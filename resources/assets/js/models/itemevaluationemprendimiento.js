@@ -1,0 +1,40 @@
+/**
+* Class ItemEvaluationEmprendimientoModel of Backbone Model
+* @author TuProyecto || Desarrollador : @xindykatalina
+* @link http://TuProyecto.com
+*/
+
+//Global App Backbone
+app || (app = {});
+
+(function (window, document, undefined) {
+
+     app.ItemEvaluationEmprendimientoModel = Backbone.Model.extend({
+
+        urlRoot: function () {
+            return window.Misc.urlFull( Route.route('itemevaluacionemprendimiento.index') );
+        },
+        idAttribute: 'codigo_evaluacion_emprendimiento',
+        defaults: {
+
+        },
+
+        /**
+        * Constructor Method
+        * @param Object attrs, model attributes
+        * @param Object opts, model Options
+        */
+        initialize: function(attrs, opts){
+            //
+        },
+
+        /**
+        * validate attributes model in the change
+        * @param Object. modified attributes model
+        */
+        validate: function (attrs) {
+
+        }
+    });
+
+})(this, this.document);

@@ -1,0 +1,44 @@
+.nav-md, .nav-sm {
+
+	.navbar {
+		background: #EDEDED;
+	}
+
+	.left_col {
+		z-index: 9989 !important;
+	}
+}
+
+.site_title {
+	color: $primary-color !important;
+
+	> img {
+		vertical-align: sub;
+	}
+
+	> span {
+		vertical-align: middle;
+	}
+}
+
+// Spinner loader
+.wrapper-spinner {
+	background-color: rgba(#FFFFFF, 0.6);
+	border: none;
+	min-height: rem-calc(35);
+
+	.inner-spinner {
+		font-size: 1.2em;
+	    border: 4px solid #f3f3f3; /* Light grey */
+	    border-top: 4px solid #3498db; /* Blue */
+	    border-radius: 50%;
+	    width: 3em;
+	    height: 3em;
+	    @include animation( spin 2s linear infinite );
+	}
+
+	@include keyframes(spin) {
+	    0% { @include transform( rotate(0deg) ); }
+	    100% { @include transform( rotate(360deg) ); }
+	}
+}

@@ -1,0 +1,74 @@
+// Owerwrite fontawesome path iconfonts
+$icon-font-path: "fonts/" !default;
+
+@import "base/css3-mixins";
+// Import Bourbon 4.3.4 library
+@import "bourbon";
+
+// Import custom style on top
+// --------------------------
+@import "base/variables";
+
+// Import bootstrap sass
+@import 'bootstrap';
+
+// Owerwrite fontawesome path fonts
+$fa-font-path: "fonts" !default;
+
+/*!
+*  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
+*  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+*/
+@import "font-awesome/scss/variables";
+@import "font-awesome/scss/mixins";
+@import "font-awesome/scss/path";
+@import "font-awesome/scss/core";
+@import "font-awesome/scss/larger";
+@import "font-awesome/scss/fixed-width";
+@import "font-awesome/scss/list";
+@import "font-awesome/scss/bordered-pulled";
+@import "font-awesome/scss/animated";
+@import "font-awesome/scss/rotated-flipped";
+@import "font-awesome/scss/stacked";
+@import "font-awesome/scss/icons";
+@import "font-awesome/scss/screen-reader";
+
+// Import gentelella template
+@import 'custom';
+
+// Custom default template
+
+// Base
+// ------------------------------
+@import "base/fonts";
+@import "base/global";
+
+// Modules
+// ------------------------------
+@import "modules/posts";
+@import "modules/forms";
+@import "modules/grid";
+@import "modules/editors";
+@import "modules/crop-uploader";
+@import "modules/nestable";
+@import "modules/list";
+@import "modules/paginator";
+@import "modules/multi-select";
+@import "modules/class-boostrap5";
+
+
+// Layout
+// ------------------------------
+@import "layout/sidenav-bar";
+// marketplace
+@import "layout/marketplace/marketplace-main";
+@import "layout/marketplace/transactions/agreement/agreement-main";
+@import "layout/marketplace/transactions/evaluations";
+// articles
+@import "layout/content/content-main";
+// course
+@import "layout/course/course-main";
+// user
+@import "layout/user/user-detail";
+// form
+@import "layout/form/form-main";

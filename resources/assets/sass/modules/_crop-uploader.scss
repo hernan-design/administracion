@@ -1,0 +1,34 @@
+.crop-preview-img{
+	overflow: hidden;
+}
+
+.iuc__qq-uploader {
+	.qq-upload-list-selector {
+		visibility: hidden;
+    width: 0px;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+	}
+}
+
+.iuc__image-uploader {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+}
+
+.qq-upload-btn-picture {
+	display: inline-block;
+	vertical-align: top;
+	font: {
+		family: $font-family-sanfrancisco;
+		size: inherit;
+		weight: 200;
+	}
+	color: $sky-blue;
+	&.qq-upload-button-hover{
+		background: transparent;
+		text-decoration: underline;
+	}
+}

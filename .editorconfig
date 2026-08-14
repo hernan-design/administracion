@@ -1,0 +1,40 @@
+# EditorConfig is awesome: http://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+indent_style = tab
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Matches multiple files with brace expansion notation
+# Set default charset
+[*.{html,js,css,php,py,less,scss,sass,blade.php}]
+charset = utf-8
+indent_style = space
+indent_size = 2
+
+# Indentation override for all JS under lib directory
+[resources/assets/**/**.js]
+indent_style = space
+indent_size = 4
+
+# Matches the exact files either package.json or .travis.yml
+[{Gruntfile.js,gulpfile.js,package.json,bower.json,.bowerrc,.jshintrc}]
+indent_size = 2
+insert_final_newline = false
+
+# scss files
+[*.scss]
+indent_size = 2
+
+#remove final newline
+[*.{php}]
+insert_final_newline = false
+
+[*.md]
+trim_trailing_whitespace = false

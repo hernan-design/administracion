@@ -1,0 +1,260 @@
+//
+// @author tuproyecto.com
+// @frontend @krobing
+// Forms styles
+//
+
+// ====================
+// Styles forms general
+// ====================
+
+// Tablet of content
+// 01. Validation styles
+// 02. Entity editable
+// 03. Selects
+
+
+// =========================
+// 01. Validation styles
+// =========================
+
+.item {
+
+	.alert {
+		margin-left: 0px;
+    max-width: 300px;
+    white-space: normal;
+    margin-top: 10px;
+    display: inline-block;
+    float: none;
+
+    &:after {
+			left: 5px;
+			bottom: 100%;
+			top: auto;
+			border-color: transparent transparent #CE5454 transparent;
+			border-width: 10px 11px;
+    }
+	}
+}
+
+// ===================
+// 02. Entity editable
+// ===================
+
+// container item editable
+.editable-item {
+  display: block;
+
+  .close {
+    visibility: hidden;
+    display: none;
+  }
+}
+
+.edit-field {
+	display: inline-block;
+}
+
+.edit-no-result {
+	display: inline-block;
+	vertical-align: middle;
+
+	font: {
+		size: inherit;
+		style: italic;
+		weight: 200;
+	}
+	color: $aluminum !important;
+}
+
+// button editable
+.edit-field-button {
+	display: none;
+	visibility: hidden;
+	height: 0;
+	margin: 0 5px 0 5px;
+
+	&:focus {
+		outline: none;
+	}
+}
+
+.field-for-edit {
+	width: 100%;
+
+	> p , .prepared-to-edit {
+		float: left;
+		width: 100%;
+		// width: 94%;
+	}
+}
+
+.field-text {
+	display: inline;
+	vertical-align: middle;
+}
+
+ul.field-and-button-edit {
+	// @include base-list-grid;
+	> li {
+		&:not(:last-of-type) {
+			padding: {
+				right: 0;
+			}
+		}
+	}
+}
+
+.field-editing {
+	display: none;
+
+	&.content-form-editing {
+		background-color: $color-main-wrap-alt;
+		padding: 20px;
+		margin: {
+			bottom: 20px;
+		}
+		@include border-radius(4px);
+	}
+
+	.edit-field-text {
+		// resize: none;
+		border: 1px solid $silver;
+		padding: 10px 0 15px;
+		@include box-shadow( 1px 1px 4px $iron inset );
+	}
+
+	&:not(.content-form-editing) {
+
+		.col-equal-height {
+			&.valign-bottom {
+				[type="submit"] {
+					margin-bottom: 10px + 10px;
+				}
+			}
+		}
+	}
+}
+
+// list info editing global
+ul.list-data-editing, ul.list-info-editing {
+
+	> li {
+	  position: relative;
+
+	  .close {
+	    position: absolute;
+	    right: 10px;
+	    top: 0px;
+	    line-height: 1.7em;
+	    list-style: normal;
+	    font: {
+	      size: 24px;
+	      weight: 200px;
+	    }
+	    color: $base;
+	    cursor: pointer;
+
+	    &:hover, &:focus {
+	      color: inherit;
+	      text-decoration: none;
+	    }
+	  }
+	}
+}
+ul.list-info-editing {
+
+	&:not(:last-of-type) {
+    padding: 0 0 10px;
+  }
+}
+
+// editable container
+.editable {
+
+	.edit-field-button {
+		// @include icon-circle(
+	  //   $font-size: 15px,
+	  //   $padding: 4px,
+	  //   $color: $iron,
+	  //   $bgcolor: transparent,
+	  //   $colors-custom: false
+	  // );
+	  visibility: visible;
+	  height: auto;
+	  vertical-align: middle;
+	  border: 1px solid transparent;
+
+	  &.vtop { vertical-align: top !important; }
+	  &.vcenter { vertical-align: middle !important; }
+	  &.vbottom { vertical-align: bottom !important; }
+
+	  > i {
+	  	color: inherit;
+	  }
+	}
+
+	&:hover, &:focus {
+		.edit-field-button {
+			// @include icon-circle(
+			// 	$color: $sky-blue,
+			// 	$bgcolor: transparent,
+			// 	$colors-custom: false
+			// );
+			border: 1px solid $primary-color;
+
+			&:hover, &:focus {
+				// @include icon-circle(
+				// 	$color: $white,
+				// 	$bgcolor: $sky-blue,
+				// 	$colors-custom: false
+				// );
+				// @extend .circle-shadow;
+			}
+
+			&.invert-edit-button, &.invert-edit-button:hover, &.invert-edit-button:focus {
+				color: white;
+				border-color: white;
+			}
+		}
+	}
+
+	.editing {
+		width: 100%;
+
+		.field-for-edit {
+			display: none;
+		}
+
+		.field-editing {
+			display: block;
+		}
+
+		.close {
+			display: inline-block;
+			visibility: visible;
+		}
+	}
+}
+
+input.parsley-success, select.parsley-success, textarea.parsley-success {
+		color: $black;
+    background-color: $white;
+    border: 1px solid $iron;
+}
+
+.bold-text {
+  font-weight: 600;
+}
+
+.radio-inline, .checkbox-inline {
+	padding-left: 0px;
+}
+
+//===================
+// 03. Selects
+//===================
+.select2-container--open {
+	z-index: 10000;
+}

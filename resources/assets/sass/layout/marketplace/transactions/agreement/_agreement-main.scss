@@ -1,0 +1,32 @@
+.agreement_name_product {
+	margin-bottom: 20px;
+}
+
+.text_confirmed_agreement {
+	margin-bottom: 20px;
+	color: #3FC1A5;
+}
+
+.table_agreement>thead>tr {
+	background-color: rgba(52,73,94,1.94);
+	color: #fcfcfc;
+}
+
+.table.table_agreement>thead>tr>th {
+	vertical-align: middle;
+	margin-bottom: 40px;
+	border: 1px solid rgba(52, 73, 94, .94) !important;
+}
+
+.table_agreement>thead>tr>th {
+	border-top: none !important;
+	border-bottom: none !important;
+}
+
+.table_agreement>tbody>tr>td {
+	vertical-align: middle;
+}
+
+.size_column_agreement {
+	width: 770px;
+}

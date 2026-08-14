@@ -1,0 +1,160 @@
+// //
+// // @author tuproyecto.com
+// // @backend @dortegon
+// // Content styles
+// //
+//
+// #tp_list-article {
+// 	#tp_article-left-box {
+// 		width: 100%;
+//
+// 		h5 {
+// 			margin-top: 0px;
+// 		}
+//
+// 		.inner-content-list {
+// 			display: table-cell;
+// 			vertical-align: top;
+// 		}
+//
+// 		.tp_btn-content-edit {
+// 			display: table-cell;
+// 			vertical-align: top;
+// 			position: relative;
+// 			float: right;
+// 			height: 100%;
+// 			padding: 6px 6px;
+// 			width: 150px;
+//
+// 			.tp_btn-group {
+// 				li {
+// 					margin: 0px !important;
+// 					padding: 0px !important;
+// 					background: #ffffff;
+// 					a {
+// 						font-size: 12px !important;
+// 						padding: 5px 18px !important;
+//     				width: 100%;
+// 					}
+// 				}
+// 			}
+//
+// 			@media #{$screen-xs-up} {
+// 				a {
+// 					margin-right: 0px;
+// 				}
+// 			}
+//
+// 			@media #{$screen-xs-only} {
+// 				width: auto !important;
+// 				.tp_btn-action {
+// 					display: none;
+// 				}
+// 			}
+// 		}
+//
+// 		.accountant-item-list {
+// 			@media #{$screen-xs-only} {
+// 				font-size: 10px;
+// 			}
+// 		}
+//
+// 		.content-item-list {
+// 			display: table;
+// 			width: 100%;
+// 			position: relative;
+// 			padding-top: 8px;
+// 			height: 100%;
+//
+// 			@media #{$screen-xs-up} {
+// 				.title-item-list {
+// 					height: 18px;
+// 					overflow: hidden;
+// 				}
+//
+// 				.description-project-item {
+// 					margin-bottom: 0;
+// 					overflow: hidden;
+// 					height: 40px;
+// 				}
+// 			}
+//
+// 			@media #{$screen-sm-up} {
+//
+// 				.title-item-list {
+// 					height: auto;
+// 					overflow: none;
+// 				}
+//
+// 				.description-project-item {
+// 					margin-bottom: 0;
+// 					overflow: none;
+// 				}
+// 			}
+//
+// 			.data-inline-list {
+// 				width: 100%;
+// 				position: absolute;
+// 				bottom: 0px;
+// 				left: 0px;
+// 				padding: 0 0 10px 0;
+// 				margin: 0px;
+//
+// 				> li {
+// 					list-style: outside none none;
+// 					display: inline-block;
+// 					vertical-align: middle;
+// 					margin: 0;
+// 				}
+// 			}
+// 		}
+//
+// 		.inner-content-list {
+// 			a {
+// 				padding: 0px !important;
+// 				font-size: 16px;
+// 				font-weight: 600;
+// 				text-align: justify;
+// 			}
+// 		}
+// 	}
+//
+// 	.article-list {
+// 		width: 100% !important;
+//
+// 		#tp_article-left-box img {
+// 			border-radius: 2px;
+// 			-webkit-border-radius: 2px;
+// 			float: left;
+// 			margin-right: 0px;
+//
+// 			@media #{$screen-xs-up} {
+// 				width: 100%;
+// 			}
+//
+// 			@media #{$screen-xlg-up} {
+// 				max-width: 250px;
+// 			}
+// 		}
+//
+// 		@media #{$screen-xs-up} {
+// 			padding: 0;
+// 	    display: flex;
+// 		}
+//
+// 	}
+//
+// 	@media #{$screen-xs-up} {
+// 		.time {
+// 			float: right;
+// 			font-size: 10px;
+// 			min-width: 100%;
+// 		}
+// 	}
+//
+// 	@media #{$screen-sm-up} {
+// 		.time {
+// 			font-size: 12px;
+// 		}
+// 	}
+// }

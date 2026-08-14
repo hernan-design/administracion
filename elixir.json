@@ -1,0 +1,30 @@
+{
+	"versioning": {
+		"buildFolder": "build"
+	},
+	"js" : {
+		"browserify": {
+            "transformers": [
+            	{
+					"name": "browserify-shim",
+					"options": {
+						"global": true
+					}
+				},
+				{
+					"name": "babelify",
+					"options": {
+						"presets": [["env", {
+							"targets": {
+								"browsers": [ ">0.25%", "not ie 11", "not op_mini all"]
+							}
+						}], "stage-3", "react"]
+					}
+				}
+            ],
+            "watchify": {
+                "enabled": true
+            }
+		}
+	}
+}

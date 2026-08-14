@@ -1,0 +1,83 @@
+// Table of content
+// a. overwrite varibles bootstrap
+// b. media queries customize
+// 01. Colors
+// 02. Fonts
+// 03. Typography
+
+// ===============================
+// a. overwrite varibles bootstrap
+// ===============================
+
+// ===============================
+// b. media queries customize
+// ===============================
+$screen-xs-only : "(max-width: 480px)" !default;
+$screen-xs-up : "(min-width: 320px)" !default;
+$screen-all-only : "(min-width: 320px) and (max-width: 1200px)" !default;
+$screen-sm-only : "(min-width: 481px) and (max-width: 767px)" !default;
+$screen-sm-up : "(min-width: 768px)" !default;
+$screen-lg-only : "(min-width: 992px) and (max-width: 1200px)" !default;
+$screen-lg-up : "(min-width: 992px)" !default;
+$screen-xlg-only : "(min-width: 1201px) and (max-width: 1440px)" !default;
+$screen-xlg-up : "(min-width: 1201px)" !default;
+// ================================
+// 01. Colors
+// ================================
+
+// Customize colors
+// --------------------------------
+$white       : #FFFFFF;
+$ghost       : #FAFAFA;
+$snow        : #F9F9F9;
+$vapor       : #F6F6F6;
+$white-smoke : #F5F5F5;
+$silver      : #EFEFEF;
+$smoke       : #EEEEEE;
+$gainsboro   : #DDDDDD;
+$iron        : #CCCCCC;
+$base        : #AAAAAA;
+$aluminum    : #999999;
+$jumbo       : #888888;
+$monsoon     : #777777;
+$steel       : #666666;
+$charcoal    : #555555;
+$tuatara     : #444444;
+$oil         : #2E2E2E;
+$jet         : #222222;
+$black       : #000000;
+
+$primary-color: #5A738E;
+$secondary-color: #3FC1A5;
+$tertiary-color: #3199D3;
+
+// base colors
+// -----------
+$primary-btn: #337AB7 !default;
+$danger-btn: #D9534F !default;
+$success-btn: #449D44 !default;
+$sky-blue: $tertiary-color !default;
+$color-main-wrap-alt : #615e5d !default;
+
+// ================================
+// 02. Fonts
+// ================================
+$font-family-sanfrancisco: "San Francisco", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif !default;
+$font-family-frutiger: Frutiger, "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif !default;
+$font-family-frutiger-roman: 'Frutiger Roman' !default;
+$font-family-crimsontext: 'Crimson Text', serif;
+$icon-css-prefix: "icon" !default;
+$social-css-prefix: "social" !default;
+$icon-fontsize-base: 14px !default;
+$facebook-logotype: "f" !default;
+$twitter-logo: "M" !default;
+$youtube-logo: "w" !default;
+
+$text-small: 13px !default;
+$text-medium: 15px !default;
+$text-large: 17px !default;
+
+// ================================
+// 03. Typography
+// ================================
+$font-size-base: 15px;

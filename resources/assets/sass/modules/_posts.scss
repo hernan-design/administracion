@@ -1,0 +1,489 @@
+//
+// @author tuproyecto.com
+// @frontend @krobing
+// Posts styles
+//
+
+// ===================
+// Styles post general
+// ===================
+.wall-post-box, .comment-post-box {
+	position: relative;
+	background-color: $white;
+	padding: 2px;
+	margin: {
+		bottom: 15px;
+	}
+
+	@include box-shadow( 1px, 1px, 4px, $iron );
+	&.no-shadow {
+		box-shadow: none;
+	}
+
+  // nickname users post
+	.nickname-user-post, .nickname-comment-post {
+		line-height: 1.3;
+		font: {
+			size: 18px;
+			weight: bold;
+		}
+	}
+
+  // reference to user in post
+	.nickname-user-ref-post{
+		position: relative;
+		padding: {
+			left: 20px;
+		}
+		margin: {
+			left: 10px;
+		}
+		&:before{
+			content: '';
+			position: absolute;
+			left: 0px;
+			top: -1px;
+			border: 6px solid transparent;
+			border-left-color: $primary-color;
+			transform: rotateX(45deg);
+		}
+	}
+
+  // wall's post
+	ul.post-user-data {
+		list-style: outside none none;
+		margin: 0;
+
+		> li {
+			ul.list-medals-user {
+				margin: 0;
+				list-style: none none outside;
+
+				> li {
+					margin-right: 10px;
+					display: inline-block;
+
+					.tp-icon {
+						width: 15px;
+						height: 15px;
+					}
+
+					span {
+						font-size: 11px;
+					}
+				}
+			}
+
+			span {
+				font-size: 12px;
+			}
+
+			.post-content-box {
+				padding: 5px 0px;
+			}
+		}
+	}
+
+	// User card post
+	.post-user-card {
+		list-style: outside none none;
+		display: table;
+		margin: 0;
+    width: 100%;
+
+		> dd, > li {
+			display: table-cell;
+			vertical-align: top;
+
+      &:first-child {
+        width: 5%;
+      }
+
+			&:not(:first-child) {
+				padding: {
+					left: 10px;
+				}
+			}
+
+      .post-avatar {
+        img {
+          max-width: 45px;
+          max-height: 45px;
+          width: 45px;
+          height: 45px;
+        }
+      }
+
+      .picture-comment-post {
+        img {
+          min-width: 45px;
+          min-height: 45px;
+          width: 45px;
+          height: 45px;
+        }
+      }
+		}
+	}
+
+  // container  wall's post
+	.post-user-data-box {
+		background-color: $snow;
+		padding: {
+			top: 15px;
+			right: 15px;
+			bottom: 10px;
+			left: 15px;
+		}
+		p {
+			color: $tuatara;
+			font: {
+				// family: $font-family-sanfrancisco;
+				size: 14px;
+			}
+		}
+	}
+
+  // content wall's post
+	.post-content-box {
+		background-color: $snow;
+		padding: {
+			top: 5px;
+			right: 15px;
+			bottom: 15px;
+			left: 15px;
+		}
+
+		.text-description-post {
+			word-break: break-word;
+			// @extend .text-xmd;
+			a {
+				// @extend a;
+			}
+		}
+	}
+
+	// bottom of post entry
+	.post-bottom-entry {
+		margin: {
+			top: 20px;
+		}
+	}
+
+  // box footer wall's post
+	.post-footer-box {
+		background-color: scale-color($primary-color, $lightness: 10%);
+		border-top: 2px solid $white;
+		padding: 4px 15px;
+
+		ul.footer-box-icons {
+			// @extend ul.social-box-icons;
+		}
+	}
+
+  // box comments wall's post
+	.post-comments-box {
+		background-color: scale-color($primary-color, $lightness: 10%);
+		border-top: 2px solid $white;
+		padding: 16px 20px 10px 20px;
+
+		.user-comment {
+			padding: 0;
+			border-top: 1px solid $white;
+			border-bottom: 1px solid scale-color($primary-color, $lightness: 30%);
+
+			&:last-child {
+				border-bottom: none;
+				// padding-bottom: 0;
+			}
+
+			.picture-comment-post {
+				margin: {
+					right: 8px;
+				}
+			}
+
+			.nickname-comment-post {
+				font: {
+					size: 15px;
+				}
+			}
+
+			.comment-content-post {
+        display: inline-block;
+				font: {
+					size: 14px;
+				}
+				line-height: 1;
+				color: $steel;
+			}
+
+      &.wall-user-comment {
+        border-top: none;
+        padding: {
+          top: 0px;
+        }
+      }
+
+      .comment-icons-list {
+        > li {
+          vertical-align: middle;
+          margin: 0;
+        }
+      }
+		}
+	}
+}
+
+
+ // ======================
+// Styles post discussion
+// ======================
+.discussion-post-box {
+	position: relative;
+	background-color: $white;
+	padding: 15px 0px;
+	border-bottom: 1px solid $gray-lighter;
+
+	.close { right: 0px; }
+
+	// nickname users post
+	.nickname-user-post, .nickname-comment-post {
+		line-height: 1.3;
+		font: {
+			size: 16px;
+			weight: bold;
+		}
+		color: $charcoal;
+	}
+
+	// wall's post
+	ul.post-user-data {
+		list-style: outside none none;
+		margin: 0;
+
+		> li {
+			ul.list-medals-user {
+				margin: 0;
+				list-style: none none outside;
+
+				> li {
+					margin-right: 10px;
+					display: inline-block;
+
+					.tp-icon {
+						width: 15px;
+						height: 15px;
+					}
+
+					> span {
+						font-size: 11px;
+					}
+				}
+			}
+
+			> span {
+				font-size: 12px;
+			}
+
+			.post-content-box {
+				padding: 5px 0px;
+			}
+
+			.post-footer-box {
+				padding: {
+					left: 0;
+					right: 0;
+				}
+			}
+		}
+	}
+
+	// User card post
+	.post-user-card {
+		list-style: outside none none;
+		display: table;
+		margin: 0;
+    width: 100%;
+
+		> dd, > li {
+			display: table-cell;
+			vertical-align: top;
+
+      &:first-child {
+        width: 1%;
+      }
+
+			&:not(:first-child) {
+				padding: {
+					left: 10px;
+				}
+			}
+
+      .post-avatar {
+        img {
+          max-width: 50px;
+          max-height: 50px;
+          width: 50px;
+          height: 50px;
+        }
+      }
+
+      .picture-comment-post {
+        img {
+          max-width: 45px;
+          max-height: 45px;
+          width: 45px;
+          height: 45px;
+        }
+      }
+		}
+	}
+
+	// container  wall's post
+	.post-user-data-box {
+		background-color: $white;
+		padding: 5 0px;
+
+		p {
+			color: $tuatara;
+			font: {
+				// family: $font-family-sanfrancisco;
+				size: 14px;
+			}
+		}
+	}
+
+	// content wall's post
+	.post-content-box {
+		background-color: $white;
+		padding: 5px 15px 15px;
+
+		.text-description-post {
+			// @extend .text-md;
+			color: $gray-dark;
+
+			a {
+				// @extend a;
+			}
+		}
+	}
+
+	// box footer wall's post
+	.post-footer-box {
+		background-color: $white;
+		padding: 10px 15px 0px;
+
+		ul.footer-box-icons {
+			// @extend ul.social-box-icons;
+			> li {
+				a {
+					color: $aluminum;
+					i {
+						font-size: 1.2em;
+					}
+				}
+			}
+		}
+
+		li {
+			> span {
+				font: {
+					size: 13px;
+				}
+				color: $aluminum;
+			}
+		}
+	}
+
+	// box comments wall's post
+	.post-comments-box {
+		background-color: $white;
+		padding: 10px 0px;
+
+		.comment-post-field {
+			padding: 5px 0px;
+			margin: {
+				bottom: 0px;
+			}
+
+			.button, button {
+				position: relative;
+				margin: 5px 0px 0px;
+			}
+		}
+
+		.user-comment {
+			padding: 0;
+
+			&:last-child {
+				border-bottom: none;
+				// padding-bottom: 0;
+			}
+
+			.picture-comment-post {
+				margin: {
+					right: 8px;
+				}
+			}
+
+			.nickname-comment-post {
+				font: {
+					size: 14px;
+				}
+			}
+
+			.comment-content-post {
+
+				.text-description-comment {
+	        display: block;
+					line-height: 1.3;
+					word-break: break-word;
+					// @extend .text-xmd;
+					color: $gray-dark;
+
+					a {
+						// @extend a;
+					}
+				}
+			}
+
+      &.wall-user-comment {
+        border-top: none;
+        padding: {
+          top: 0px;
+        }
+      }
+
+      .comment-icons-list {
+      	// @extend ul.social-box-icons;
+
+        > li {
+          vertical-align: middle;
+          margin: 0 !important;
+          line-height: 1;
+
+          > span {
+          	font: {
+							size: 12.5px;
+						}
+						color: $aluminum;
+
+						a {
+							font-size: inherit;
+						}
+          }
+
+          a {
+          	color: $aluminum;
+
+          	&,  &.TPlikelink{
+          		font-size: 14px;
+          	}
+          }
+        }
+      }
+		}
+	}
+}
+
+.show-comment-field { cursor: pointer; }

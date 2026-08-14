@@ -1,0 +1,63 @@
+/**
+* Class EvaluationAssignmentList extend of Backbone Collection
+* @author TuProyecto || Desarrollador : @xindykatalina
+* @link http://TuProyecto.com
+*/
+
+//Global App Backbone
+app || (app = {});
+
+(function (window, document, undefined) {
+
+    app.EvaluationAssignmentList = Backbone.PageableCollection.extend({
+
+        mode: 'server',
+        url: function (){
+           return window.Misc.urlFull( Route.route('evaluacion.asignacion.index') );
+        },
+        model: app.EvaluationAssignmentModel,
+
+        state: {
+            firstPage: 0,
+            pageSize: 20 //number of records to show by page
+        },
+
+        queryParams: {
+            totalPages: null,
+            totalRecords: null,
+            pageSize: "limit",
+            currentPage: null,
+            offset: function () { return this.state.currentPage * this.state.pageSize; }
+        },
+
+        /**
+        * Constructor Method
+        */
+        initialize : function(){
+        },
+
+        /**
+        * order by
+        */
+        comparator: function(){
+            // ordenamos por el atributo nombre
+            // return cliente.get('nombre');
+        },
+
+        /**
+        * parse state of the paginator collection
+        */
+        parseState: function (resp, queryParams, state, options) {
+            return {totalRecords: resp.total_entries};
+        },
+
+        /**
+        * Return all the posts
+        * @param Object resp, response of the server
+        */
+        parseRecords: function (resp) {
+            return resp.items;
+        }
+   });
+
+})(this, this.document);

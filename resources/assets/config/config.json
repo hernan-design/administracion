@@ -1,0 +1,104 @@
+{
+    "NODE_ENV": "production",
+    "TEST": false,
+    "port": 8443,
+    "host": "https://coposoftware.com",
+    "db": {
+        "name": "tuproyecto",
+        "host": "52.41.194.126",
+        "username": "tuproyecto",
+        "password": "mongoTupr0y3ct0"
+    },
+    "redis": {
+        "port": 6379,
+        "host": "52.41.194.126"
+    },
+    "session": {
+        "secret": "TuProyecto",
+        "key": "tp"
+    },
+    "cookie": {
+        "secret": "TuProyecto"
+    },
+    "secure": false,
+    "loginsecure": false,
+    "sentry": "dsn",
+    "assetsPath": "/resources/assets",
+    "publicPath": "/public",
+    "relativePath": "../",
+    "BASE_PATHNAME": "/administrator/public",
+    "certs": [
+        {
+            "domain": "redcoomeva.com",
+            "key": "/usr/local/apache/ssl/redcoomeva/redcoomeva.key",
+            "cert": "/usr/local/apache/ssl/redcoomeva/STAR_redcoomeva_com.crt",
+            "ca": "/usr/local/apache/ssl/redcoomeva/STAR_redcoomeva_com.ca-bundle"
+        },
+        {
+            "domain": "aldeainnpulsa.com",
+            "key": "/usr/local/apache/ssl/aldeainnpulsa/aldeainnpulsa.key",
+            "cert": "/usr/local/apache/ssl/aldeainnpulsa/STAR_aldeainnpulsa_com.crt",
+            "ca": "/usr/local/apache/ssl/aldeainnpulsa/intermediate.crt"
+        },
+        {
+            "domain": "disenaelcambio.fundacionterpel.org",
+            "key": "/usr/local/apache/ssl/terpel/terpel.key",
+            "cert": "/usr/local/apache/ssl/terpel/STAR_fundacionterpel_org.crt",
+            "ca": "/usr/local/apache/ssl/terpel/intermediate.crt"
+        },
+        {
+            "domain": "coposoftware.com",
+            "key": "/usr/local/apache/ssl/coposoftware/coposoftware.key",
+            "cert": "/usr/local/apache/ssl/coposoftware/STAR_coposoftware_com.crt",
+            "ca": "/usr/local/apache/ssl/coposoftware/STAR_coposoftware_com.ca-bundle"
+        },
+        {
+            "domain": "dinamiza.cali.gov.co",
+            "key": "/usr/local/apache/ssl/dinamiza/dinamiza.key",
+            "cert": "/usr/local/apache/ssl/dinamiza/STAR_cali_gov_co.crt",
+            "ca": "/usr/local/apache/ssl/dinamiza/STAR_cali_gov_co.ca-bundle"
+        },
+        {
+            "domain": "emprendimiento.compensar.com",
+            "key": "/usr/local/apache/ssl/compensar/compensar.key",
+            "cert": "/usr/local/apache/ssl/compensar/STAR_compensar_com.crt",
+            "ca": "/usr/local/apache/ssl/compensar/STAR_compensar_com.ca-bundle"
+        },
+        {
+            "domain": "cenisoft.org",
+            "key": "/usr/local/apache/ssl/cenisoft/cenisoft.key",
+            "cert": "/usr/local/apache/ssl/cenisoft/STAR_cenisoft_org.crt",
+            "ca": "/usr/local/apache/ssl/cenisoft/STAR_cenisoft_org.ca-bundle"
+        },
+        {
+            "domain": "comunidademprendepais.com",
+            "key": "/usr/local/apache/ssl/comunidademprendepais/comunidademprendepais.key",
+            "cert": "/usr/local/apache/ssl/comunidademprendepais/STAR_comunidademprendepais_com.crt",
+            "ca": "/usr/local/apache/ssl/comunidademprendepais/STAR_comunidademprendepais_com.ca-bundle"
+        },
+        {
+            "domain": "emprendimientoinnpulsa.com",
+            "key": "/usr/local/apache/ssl/emprendimientoinnpulsa/emprendimientoinnpulsa.key",
+            "cert": "/usr/local/apache/ssl/emprendimientoinnpulsa/STAR_emprendimientoinnpulsa_com.crt",
+            "ca": "/usr/local/apache/ssl/emprendimientoinnpulsa/intermediate.crt"
+        },
+        {
+            "domain": "colaborainnovacion.compensar.com",
+            "key": "/usr/local/apache/ssl/compensar/compensar.key",
+            "cert": "/usr/local/apache/ssl/compensar/STAR_compensar_com.crt",
+            "ca": "/usr/local/apache/ssl/compensar/STAR_compensar_com.ca-bundle"
+        },
+        {
+            "domain": "comunidadpropace.com",
+            "key": "/usr/local/apache/ssl/comunidadpropace/comunidadpropace.key",
+            "cert": "/usr/local/apache/ssl/comunidadpropace/STAR_comunidadpropace_com.crt",
+            "ca": "/usr/local/apache/ssl/comunidadpropace/STAR_comunidadpropace_com.ca-bundle"
+        },
+        {
+            "domain": "campus.tureto.co",
+            "key": "/usr/local/apache/ssl/tureto/tureto.key",
+            "cert": "/usr/local/apache/ssl/tureto/STAR_tureto_co.crt",
+            "ca": "/usr/local/apache/ssl/tureto/STAR_tureto_co.ca-bundle"
+        }
+    ]
+}

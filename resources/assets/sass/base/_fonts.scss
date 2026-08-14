@@ -1,0 +1,13 @@
+/**
+* Fonts of application
+* -----------------------
+*/
+// Summernote fonts
+// ----------------
+@include font-face(
+	"summernote",
+	"fonts/summernote",
+	normal,
+	normal,
+	$file-formats: eot ttf woff
+);

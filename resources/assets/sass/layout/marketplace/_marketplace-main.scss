@@ -1,0 +1,45 @@
+#marketplaces-content {
+	@media #{$screen-sm-up} {
+	  .tile_count {
+	  	.tile_stats_count {
+
+	  		.count {
+			    font-size: 30px;
+			  }
+	  	}
+	  }
+  }
+
+	@media #{$screen-lg-only} {
+		.tile_count {
+	  	.tile_stats_count {
+
+	  		.count {
+			    font-size: 25px;
+			  }
+	  	}
+	  }
+	}
+
+  @media #{$screen-xlg-up} {
+  	.tile_count {
+	  	.tile_stats_count {
+
+	  		.count {
+			    font-size: 30px;
+			  }
+	  	}
+	  }
+  }
+
+  @media #{$screen-xlg-only} {
+  	.tile_count {
+	  	.tile_stats_count {
+
+	  		.count {
+			    font-size: 25px;
+			  }
+	  	}
+	  }
+  }
+}
