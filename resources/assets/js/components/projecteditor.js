@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import $ from 'jquery';
+window.jQuery = $;
+window.$ = $;
 
 import ReactSummernote from 'react-summernote';
-import "summernote/dist/summernote.js";
-import "summernote-cleaner/summernote-cleaner.js";
-import "react-summernote/lang/summernote-es-ES.js";
+require("summernote/dist/summernote.js");
+require("summernote-cleaner/summernote-cleaner.js");
+require("react-summernote/lang/summernote-es-ES.js");
 import Misc, { formToJson, getCsrf, setSpinner, removeSpinner } from '../helpers/misc.js';
 import laroute from '../helpers/routes.js';
-import $ from 'jquery';
 import Backbone from 'backbone';
 
 class ProjectEditor extends Component {

@@ -25,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
         // Validate ReCaptcha
         Validator::extend('recaptcha', function ($attribute, $value, $parameters) 
         {
+            if (config('app.env') === 'local') {
+                return true;
+            }
             $institution = Institucion::findOrFail(session('institution')->codigo_institucion);
             $client = new Client();
             $response = $client->post(

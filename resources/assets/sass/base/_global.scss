@@ -66,7 +66,7 @@ table {
   }
 
   > label {
-  	font-size: rem(24);
+  	font-size: 1.5rem;
 		display: block;
 		// vertical-align: middle;
 		float           : right;
@@ -97,32 +97,32 @@ table {
 	}
 
 	&.stars-18 {
-		font-size: rem(18) !important;
-		label{ font-size: rem(18) !important; }
+		font-size: 1.125rem !important;
+		label{ font-size: 1.125rem !important; }
 	}
 	&.stars-21 {
-		font-size: rem(21) !important;
-		label{ font-size: rem(21) !important; }
+		font-size: 1.3125rem !important;
+		label{ font-size: 1.3125rem !important; }
 	}
 	&.stars-24 {
-		font-size: rem(24) !important;
-		label{ font-size: rem(24) !important; }
+		font-size: 1.5rem !important;
+		label{ font-size: 1.5rem !important; }
 	}
 	&.stars-30 {
-		font-size: rem(30) !important;
-		label{ font-size: rem(30) !important; }
+		font-size: 1.875rem !important;
+		label{ font-size: 1.875rem !important; }
 	}
 	&.stars-36 {
-		font-size: rem(36) !important;
-		label{ font-size: rem(36) !important; }
+		font-size: 2.25rem !important;
+		label{ font-size: 2.25rem !important; }
 	}
 	&.stars-42 {
-		font-size: rem(42) !important;
-		label{ font-size: rem(42) !important; }
+		font-size: 2.625rem !important;
+		label{ font-size: 2.625rem !important; }
 	}
 	&.stars-48 {
-		font-size: rem(48) !important;
-		label{ font-size: rem(48) !important; }
+		font-size: 3rem !important;
+		label{ font-size: 3rem !important; }
 	}
 
 	&:not(:hover) > :checked ~ label {
