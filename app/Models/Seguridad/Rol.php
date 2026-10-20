@@ -4,13 +4,13 @@ namespace App\Models\Seguridad;
 
 use Input, Cache, Validator, Auth, DB, Log;
 
-use Greatsami\Entrust\EntrustRole;
+use Laratrust\Models\Role as LaratrustRole;
 
 use App\Traits\AppLogsActivity;
 
 use App\Models\Core\Estado, App\Models\BaseModel;
 
-class Rol extends EntrustRole
+class Rol extends LaratrustRole
 {
     use AppLogsActivity;
 
@@ -156,7 +156,7 @@ class Rol extends EntrustRole
         $modulePrimaryKey = $module ?: 'general';
         $cacheKey = "entrust_permissions_for_role_{$this->$rolePrimaryKey}_$modulePrimaryKey";
 
-        return Cache::tags(config('entrust.permission_role_table'))->remember($cacheKey, config('cache.ttl'), function () use($module) {
+        return Cache::tags(config('laratrust.tables.permission_role'))->remember($cacheKey, config('cache.ttl'), function () use($module) {
         	$query = $this->perms();
         	if( !is_null($module) ) {
             	$query->where('modulo.url_modulo', $module);
@@ -173,7 +173,7 @@ class Rol extends EntrustRole
      */
     public function perms()
     {
-        return $this->belongsToMany(config('entrust.permission'), config('entrust.permission_role_table'), 'role_id', 'permission_id')->leftJoin('seguridad.modulo', 'modulo.codigo_modulo', '=', 'permiso_rol.codigo_modulo')->where(function($where){
+        return $this->belongsToMany(config('laratrust.models.permission'), config('laratrust.tables.permission_role'), 'role_id', 'permission_id')->leftJoin('seguridad.modulo', 'modulo.codigo_modulo', '=', 'permiso_rol.codigo_modulo')->where(function($where){
 				$where->where('modulo.codigo_tipo_modulo', '=', Modulo::getTypeModule('administrator'));
 				$where->orWhereNull('permiso_rol.codigo_modulo');
 		});

@@ -5023,7 +5023,7 @@
         });
     }
     else if (typeof module === 'object' && module.exports){
-        module.exports = laroute;
+        window.Route = module.exports = laroute;
     }
     else {
         window.Route = laroute;

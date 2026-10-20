@@ -2,38 +2,32 @@
 
 namespace App\Traits;
 
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
-
-use Spatie\Activitylog\Traits\LogsActivity;
-use App\Classes\ActivityLogger;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 trait AppLogsActivity
 {
     use LogsActivity;
 
-    protected static function bootLogsActivity()
+    public function getActivitylogOptions(): LogOptions
     {
-        static::eventsToBeRecorded()->each(function ($eventName) {
-            return static::$eventName(function (Model $model) use ($eventName) {
-                if (! $model->shouldLogEvent($eventName)) {
-                    return;
-                }
-
-                $description = $model->getDescriptionForEvent($eventName);
-
-                $logName = $model->getLogNameToUse($eventName);
-
-                if ($description == '') {
-                    return;
-                }
-
-                app(ActivityLogger::class)
-                    ->useLog($logName)
-                    ->performedOn($model)
-                    ->withProperties($model->attributeValuesToBeLogged($eventName))
-                    ->log($description);
+        $options = LogOptions::defaults();
+        
+        if (property_exists($this, 'logAttributes')) {
+            $options->logAttributes(static::$logAttributes);
+        }
+        
+        if (property_exists($this, 'logName')) {
+            $options->useLogName(static::$logName);
+        }
+        
+        // Emulate the v3 getDescriptionForEvent behavior
+        if (method_exists($this, 'getDescriptionForEvent')) {
+            $options->setDescriptionForEvent(function(string $eventName) {
+                return $this->getDescriptionForEvent($eventName);
             });
-        });
+        }
+        
+        return $options;
     }
 }

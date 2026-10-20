@@ -194,4 +194,4 @@ app || (app = {});
 
     new app.ListOrganizerAdd()
 
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

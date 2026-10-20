@@ -32,7 +32,7 @@
                                 <input type="password" name="password" class="form-control input-sm" placeholder="Contraseña" required />
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-default widget-login-recaptcha" data-key-recaptcha="{{ $institution->clave_sitio_captcha ?: config('tuproyecto.grecatcha_api_key') }}">{{ trans('app.login') }}</button>
+                                <button type="submit" class="btn btn-default">{{ trans('app.login') }}</button>
                             </div>
 
                             <div class="separator">
@@ -50,11 +50,7 @@
 
         <script>window.document.url = "{{ URL::to('/') }}";</script>
         <script>window.document.platform = "{{ URL::to($institution->url_institucion) }}";</script>
-        {{-- Libraries so: underscore, backbone, etc --}}
-        <script src="{{ elixir('js/vendor.js') }}"></script>
-        {{-- Components --}}
-        <script src="{{ elixir('js/component.js') }}"></script>
-        {{-- App --}}
-        <script src="{{ elixir('js/app.js') }}"></script>
+        <script src="{{ asset('js/vendor-legacy.js') }}?v={{ filemtime(public_path('js/vendor-legacy.js')) }}"></script>
+        @vite(['resources/assets/js/components/main.jsx'])
     </body>
 </html>

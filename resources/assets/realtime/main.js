@@ -1,6 +1,7 @@
 // file: realtime/main.js
 import io from 'socket.io-client';
-import Misc from '../js/helpers/misc';
+import '../js/helpers/misc.js';
+const Misc = window.Misc;
 
 import config from '../config/config.json';
 

@@ -17,4 +17,4 @@ app || (app = {});
         }
    });
 
-})(this, this.document);
+})(window, document);

@@ -16,4 +16,4 @@ app || (app = {});
         model: app.EventOrganizerModel
    });
 
-})(this, this.document);
+})(window, document);

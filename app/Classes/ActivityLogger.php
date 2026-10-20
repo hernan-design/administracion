@@ -2,27 +2,28 @@
 
 namespace App\Classes;
 
-use Spatie\Activitylog\ActivitylogServiceProvider;
+use Spatie\Activitylog\Support\ActivityLogger as SpatieActivityLogger;
+use Spatie\Activitylog\Contracts\Activity as ActivityContract;
 
-class ActivityLogger extends \Spatie\Activitylog\ActivityLogger
+class ActivityLogger extends SpatieActivityLogger
 {
     /**
      * @param string $description
      *
-     * @return null|mixed
+     * @return null|ActivityContract
      */
-    public function log(string $description)
+    public function log(string $description): ?ActivityContract
     {
         if ($this->logStatus->disabled()) {
-            return;
+            return null;
         }
 
-        $activity = ActivitylogServiceProvider::getActivityModelInstance();
-        $activity->properties = $this->getActivity()->properties;
-        $activity->description = $this->replacePlaceholders($description, $activity);
-        $activity->log_name = $this->defaultLogName;
-        $activity->codigo_institucion = session('institution')->codigo_institucion;
-        $activity->save();
+        $activity = parent::log($description);
+
+        if ($activity) {
+            $activity->codigo_institucion = session('institution')->codigo_institucion ?? null;
+            $activity->save();
+        }
 
         return $activity;
     }

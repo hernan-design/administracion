@@ -77,7 +77,7 @@
 									<select type="text" name="codigo_privacidad_contenido" id="codigo_privacidad_contenido" class="form-control" required>
 										<option value="">Seleccione...</option>
 										@foreach ($privacyContent as $value)
-											<option value="{{ $value->id }}" {{ isset($form) ? $form->codigo_privacidad_contenido == $value->id ? 'selected' : '' : '' }}>{{ $value->text }}</option>
+											<option value="{{ $value->id }}" {{ isset($form) ? ($form->codigo_privacidad_contenido == $value->id ? 'selected' : '') : '' }}>{{ $value->text }}</option>
 										@endforeach
 									</select>
 								</div>

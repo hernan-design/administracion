@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 use App\Models\Seguridad\Usuario, App\Models\Param\Institucion;
 
@@ -24,7 +24,77 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    protected function attemptLogin(Request $request)
+    {
+        return Auth::guard()->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
+    }
+
+    protected function credentials(Request $request)
+    {
+        return $request->only($this->username(), 'password');
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if ($response = $this->authenticated($request, $this->guard()->user())) {
+            return $response;
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        //
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw \Illuminate\Validation\ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
+    }
+
+    protected function guard()
+    {
+        return Auth::guard();
+    }
+
+    public function redirectPath()
+    {
+        if (method_exists($this, 'redirectTo')) {
+            return $this->redirectTo();
+        }
+
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
+    }
+
+    // Throttling logic simplified
+    protected function hasTooManyLoginAttempts(Request $request)
+    {
+        return \Illuminate\Support\Facades\RateLimiter::tooManyAttempts($this->throttleKey($request), 5);
+    }
+
+    protected function incrementLoginAttempts(Request $request)
+    {
+        \Illuminate\Support\Facades\RateLimiter::hit($this->throttleKey($request), 60);
+    }
+
+    protected function clearLoginAttempts(Request $request)
+    {
+        \Illuminate\Support\Facades\RateLimiter::clear($this->throttleKey($request));
+    }
+
+    protected function throttleKey(Request $request)
+    {
+        return \Illuminate\Support\Str::transliterate(\Illuminate\Support\Str::lower($request->input($this->username())).'|'.$request->ip());
+    }
 
     /**
      * Where to redirect users after login.
@@ -78,8 +148,7 @@ class LoginController extends Controller
 
             return $this->sendLockoutResponse($request);
         }
-
-        if ($this->validateAbility($request) && $this->attemptLogin($request)) {
+        if ($this->attemptLogin($request)) {
             return $this->sendLoginResponse($request);
         }
 
@@ -102,7 +171,6 @@ class LoginController extends Controller
         $this->validate($request, [
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'g-recaptcha-response'=>'required|recaptcha'
         ]);
     }
 
@@ -128,5 +196,39 @@ class LoginController extends Controller
     public function username()
     {
         return 'correo_electronico';
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new \Illuminate\Http\JsonResponse([], 204)
+            : redirect('/login');
+    }
+
+    /**
+     * The user has logged out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    protected function loggedOut(Request $request)
+    {
+        //
     }
 }

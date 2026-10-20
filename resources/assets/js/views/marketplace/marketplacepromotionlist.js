@@ -11,10 +11,10 @@ app || (app = {});
 
     app.MarketplacePromotionListView = Backbone.View.extend({
         el: '#marketplace-promotion-content',
-        templateConfirm: _.template( ($('#active-confirm-tpl').html() || '') ),
-        templateActivation: _.template( ($('#activation-promotion-tpl').html() || '') ),
-        templateButtonsAction: _.template( ($('#buttons-action-tpl').html() || '') ),
-        templateRefuse: _.template( ($('#comment-refused-promotion-tpl').html() || '') ),
+        templateConfirm: _.template(($('#active-confirm-tpl').html() || '')),
+        templateActivation: _.template(($('#activation-promotion-tpl').html() || '')),
+        templateButtonsAction: _.template(($('#buttons-action-tpl').html() || '')),
+        templateRefuse: _.template(($('#comment-refused-promotion-tpl').html() || '')),
         events: {
             'click .btn-clear': 'clear',
             'click .btn-search': 'search',
@@ -29,11 +29,11 @@ app || (app = {});
         /**
         * Constructor Method
         */
-        initialize : function(opts) {
+        initialize: function (opts) {
             _.bindAll(this, 'beforeRender', 'render', 'afterRender');
 
             // extends parameters
-            if( opts !== undefined && _.isObject(opts.parameters) ){
+            if (opts !== undefined && _.isObject(opts.parameters)) {
                 this.parameters = $.extend({}, this.parameters, opts.parameters);
             }
 
@@ -48,7 +48,7 @@ app || (app = {});
             };
 
             var _this = this;
-            this.render = _.wrap(this.render, function(render) {
+            this.render = _.wrap(this.render, function (render) {
 
                 _this.trigger('beforeRender');
 
@@ -60,14 +60,14 @@ app || (app = {});
             });
 
             // Events Listener custome
-            this.on( 'beforeRender', this.beforeRender );
-            this.on( 'afterRender', this.afterRender );
+            this.on('beforeRender', this.beforeRender);
+            this.on('afterRender', this.afterRender);
         },
 
         /*
         * Render View Element
         */
-        render: function() {
+        render: function () {
             // Initialize attributes
             this.$searchState = this.$('#codigo_estado');
             this.$searchOwner = this.$('#correo_electronico');
@@ -101,11 +101,11 @@ app || (app = {});
             var _this = this;
 
             // reload plugins
-            if(typeof window.initComponent.select2Trigger == 'function' ){
+            if (typeof window.initComponent.select2Trigger == 'function') {
                 window.initComponent.select2Trigger();
             }
 
-            if( typeof(window.initComponent.datepickerTrigger) == 'function'){
+            if (typeof (window.initComponent.datepickerTrigger) == 'function') {
                 window.initComponent.datepickerTrigger();
             }
         },
@@ -117,16 +117,16 @@ app || (app = {});
 
             var _this = this;
             this.promotionsSearchTable = this.$promotionsSearchTable.DataTable({
-                dom:"<'row'<'col-sm-5'i><'col-sm-7'p>>" +
+                dom: "<'row'<'col-sm-5'i><'col-sm-7'p>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 processing: true,
                 serverSide: true,
                 language: window.Misc.dataTableES(),
                 ajax: {
-                    url: window.Misc.urlFull( Route.route('marketplace.promociones.index') ),
-                    data: function( data ) {
-                        data.codigo_estado  = _this.$searchState.val();
+                    url: window.Misc.urlFull(Route.route('marketplace.promociones.index')),
+                    data: function (data) {
+                        data.codigo_estado = _this.$searchState.val();
                         data.correo_electronico = _this.$searchOwner.val();
                     }
                 },
@@ -138,42 +138,43 @@ app || (app = {});
 
                 ],
                 order: [
-                    [ 0, 'desc' ]
+                    [0, 'desc']
                 ],
                 columnDefs: [
                     {
                         targets: 0,
-                        render: function ( data, type, full, row ) {
-                            if(full.tipo_promocion == window._tp.getTypePromo['promotion']){
+                        render: function (data, type, full, row) {
+                            var tipo = '';
+                            if (full.tipo_promocion == window._tp.getTypePromo['promotion']) {
                                 tipo = 'promoción';
                             }
 
-                            if(full.tipo_promocion == window._tp.getTypePromo['advertisement']){
+                            if (full.tipo_promocion == window._tp.getTypePromo['advertisement']) {
                                 tipo = 'anuncio';
                             }
 
-                            return '<a href="' + window.Misc.urlFull( Route.route('marketplace.promociones.show', {promocione: full.codigo_promocion})) + '" title="Ver '+tipo+' ">'+full.codigo_promocion+'</a>';
+                            return '<a href="' + window.Misc.urlFull(Route.route('marketplace.promociones.show', { promocione: full.codigo_promocion })) + '" title="Ver ' + tipo + ' ">' + full.codigo_promocion + '</a>';
                         }
                     },
                     {
                         targets: 4,
                         orderable: false,
                         className: 'text-center',
-                        render: function ( data, type, full, row ) {
+                        render: function (data, type, full, row) {
                             console.log('Full data', full);
-                            if(full.tipo_promocion == window._tp.getTypePromo['promotion']){
+                            if (full.tipo_promocion == window._tp.getTypePromo['promotion']) {
                                 full.tipo = 'la promoción';
                             }
 
-                            if(full.tipo_promocion == window._tp.getTypePromo['advertisement']){
+                            if (full.tipo_promocion == window._tp.getTypePromo['advertisement']) {
                                 full.tipo = 'el anuncio';
                             }
 
-                            if(full.codigo_estado != window._tp.getState['pending']) {
+                            if (full.codigo_estado != window._tp.getState['pending']) {
                                 if (full.codigo_estado == window._tp.getState['active']) {
-                                    return '<a href="#" title="Desactivar" class="btn btn-default btn-xs confirm-turn" data-turn="false" data-id="'+ full.codigo_promocion +'" data-name="' + full.tipo + '" data-action="desactivar"> <i class="fa fa-toggle-on"></i></a>';
+                                    return '<a href="#" title="Desactivar" class="btn btn-default btn-xs confirm-turn" data-turn="false" data-id="' + full.codigo_promocion + '" data-name="' + full.tipo + '" data-action="desactivar"> <i class="fa fa-toggle-on"></i></a>';
                                 } else {
-                                    return '<a href="#" title="Activar" class="btn btn-default btn-xs confirm-turn" data-turn="true" data-id="'+ full.codigo_promocion +'" data-name="'+ full.tipo +'" data-action="activar"> <i class="fa fa-toggle-off"></i></a>';
+                                    return '<a href="#" title="Activar" class="btn btn-default btn-xs confirm-turn" data-turn="true" data-id="' + full.codigo_promocion + '" data-name="' + full.tipo + '" data-action="activar"> <i class="fa fa-toggle-off"></i></a>';
                                 }
                             } else {
                                 return full.tipo + ' no ha sido aprobada';
@@ -184,26 +185,26 @@ app || (app = {});
                         targets: 5,
                         orderable: false,
                         className: 'text-center',
-                        render: function ( data, type, full, row ) {
-                            if(full.tipo_promocion == window._tp.getTypePromo['promotion']){
+                        render: function (data, type, full, row) {
+                            if (full.tipo_promocion == window._tp.getTypePromo['promotion']) {
                                 full.tipo = 'la promoción';
                             }
 
-                            if(full.tipo_promocion == window._tp.getTypePromo['advertisement']){
+                            if (full.tipo_promocion == window._tp.getTypePromo['advertisement']) {
                                 full.tipo = 'el anuncio';
                             }
 
-                            return _this.templateButtonsAction( {full: full} )
+                            return _this.templateButtonsAction({ full: full })
                         }
                     }
                 ],
-                fnRowCallback: function( row, data ) {
+                fnRowCallback: function (row, data) {
                     //
                 }
             });
         },
 
-        onChangeState: function(e) {
+        onChangeState: function (e) {
             e.preventDefault();
 
             var _this = this,
@@ -217,7 +218,7 @@ app || (app = {});
                     codigo_promocion: target.data('id')
                 };
 
-            if( this.acceptConfirm instanceof Backbone.View ) {
+            if (this.acceptConfirm instanceof Backbone.View) {
                 this.acceptConfirm.stopListening();
                 this.acceptConfirm.undelegateEvents();
             }
@@ -225,14 +226,15 @@ app || (app = {});
             this.acceptConfirm = new app.ConfirmWindow({
                 model: this.promotionModel,
                 parameters: {
-                    template: this.templateConfirm( {
+                    template: this.templateConfirm({
                         codigo_promocion: target.data('id'),
                         action: target.data('turn') ? 'Activar' : 'Desactivar',
                         tipo: name
-                    } ),
+                    }),
                     titleConfirm: "Confirmación",
                     onConfirm: function () {
-                        _this.promotionModel.save( data, {patch: true, wait:true,
+                        _this.promotionModel.save(data, {
+                            patch: true, wait: true,
                             success: function (model, resp) {
                                 // complete proccess
                                 window.Misc.removeSpinner({
@@ -246,12 +248,12 @@ app || (app = {});
                                         (resp.message !== undefined ? resp.message : '...')
                                         : resp.errors;
 
-                                if( _.isObject( resp.errors ) ){
+                                if (_.isObject(resp.errors)) {
 
                                     var listError = '<ul>';
 
-                                    $.each(resp.errors, function(field, item) {
-                                         listError += '<li>'+ item[0] +'</li>';
+                                    $.each(resp.errors, function (field, item) {
+                                        listError += '<li>' + item[0] + '</li>';
                                     });
                                     listError += '</ul>';
 
@@ -267,12 +269,12 @@ app || (app = {});
                                 console.log('Response', resp);
 
                                 //complete proccess
-                                if( resp.success !== undefined ){
-                                    if( resp.success ){
-                                        window.Misc.showAlertBox( _.extend({title:'Estado...'}, _this.configAlert) );
-                                        _this.promotionsSearchTable.ajax.reload( null, false );
-                                    }else{
-                                        window.Misc.showAlertBox( _.extend({title:'Error!'}, _this.configAlert) );
+                                if (resp.success !== undefined) {
+                                    if (resp.success) {
+                                        window.Misc.showAlertBox(_.extend({ title: 'Estado...' }, _this.configAlert));
+                                        _this.promotionsSearchTable.ajax.reload(null, false);
+                                    } else {
+                                        window.Misc.showAlertBox(_.extend({ title: 'Error!' }, _this.configAlert));
                                     }
                                 }
                             }
@@ -288,13 +290,13 @@ app || (app = {});
         * Load spinner on the request
         */
         loadSpinner: function () {
-             window.Misc.setSpinner( this.$el );
+            window.Misc.setSpinner(this.$el);
         },
 
         /**
         * response of the server
         */
-        responseServer: function ( model, resp, opts ) {
+        responseServer: function (model, resp, opts) {
 
             window.Misc.removeSpinner({
                 'wrap': this.$el,
@@ -302,12 +304,12 @@ app || (app = {});
             });
         },
 
-        search: function(e) {
+        search: function (e) {
             e.preventDefault();
             this.promotionsSearchTable.ajax.reload();
         },
 
-        clear: function(e) {
+        clear: function (e) {
             e.preventDefault();
 
             this.$searchState.val('');
@@ -332,7 +334,7 @@ app || (app = {});
                     codigo_promocion: target.data('id')
                 };
 
-            if( this.acceptConfirm instanceof Backbone.View ) {
+            if (this.acceptConfirm instanceof Backbone.View) {
                 this.acceptConfirm.stopListening();
                 this.acceptConfirm.undelegateEvents();
             }
@@ -340,14 +342,15 @@ app || (app = {});
             this.acceptConfirm = new app.ConfirmWindow({
                 model: this.promotionModel,
                 parameters: {
-                    template: this.templateConfirm( {
+                    template: this.templateConfirm({
                         codigo_promocion: target.data('id'),
                         action: action,
                         tipo: name
-                    } ),
+                    }),
                     titleConfirm: "Confirmación",
                     onConfirm: function () {
-                        _this.promotionModel.save( data, {patch: true, wait:true,
+                        _this.promotionModel.save(data, {
+                            patch: true, wait: true,
                             success: function (model, resp) {
                                 // complete proccess
                                 window.Misc.removeSpinner({
@@ -361,12 +364,12 @@ app || (app = {});
                                         (resp.message !== undefined ? resp.message : '...')
                                         : resp.errors;
 
-                                if( _.isObject( resp.errors ) ){
+                                if (_.isObject(resp.errors)) {
 
                                     var listError = '<ul>';
 
-                                    $.each(resp.errors, function(field, item) {
-                                         listError += '<li>'+ item[0] +'</li>';
+                                    $.each(resp.errors, function (field, item) {
+                                        listError += '<li>' + item[0] + '</li>';
                                     });
                                     listError += '</ul>';
 
@@ -380,12 +383,12 @@ app || (app = {});
                                 _.extend(_this.configAlert, config);
 
                                 //complete proccess
-                                if( resp.success !== undefined ){
-                                    if( resp.success ){
-                                        window.Misc.showAlertBox( _.extend({title:'Estado...'}, _this.configAlert) );
-                                        _this.promotionsSearchTable.ajax.reload( null, false );
-                                    }else{
-                                        window.Misc.showAlertBox( _.extend({title:'Error!'}, _this.configAlert) );
+                                if (resp.success !== undefined) {
+                                    if (resp.success) {
+                                        window.Misc.showAlertBox(_.extend({ title: 'Estado...' }, _this.configAlert));
+                                        _this.promotionsSearchTable.ajax.reload(null, false);
+                                    } else {
+                                        window.Misc.showAlertBox(_.extend({ title: 'Error!' }, _this.configAlert));
                                     }
                                 }
                             }
@@ -424,6 +427,6 @@ app || (app = {});
 
             this.actionModal.render();
         }
-   });
+    });
 
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

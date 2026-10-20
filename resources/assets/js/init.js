@@ -798,4 +798,4 @@ var app = app || {};
         window.initComponent.initialize();
     });
 
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

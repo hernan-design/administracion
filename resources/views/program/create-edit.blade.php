@@ -62,7 +62,7 @@
 											<select name="codigo_orientacion_convocatoria" id="codigo_orientacion_convocatoria" class="form-control" required>
 												<option value="">Seleccione...</option>
 												@foreach ($programOrentation as $value)
-													<option value="{{ $value->codigo_orientacion_convocatoria }}" {{ isset($program) ? $value->codigo_orientacion_convocatoria == $program->codigo_orientacion_convocatoria ? 'selected' : '' : '' }}>{{ $value->nombre_orientacion_convocatoria }}</option>
+													<option value="{{ $value->codigo_orientacion_convocatoria }}" {{ isset($program) ? ($value->codigo_orientacion_convocatoria == $program->codigo_orientacion_convocatoria ? 'selected' : '') : '' }}>{{ $value->nombre_orientacion_convocatoria }}</option>
 												@endforeach
 											</select>
 										</div>
@@ -71,7 +71,7 @@
                       <select name="codigo_privacidad_contenido" id="codigo_privacidad_contenido" class="form-control">
                         <option value="">Seleccione...</option>
                         @foreach ($privacyContent as $value)
-                          <option value="{{ $value->id }}" {{ isset($program) ?  $program->codigo_privacidad_contenido == $value->id ? 'selected' :  '' : $value->id == App\Models\Core\PrivacidadContenido::getPrivacy('public') ? 'selected' : '' }}>{{ $value->text }}</option>
+                          <option value="{{ $value->id }}" {{ isset($program) ? ($program->codigo_privacidad_contenido == $value->id ? 'selected' : '') : ($value->id == App\Models\Core\PrivacidadContenido::getPrivacy('public') ? 'selected' : '') }}>{{ $value->text }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -83,7 +83,7 @@
 										</div>
 										<div class="col-md-2 col-sm-4 col-xs-12">
 											<label>Tiempo espera </label>
-											<input type="number" class="form-control text-center spinner-quantity" name="tiempo_espera_nueva_aplicacion" id="tiempo_espera_nueva_aplicacion" value="{{ isset($program) ? $program->tiempo_espera_nueva_aplicacion ? $program->tiempo_espera_nueva_aplicacion : 0 : 0 }}" min="0">
+											<input type="number" class="form-control text-center spinner-quantity" name="tiempo_espera_nueva_aplicacion" id="tiempo_espera_nueva_aplicacion" value="{{ isset($program) ? ($program->tiempo_espera_nueva_aplicacion ? $program->tiempo_espera_nueva_aplicacion : 0) : 0 }}" min="0">
 										</div>
 										<div class="col-md-2 col-sm-4 col-xs-12">
 											<label>Fecha cierre</label>
@@ -98,7 +98,7 @@
 											<select name="tipo_convocatoria" id="tipo_convocatoria" class="form-control" required>
 												<option value="">Seleccione...</option>
 												@foreach ($types as $key => $type)
-													<option value="{{ $key }}" {{ isset($program) ? $program->tipo_convocatoria == $key ? 'selected' : '' : '' }}>{{ $type }}</option>
+													<option value="{{ $key }}" {{ isset($program) ? ($program->tipo_convocatoria == $key ? 'selected' : '') : '' }}>{{ $type }}</option>
 												@endforeach
 											</select>
 										</div>
@@ -133,7 +133,7 @@
 											<br>
 											<div class="checkbox-inline">
 												<label class="checkbox-inline">
-													<input type="checkbox" name="permanente_convocatoria" {{ isset($program) ? $program->permanente_convocatoria ? 'checked' : '' : '' }} class="flat"> <strong>Permanente</strong>
+													<input type="checkbox" name="permanente_convocatoria" {{ isset($program) ? ($program->permanente_convocatoria ? 'checked' : '') : '' }} class="flat"> <strong>Permanente</strong>
 												</label>
 											</div>
 										</div>
@@ -141,7 +141,7 @@
 											<br>
 											<div class="checkbox-inline">
 												<label class="checkbox-inline">
-													<input type="checkbox" name="evaluacion_convocatoria" class="flat" {{ isset($program) ? $program->evaluacion_convocatoria ? 'checked' : '' : '' }}> <strong>Evaluación</strong>
+													<input type="checkbox" name="evaluacion_convocatoria" class="flat" {{ isset($program) ? ($program->evaluacion_convocatoria ? 'checked' : '') : '' }}> <strong>Evaluación</strong>
 												</label>
 											</div>
 										</div>
@@ -150,7 +150,7 @@
 												<br>
 												<div class="checkbox-inline">
 													<label class="checkbox-inline">
-														<input type="checkbox" name="visualizacion_usuario" class="flat" {{ isset($program) ? $program->visualizacion_usuario ? 'checked' : '' : 'checked' }}> <strong>Visualización usuario</strong>
+														<input type="checkbox" name="visualizacion_usuario" class="flat" {{ isset($program) ? ($program->visualizacion_usuario ? 'checked' : '') : 'checked' }}> <strong>Visualización usuario</strong>
 													</label>
 												</div>
 											</div>
@@ -160,7 +160,7 @@
 											<br>
                     <div class="checkbox-inline">
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="ocultar_al_finalizar" class="flat" {{ isset($program) ? $program->ocultar_al_finalizar ? 'checked' : '' : '' }}> <strong>Ocultar al cerrar convocatoria</strong>
+                        <input type="checkbox" name="ocultar_al_finalizar" class="flat" {{ isset($program) ? ($program->ocultar_al_finalizar ? 'checked' : '') : '' }}> <strong>Ocultar al cerrar convocatoria</strong>
                       </label>
                     </div>
                     </div>
@@ -802,7 +802,7 @@
                         <option value=""> Seleccione... </option>
                         @if (isset($resourcesPhases))
                           @foreach ($resourcesPhases as $resource)
-                            <option value="{{ $resource->codigo_tipo_recurso_fase  }}" <%- typeof tipo_recurso_phase !== 'undefined' ? tipo_recurso_phase === {{  $resource->codigo_tipo_recurso_fase }} ? 'selected' : '' : '' %> > {{ $resource->nombre_tipo_recurso_fase  }} </option>
+                            <option value="{{ $resource->codigo_tipo_recurso_fase  }}" <%- typeof tipo_recurso_phase !== 'undefined' ? (tipo_recurso_phase === {{  $resource->codigo_tipo_recurso_fase }} ? 'selected' : '') : '' %> > {{ $resource->nombre_tipo_recurso_fase  }} </option>
                           @endforeach
                         @endif
                       </select>
@@ -817,7 +817,7 @@
                   <div class="row">
                     <div class="col-md-12 col-xs-12">
                       <label>Descripcion de recurso</label>
-                      <textarea name="descripcion_adjunto_fase" id="descripcion_adjunto_fase" class="form-control" value="<%- typeof descripcion_adjunto_fase !== undefined ? descripcion_adjunto_fase ? descripcion_adjunto_fase : '' : '' %>"><%- typeof descripcion_adjunto_fase !== undefined ? descripcion_adjunto_fase ? descripcion_adjunto_fase : '' : '' %></textarea>
+                      <textarea name="descripcion_adjunto_fase" id="descripcion_adjunto_fase" class="form-control" value="<%- typeof descripcion_adjunto_fase !== 'undefined' ? (descripcion_adjunto_fase ? descripcion_adjunto_fase : '') : '' %>"><%- typeof descripcion_adjunto_fase !== 'undefined' ? (descripcion_adjunto_fase ? descripcion_adjunto_fase : '') : '' %></textarea>
                     </div>
                   </div>
                   <div class="row">

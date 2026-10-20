@@ -202,4 +202,4 @@ app || (app = {});
             console.log('Response');
         }
     });
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

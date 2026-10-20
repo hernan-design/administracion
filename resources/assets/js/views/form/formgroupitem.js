@@ -81,4 +81,4 @@ app || (app = {});
             this.$(":input").inputmask();
         },
     });
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

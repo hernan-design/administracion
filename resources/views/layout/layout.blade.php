@@ -48,11 +48,8 @@
 		<script>window.document.url = "{{ URL::to('/') }}";</script>
 		<script>window.document.platform = "{{ URL::to(session('institution')->url_institucion) }}";</script>
 		{{-- Libraries so: foundation, underscore, backbone, etc --}}
-		<script src="{{ elixir('js/vendor.js') }}"></script>
-		{{-- Components --}}
-		<script src="{{ elixir('js/component.js') }}"></script>
-		{{-- App --}}
-		<script src="{{ elixir('js/app.js') }}"></script>
+		<script src="{{ asset('js/vendor-legacy.js') }}?v={{ filemtime(public_path('js/vendor-legacy.js')) }}"></script>
+		@vite(['resources/assets/js/pre-app.js', 'resources/assets/js/app.js', 'resources/assets/js/components/main.jsx'])
 		{{-- Realtime --}}
 		 @if (Auth::check() && $app->environment('production'))
 			{{-- <script src="{{ elixir('js/realtime.js') }}"></script>  --}}

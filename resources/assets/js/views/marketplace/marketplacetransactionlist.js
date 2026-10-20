@@ -161,36 +161,43 @@ app || (app = {});
                         targets: [2],
                         className: 'text-capitalize',
                         render: function (data, type, full, row) {
-                            return data.toLowerCase() + ' <br> ' + full.buyer_entity_name;
+                            var safeData = data ? data.toLowerCase() : '';
+                            var buyerName = full.buyer_entity_name ? full.buyer_entity_name : '';
+                            return safeData + ' <br> ' + buyerName;
                         }
                     },
                     {
                         targets: [3],
                         className: 'text-capitalize',
                         render: function ( data, type, full, row ) {
-                            return data.toLowerCase() + ' <br>' + full.entity_name.toLowerCase();
+                            var safeData = data ? data.toLowerCase() : '';
+                            var entityName = full.entity_name ? full.entity_name.toLowerCase() : '';
+                            return safeData + ' <br>' + entityName;
                         }
                     },
                     {
                         targets: [4],
                         render: function ( data, type, full, row ) {
-                            return data + ' <br>' + full.nombre_categoria_producto;
+                            var safeData = data ? data : '';
+                            var categoryName = full.nombre_categoria_producto ? full.nombre_categoria_producto : '';
+                            return safeData + ' <br>' + categoryName;
                         }
                     },
                     {
                         targets: [5],
                         className: 'text-capitalize',
                         render: function (data, type, full, row) {
-                            return data.toLowerCase();
+                            return data ? data.toLowerCase() : '';
                         }
                     },
                     {
                         targets: [6],
                         className: 'text-capitalize',
                         render: function (data, type, full, row) {
-                            if(!_.isNull(data)){
+                            if(!_.isNull(data) && data){
                                 return data.toLowerCase();
                             }
+                            return '';
                         }
                     },
                     {
@@ -287,4 +294,4 @@ app || (app = {});
         }
    });
 
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

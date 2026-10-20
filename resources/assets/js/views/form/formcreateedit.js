@@ -721,4 +721,4 @@ app || (app = {});
             this.modalFormGroup.render();
         },
     });
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

@@ -68,6 +68,7 @@ gulp.task('styles', function() {
 		paths.gentelella + 'vendors/iCheck/skins/flat/green.css',
 		paths.gentelella + 'vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
 		paths.gentelella + 'build/css/custom.css',
+		paths.libs + 'fine-uploader/dist/fine-uploader-new.css',
 		paths.libs + 'jcrop/css/jquery.Jcrop.css',
 		paths.libs + 'image-uploader-crop/src/image-uploader-crop.css',
 		paths.libs + 'flexboxgrid/dist/flexboxgrid.css',
@@ -101,6 +102,7 @@ gulp.task('vendor-scripts', function() {
 		paths.modules + 'datatables.net/js/jquery.dataTables.min.js',
 		paths.modules + 'datatables.net-select/js/dataTables.select.min.js',
 		paths.gentelella + 'vendors/datatables.net-bs/js/dataTables.bootstrap.min.js',
+		paths.gentelella + 'vendors/datatables.net-buttons/js/dataTables.buttons.min.js',
 		paths.gentelella + 'vendors/datatables.net-buttons/js/buttons.bootstrap.min.js',
 		paths.gentelella + 'vendors/datatables.net-buttons/js/buttons.flash.min.js',
 		paths.gentelella + 'vendors/datatables.net-buttons/js/buttons.html5.min.js',
@@ -136,6 +138,8 @@ gulp.task('vendor-scripts', function() {
 		paths.gentelella + 'vendors/dropzone/dist/dropzone.js',
 		paths.gentelella + 'vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',
 		paths.gentelella + 'build/js/custom.min.js',
+		paths.libs + 'fine-uploader/dist/all.fine-uploader.js',
+		paths.libs + 'fine-uploader/dist/jquery.fine-uploader.js',
 		paths.libs + 'wnumb/wNumb.js',
 		paths.libs + 'jcrop/js/jquery.Jcrop.js',
 		paths.libs + 'image-uploader-crop/src/image-uploader-crop.js',
@@ -233,8 +237,11 @@ gulp.task('version', function() {
 		'public/js/vendor.js',
 		'public/js/component.js',
 		'public/js/realtime.js'
-	], { base: 'public' })
-	.pipe(gulp.dest('public/'));
+	], { allowEmpty: true, base: 'public' })
+	.pipe(rev())
+	.pipe(gulp.dest('public/build'))
+	.pipe(rev.manifest())
+	.pipe(gulp.dest('public/build'));
 });
 
 gulp.task('copy', function() {

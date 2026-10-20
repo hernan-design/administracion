@@ -9,7 +9,7 @@
     } else if (typeof module === 'object' && module.exports) {
         // Node/CommonJS
         if(window) {
-            module.exports = exports.default = factory(window.jQuery || require('jquery'), window, window.document);
+            window.Misc = module.exports = exports.default = factory(window.jQuery || require('jquery'), window, window.document);
         }else {
             module.exports = exports.default = factory(require('jquery'), global, global.document);
         }

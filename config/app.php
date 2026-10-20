@@ -169,14 +169,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\PdfServiceProvider::class,
-        Jenssegers\Mongodb\MongodbServiceProvider::class,
+        MongoDB\Laravel\MongoDBServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
-        Lord\Laroute\LarouteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Greatsami\Entrust\EntrustServiceProvider::class,
+        Laratrust\LaratrustServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
+        Intervention\Image\Laravel\ServiceProvider::class,
         Spatie\GoogleCalendar\GoogleCalendarServiceProvider::class
     ],
 
@@ -229,10 +228,10 @@ return [
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
         'Form'      => Collective\Html\FormFacade::class,
         'HTML'      => Collective\Html\HtmlFacade::class,
-        'Entrust'   => Greatsami\Entrust\EntrustFacade::class,
+        'Laratrust' => Laratrust\LaratrustFacade::class,
         'Datatables'=> Yajra\Datatables\Datatables::class,
         'AWS'       => Aws\Laravel\AwsFacade::class,
-        'Image'     => Intervention\Image\Facades\Image::class,
+        'Image'     => Intervention\Image\Laravel\Facades\Image::class,
         'GoogleCalendar' => Spatie\GoogleCalendar\GoogleCalendarFacade::class
     ],
 ];

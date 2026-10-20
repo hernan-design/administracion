@@ -10,7 +10,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-use Greatsami\Entrust\Traits\EntrustUserTrait;
+use Laratrust\Traits\HasRolesAndPermissions;
 
 use DB, Cache, Config, Validator, Auth;
 use App\Models\Param\TerminosCondiciones, App\Models\Param\Documento, App\Models\Core\Estado,
@@ -18,7 +18,7 @@ use App\Models\Param\TerminosCondiciones, App\Models\Param\Documento, App\Models
 
 class Usuario extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-	use Authenticatable, CanResetPassword, EntrustUserTrait;
+	use Authenticatable, CanResetPassword, HasRolesAndPermissions;
 
 	/**
 	 * The database table used by the model.
@@ -752,7 +752,7 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
 	 */
 	public function roles()
 	{
-		return $this->belongsToMany(config('entrust.role'), config('entrust.role_user_table'), 'user_id', 'role_id')
+		return $this->belongsToMany(config('laratrust.models.role'), config('laratrust.tables.role_user'), 'user_id', 'role_id')
 			->where('codigo_institucion', '=', session('institution')->codigo_institucion);
 	}
 
@@ -788,6 +788,9 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
 		}
 
 		// Set up default values and validate options.
+		if (!is_array($options)) {
+			$options = [];
+		}
 		if (!isset($options['validate_all'])) {
 			$options['validate_all'] = false;
 		} else {

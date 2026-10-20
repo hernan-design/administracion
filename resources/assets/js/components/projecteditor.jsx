@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
+import { Component } from 'react';
+const $ = window.$;
 window.jQuery = $;
 window.$ = $;
 
-import ReactSummernote from 'react-summernote';
-require("summernote/dist/summernote.js");
-require("summernote-cleaner/summernote-cleaner.js");
-require("react-summernote/lang/summernote-es-ES.js");
-import Misc, { formToJson, getCsrf, setSpinner, removeSpinner } from '../helpers/misc.js';
-import laroute from '../helpers/routes.js';
 import Backbone from 'backbone';
+// import ReactSummernote from 'react-summernote';
+import '../helpers/misc.js';
+const Misc = window.Misc;
+const { formToJson, getCsrf, removeSpinner, setSpinner } = Misc;
+const laroute = window.Route;
+// import "summernote/dist/summernote.js";
+// import "summernote-cleaner/summernote-cleaner.js";
+// import "react-summernote/lang/summernote-es-ES.js";
 
 class ProjectEditor extends Component {
 
@@ -20,7 +22,7 @@ class ProjectEditor extends Component {
         // initialize attributes
         let data = props.formCreate ? formToJson(props.formCreate) : {};
         this.defaultValue = props.content.get(props.nameField) || data[props.nameField] || '';
-        props.content.set(props.nameField, this.defaultValue, { silent:true });
+        props.content.set(props.nameField, this.defaultValue, { silent: true });
 
         // set default states
         this.state = {
@@ -37,7 +39,7 @@ class ProjectEditor extends Component {
         const $nodeEditor = $(this.nodeEditor);
 
         $nodeEditor.find('[data-toggle="tooltip"]').tooltip();
-        $nodeEditor.find('[data-toggle="dropdown"]').each(function(index, el) {
+        $nodeEditor.find('[data-toggle="dropdown"]').each(function (index, el) {
             const $el = $(el);
 
             $el.dropdown();
@@ -76,14 +78,14 @@ class ProjectEditor extends Component {
     */
     handleChange(content) {
         // validate if the editor content is really empty
-        if(this.editor.isEmpty()) {
+        if (this.editor.isEmpty()) {
             this.editor.replace('');
             this.writeValue(this.props.content, '');
-        }else {
+        } else {
             this.writeValue(this.props.content, content);
         }
 
-        if(this.props.onChange) this.props.onChange(content);
+        if (this.props.onChange) this.props.onChange(content);
     }
 
     /*
@@ -102,7 +104,7 @@ class ProjectEditor extends Component {
         const noteEditor = this.editor.noteEditable;
 
         // load spinner
-        setSpinner( noteEditor );
+        setSpinner(noteEditor);
 
         let data = new FormData();
         data.append('file', dataFile);
@@ -113,7 +115,7 @@ class ProjectEditor extends Component {
             "X-XSRF-TOKEN": getCsrf().getCookie('XSRF-TOKEN'),
         });
 
-        fetch( Misc.urlFull(laroute.route('file.upload')), {
+        fetch(Misc.urlFull(laroute.route('file.upload')), {
             method: "POST",
             credentials: "same-origin",
             headers: customHeaders,
@@ -161,7 +163,7 @@ class ProjectEditor extends Component {
                 theme: 'mdn-like',
                 tabMode: 'indent',
                 tabSize: 2,
-                extraKeys: {"Ctrl-Space": "autocomplete"}
+                extraKeys: { "Ctrl-Space": "autocomplete" }
             },
             cleaner: {
                 action: 'paste', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
@@ -181,22 +183,20 @@ class ProjectEditor extends Component {
 
         const { nameField, placeholder, editorRef, options, textHeight, minHeight, required, requiredField, value, defaultValue, onChange, column, previewHide, content, ...props } = this.props;
 
-        if(textHeight){ defaults['height'] = textHeight; }
-        if(minHeight){ defaults['minHeight'] = minHeight; }
+        if (textHeight) { defaults['height'] = textHeight; }
+        if (minHeight) { defaults['minHeight'] = minHeight; }
 
-        const settings = {...defaults, ...options};
+        const settings = { ...defaults, ...options };
 
         return (
             <div className={`editor-content ${this.props.className}`} ref={node => { this.nodeEditor = node; }}>
                 <div className="row">
-                    <div className={ column ? column : "col-md-6" }>
-                        <ReactSummernote
+                    <div className={column ? column : "col-md-6"}>
+                        <textarea
                             value={this.state.value}
-                            options={settings}
-                            onChange={this.handleChange}
-                            onImageUpload={this.imageUpload}
-                            ref={(el) => { this.refEditor(el); editorRef(el); }}
-                            {...props}
+                            onChange={(e) => this.handleChange(e.target.value)}
+                            className="form-control"
+                            style={{minHeight: '200px'}}
                         />
                         <input
                             type="hidden"
@@ -205,7 +205,7 @@ class ProjectEditor extends Component {
                             required={required || requiredField}
                         />
                     </div>
-                    { previewHide ? '' :
+                    {previewHide ? '' :
                         <div className="col-md-6">
                             <div className="editor-content-preview x_panel" dangerouslySetInnerHTML={{ __html: this.state.value }} />
                         </div>
@@ -233,7 +233,7 @@ ProjectEditor.propTypes = {
 
 ProjectEditor.defaultProps = {
     formCreate: '',
-    nameField:'',
+    nameField: '',
     className: '',
     placeholder: '¡Edita tu contenido aquí!',
     required: false,
@@ -241,7 +241,7 @@ ProjectEditor.defaultProps = {
     options: {},
     content: new Backbone.Model,
     previewHide: false,
-    editorRef: () => {}
+    editorRef: () => { }
 };
 
 export default ProjectEditor;

@@ -199,4 +199,4 @@ app || (app = {});
             collection.forEach(this.onAddSubQuestions, this);
         }
     });
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

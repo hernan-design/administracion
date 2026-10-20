@@ -362,4 +362,4 @@ app || (app = {});
             this.model.save( selectedModules, { wait: true });
         },
     });
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

@@ -104,4 +104,4 @@ app || (app = {});
         }
    });
 
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

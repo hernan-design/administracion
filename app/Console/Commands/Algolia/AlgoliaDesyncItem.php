@@ -35,9 +35,7 @@ use App\Models\Core\Contenido,App\Models\Core\Convocatoria, App\Models\Core\Esta
     public function __construct()
     {
       $this->remote_sync  = config()->has('tuproyecto.algolia_sync') ?  config('tuproyecto.algolia_sync') : true;
-      $client = new \AlgoliaSearch\Client(config('algolia.id'), config('algolia.admin_api_key'));
-      // Algolia index
-      $this->index = $client->initIndex("content");
+      $this->client = \Algolia\AlgoliaSearch\Api\SearchClient::create(config('algolia.id'), config('algolia.admin_api_key'));
       parent::__construct();
     }
     /**
@@ -263,7 +261,7 @@ use App\Models\Core\Contenido,App\Models\Core\Convocatoria, App\Models\Core\Esta
         if($this->option('dev') || $this->option('log')){           
             $res = $this->testSave($object, 'delete index');
         }elseif($this->remote_sync ||  $this->option('force')){           
-           $this->index->deleteObject($objectID);          
+           $this->client->deleteObject("content", $objectID);          
         }
       $this->info('');    
       return ($this->remote_sync ||  $this->option('force') || $this->option('dev') );

@@ -12,6 +12,8 @@ npm-debug.log
 Homestead.yaml
 Homestead.json
 .env
+.env.*
+.env.local
 .idea
 *.sass-cache*
 *.log

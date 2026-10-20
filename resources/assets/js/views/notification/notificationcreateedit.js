@@ -446,4 +446,4 @@ console.log('entra');
         }
    });
 
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

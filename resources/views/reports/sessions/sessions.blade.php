@@ -50,16 +50,5 @@
       </div>
     </div>
   </section>
-  <script>
-    $(document).ready(function() {
-      e.prventDefault();
-      var url = "{{ route('reportes.sesiones.store') }}";
 
-      $.ajax({
-        type:"POST",
-        url: url,
-        data: $("#form-assignment-filter").serialize()
-      });
-    });
- </script>
 @stop

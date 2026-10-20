@@ -13,24 +13,29 @@
 
 
 {{-- App css --}}
-<link href="{{ elixir('css/all.css') }}" rel="stylesheet">
-<link href="{{ elixir('css/app.css') }}" rel="stylesheet">
-<!-- Incluir CSS de Select2 -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-<!-- Incluir jQuery (necesario para Select2) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Incluir JavaScript de Select2 -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+@viteReactRefresh
+@vite(['resources/assets/sass/vendor.scss', 'resources/assets/sass/app.scss'])
+<!-- Incluir jQuery (v2.2.3 compatible con Bootstrap 3) -->
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<!-- Global Variables for Legacy Backbone App -->
+<script>
+    window.app = window.app || {};
+    window.Misc = window.Misc || {};
+    window.Route = window.Route || {};
+</script>
 
 <script>
-    $(document).ready(function() {
-        $('.unidad-select').select2({
-            placeholder: "Seleccione...",
-            width: '100%', // Ajustar el ancho al contenedor padre
-            allowClear: true // Permitir limpiar la selección
-        });
+    document.addEventListener("DOMContentLoaded", function() {
+        // Wait for Vite modules to execute and populate window.$
+        var checkJquery = setInterval(function() {
+            if (window.$ && window.$.fn && window.$.fn.select2) {
+                clearInterval(checkJquery);
+                $('.unidad-select').select2({
+                    placeholder: "Seleccione...",
+                    width: '100%',
+                    allowClear: true
+                });
+            }
+        }, 50);
     });
 </script>

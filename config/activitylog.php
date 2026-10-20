@@ -41,4 +41,9 @@ return [
      * used by the Activity model shipped with this package.
      */
     'table_name' => 'bita.activity_log',
+
+    /*
+     * This is the class that will be used to log activity.
+     */
+    'default_logger' => App\Classes\ActivityLogger::class,
 ];

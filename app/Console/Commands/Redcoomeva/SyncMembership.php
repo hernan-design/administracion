@@ -4,8 +4,6 @@ namespace App\Console\Commands\Redcoomeva;
 
 use Illuminate\Console\Command;
 
-use Artisaninweb\SoapWrapper\SoapWrapper;
-
 use App\Models\Seguridad\Usuario, App\Models\Seguridad\RolUsuario, App\Models\Core\Estado;
 
 use DB, Log;
@@ -27,22 +25,13 @@ class SyncMembership extends Command
     protected $description = 'Validar el estado de asociado de los usuarios';
 
     /**
-     * The soap wrapper instance.
-     *
-     * @var SoapWrapper
-     */
-    protected $soapWrapper;
-      
-    /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(SoapWrapper $soapWrapper)
+    public function __construct()
     {
         parent::__construct();
-
-        $this->soapWrapper = $soapWrapper;
     }
 
     /**
@@ -79,14 +68,13 @@ class SyncMembership extends Command
                     'allow_self_signed' => true
                 ]
             ]);
-            $this->soapWrapper->add('RedCoomeva', function ($service) use($context) {
-                $service->wsdl('https://secure.coomeva.com.co/WsAsociado/services/datosAsociadoVida?wsdl')
-                ->options([ 'stream_context' => $context ]);
-            });
+            $client = new \SoapClient('https://secure.coomeva.com.co/WsAsociado/services/datosAsociadoVida?wsdl', [
+                'stream_context' => $context
+            ]);
 
             foreach ($users as $user) {
                 // Without classmap
-                $soapResponse = $this->soapWrapper->call('RedCoomeva.consultarAsociadoVida', [
+                $soapResponse = $client->consultarAsociadoVida([
                     'identificacion' => $user->identificacion_usuario,
                     'tipDocumento' => $user->tipo_identificacion_usuario
                 ]);

@@ -16,4 +16,4 @@ app || (app = {});
         model: app.FormVersionModel
    });
 
-})(this, this.document);
+})(window, document);

@@ -2,9 +2,9 @@
 
 namespace App\Models\Seguridad;
 
-use Greatsami\Entrust\EntrustPermission;
+use Laratrust\Models\Permission as LaratrustPermission;
 
-class Permiso extends EntrustPermission
+class Permiso extends LaratrustPermission
 {
 
 	public static function getPermission($permission) {

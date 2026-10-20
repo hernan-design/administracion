@@ -1,84 +1,83 @@
 {
-	"name": "laravel/laravel",
-	"description": "The Laravel Framework.",
-	"keywords": ["framework", "laravel"],
-	"license": "MIT",
-	"type": "project",
-	"require": {
-		"php": "^7.3|^8.0",
-		"algolia/algoliasearch-client-php": "1.7.*",
-		"arielcr/numero-a-letras": "dev-master",
-		"artisaninweb/laravel-soap": "0.3.*",
-		"aws/aws-sdk-php-laravel": "~3.0",
-		"barryvdh/laravel-dompdf": "^2.0.1",
-		"facade/ignition": "^2.3.6",
-		"greatsami/entrust": "*",
-		"guzzlehttp/guzzle": "^7.0.1",
-		"intervention/image": "^2.3",
-		"jpgraph/jpgraph": "^4.0",
-		"laravel/cashier": "*",
-		"laravel/framework": "^8.75",
-		"laravel/helpers": "^1.6",
-		"laravel/socialite": "*",
-		"laravel/tinker": "^2.0",
-		"laravel/ui": "^3.0",
-		"laravelcollective/html": "^6.4",
-		"leafo/scssphp": "0.0.12",
-		"league/flysystem-aws-s3-v3": "^1.0",
-		"lord/laroute": "2.*",
-		"maatwebsite/excel": "^3.1",
-		"mongodb/laravel-mongodb": "^3.7",
-		"phpoffice/phpexcel": "^1.8",
-		"predis/predis": "^1.0",
-		"pulkitjalan/google-apiclient": "*",
-		"pusher/pusher-php-server": "^4.1",
-		"spatie/laravel-activitylog": "^3.16",
-		"spatie/laravel-google-calendar": "*",
-		"tymon/jwt-auth": "^1.0",
-		"yajra/laravel-datatables-oracle": "~9.0"
-	},
-	"require-dev": {
-		"filp/whoops": "~2.0",
-		"fzaninotto/faker": "~1.4",
-		"mockery/mockery": "~1.0",
-		"phpunit/phpunit": "^9.0",
-		"symfony/thanks": "1.2.10"
-	},
-	"autoload": {
-		"classmap": [
-			"database",
-			"app/Models",
-			"app/Classes",
-			"app/Custom"
-		],
-		"psr-4": {
-			"App\\": "app/"
-		}
-	},
-	"autoload-dev": {
-		"classmap": [
-			"tests/TestCase.php"
-		]
-	},
-	"scripts": {
+    "name": "laravel/laravel",
+    "description": "The Laravel Framework.",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": "^8.4",
+        "algolia/algoliasearch-client-php": "^4.0",
+        "arielcr/numero-a-letras": "dev-master",
+        "aws/aws-sdk-php-laravel": "*",
+        "barryvdh/laravel-dompdf": "*",
+        "google/apiclient": "*",
+        "guzzlehttp/guzzle": "^7.8|^8.2.0",
+        "intervention/image": "*",
+        "intervention/image-laravel": "*",
+        "jpgraph/jpgraph": "*",
+        "laravel/cashier": "*",
+        "laravel/framework": "^13.0",
+        "laravel/helpers": "*",
+        "laravel/socialite": "*",
+        "laravel/tinker": "*",
+        "laravel/ui": "*",
+        "league/flysystem-aws-s3-v3": "*",
+        "maatwebsite/excel": "*",
+        "mongodb/laravel-mongodb": "*",
+        "phpoffice/phpspreadsheet": "*",
+        "predis/predis": "*",
+        "pusher/pusher-php-server": "*",
+        "scssphp/scssphp": "*",
+        "spatie/laravel-activitylog": "*",
+        "spatie/laravel-google-calendar": "*",
+        "prabowosd/laravel-collective-html": "*",
+        "santigarcor/laratrust": "*",
+        "tymon/jwt-auth": "*",
+        "yajra/laravel-datatables-oracle": "*"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.24.1",
+        "mockery/mockery": "^1.6.15",
+        "phpunit/phpunit": "^13.3.6",
+        "spatie/laravel-ignition": "^2.12.0"
+    },
+    "autoload": {
+        "classmap": [
+            "database",
+            "app/Models",
+            "app/Classes",
+            "app/Custom"
+        ],
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php"
+        ]
+    },
+    "scripts": {
         "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover"
+            "@php artisan package:discover --ansi"
         ]
     },
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true,
-		"allow-plugins": {
-			"kylekatarnls/update-helper": true,
-			"symfony/thanks": true
-		}
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true,
+            "symfony/thanks": true
+        }
     }
 }

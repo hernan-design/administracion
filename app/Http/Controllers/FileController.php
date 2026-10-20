@@ -120,7 +120,7 @@ class FileController extends Controller
 								throw new \Exception('file crop is undefined');
 							}
 							// open file a image resource
-							$img = Image::make($input_file_path);
+							$img = Image::read($input_file_path);
 							break;
 
 						case 'url':
@@ -129,7 +129,7 @@ class FileController extends Controller
 							copy($request->file_name, $input_file_path);
 
 							// open file a image resource
-							$img = Image::make($input_file_path);
+							$img = Image::read($input_file_path);
 							break;
 
 						default:

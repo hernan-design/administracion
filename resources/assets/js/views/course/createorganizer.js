@@ -152,4 +152,4 @@ app || (app = {});
 
     new app.CourseCreateOrganizer()
 
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

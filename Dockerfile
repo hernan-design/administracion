@@ -1,4 +1,4 @@
-FROM php:8.0-apache
+FROM php:8.4-apache
 
 # 1. Instalar dependencias del sistema y herramientas de compilación
 RUN apt-get update && apt-get install -y \
@@ -21,12 +21,20 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
         soap \
         bcmath \
         exif \
+        calendar \
         pdo_pgsql \
         pgsql
 
 # 3. Instalar extensión de MongoDB para PHP mediante PECL
 RUN pecl install mongodb \
     && docker-php-ext-enable mongodb
+
+# 3.5. Instalar Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# 3.6. Instalar Node.js y NPM
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
 # 4. Habilitar mod_rewrite de Apache para soportar el enrutamiento de Laravel
 RUN a2enmod rewrite

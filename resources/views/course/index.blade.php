@@ -64,18 +64,6 @@
 				<br/>
 
 				<!-- start courses -->
-				<ul class="inline-list-grid">
-					<li>
-						<div class="wrap-result-count">
-							{{-- Render browse result count template --}}
-						</div>
-					</li>
-					<li>
-						<div class="wrap-pagination">
-							{{-- Render Pagination--}}
-						</div>
-					</li>
-				</ul>
 				<div id="article-list">
 					@include('public.noresults', ['message' => 'No hay resultados.'])
 					<ul id="tp_list-content-article" class="list-unstyled msg_list browse-list-course">

@@ -210,4 +210,4 @@ app || (app = {});
         },
 	});
     new app.ListOrganizer()
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

@@ -50,8 +50,8 @@
 									<div class="col-md-4 col-sm-4 col-xs-12">
 										<label>Landing <span class="required">*</span></label>
 										<select type="text" name="landing_contenido" id="landing_contenido" class="form-control" required>
-											<option value="1" {{ (isset($content)) ? ($content->landing_contenido == 1) ? 'selected' : '' : '' }} >Si</option>
-											<option value="0" {{ (isset($content)) ? ($content->landing_contenido == 0) ? 'selected' : '' : 'selected' }} >No</option>
+											<option value="1" {{ (isset($content)) ? (($content->landing_contenido == 1) ? 'selected' : '') : '' }} >Si</option>
+											<option value="0" {{ (isset($content)) ? (($content->landing_contenido == 0) ? 'selected' : '') : 'selected' }} >No</option>
 										</select>
 									</div>
 								</div>
@@ -60,7 +60,7 @@
 										<label>Privacidad <span class="required">*</span></label>
 										<select type="text" name="privacidad_contenido" id="privacidad_contenido" class="form-control" required>
 											@foreach ($privacyContent as $value)
-												<option value="{{ $value->id }}" {{ (isset($content)) ? $content->privacidad_contenido == $value->id ? 'selected' : '' :  $value->id == $public ? 'selected' : '' }}>{{ $value->text }}
+												<option value="{{ $value->id }}" {{ (isset($content)) ? ($content->privacidad_contenido == $value->id ? 'selected' : '') :  ($value->id == $public ? 'selected' : '') }}>{{ $value->text }}
 												</option>
 											@endforeach
 										</select>
@@ -70,7 +70,7 @@
 										<select type="text" name="codigo_tipo_cont_institucion" id="codigo_tipo_cont_institucion" class="form-control" required>
 											<option value="">Seleccione...</option>
 												@foreach ($contentTypes as $contentType)
-													<option value="{{ $contentType->codigo_tipo_cont_institucion }}" {{  isset($content) ? $content->codigo_tipo_cont_institucion == $contentType->codigo_tipo_cont_institucion ? 'selected' : '' : '' }}>{{ $contentType->nombre_tipo_contenido }}</option>
+													<option value="{{ $contentType->codigo_tipo_cont_institucion }}" {{  isset($content) ? ($content->codigo_tipo_cont_institucion == $contentType->codigo_tipo_cont_institucion ? 'selected' : '') : '' }}>{{ $contentType->nombre_tipo_contenido }}</option>
 												@endforeach
 										</select>
 									</div>

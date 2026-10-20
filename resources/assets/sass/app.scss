@@ -1,5 +1,5 @@
 // Owerwrite fontawesome path iconfonts
-$icon-font-path: "fonts/" !default;
+$icon-font-path: "@/libs/bootstrap-sass/assets/fonts/bootstrap/" !default;
 
 @import "base/css3-mixins";
 // Import Bourbon 4.3.4 library
@@ -10,10 +10,10 @@ $icon-font-path: "fonts/" !default;
 @import "base/variables";
 
 // Import bootstrap sass
-@import 'bootstrap';
+@import '../libs/bootstrap-sass/assets/stylesheets/bootstrap';
 
 // Owerwrite fontawesome path fonts
-$fa-font-path: "fonts" !default;
+$fa-font-path: "@/libs/font-awesome/fonts" !default;
 
 /*!
 *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome

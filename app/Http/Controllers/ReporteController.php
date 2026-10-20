@@ -25,23 +25,27 @@ class ReporteController extends Controller
     $reports = [];
     $s3 = AWS::createClient('s3');
 
-    $results = $s3->ListObjects([
-      'Bucket' => env('AWS_BUCKET_NAME', 'static-dev.tuproyecto.com'),
-      'Prefix' => 'reports/' . session('institution')->codigo_institucion . '/' . Auth::user()->codigo_usuario
-    ]);
+    try {
+      $results = $s3->ListObjects([
+        'Bucket' => env('AWS_BUCKET_NAME', 'static-dev.tuproyecto.com'),
+        'Prefix' => 'reports/' . session('institution')->codigo_institucion . '/' . Auth::user()->codigo_usuario
+      ]);
 
-    if (!is_null($results['Contents'])) {
-      foreach ($results['Contents'] as $object) {
-        list($folder, $institution, $user, $name_report) = explode("/", $object['Key']);
+      if (!is_null($results['Contents'])) {
+        foreach ($results['Contents'] as $object) {
+          list($folder, $institution, $user, $name_report) = explode("/", $object['Key']);
 
-        $data['key'] = $object['Key'];
-        $data['name'] = $name_report;
-        $data['date'] = date('Y-m-d H:i:s', strtotime($object['LastModified']));
-        $data['size'] = TuProyecto::formatBytes($object['Size']);
-        $data['download'] = config('tuproyecto.url_download_aws') . "/{$object['Key']}";
+          $data['key'] = $object['Key'];
+          $data['name'] = $name_report;
+          $data['date'] = date('Y-m-d H:i:s', strtotime($object['LastModified']));
+          $data['size'] = TuProyecto::formatBytes($object['Size']);
+          $data['download'] = config('tuproyecto.url_download_aws') . "/{$object['Key']}";
 
-        $reports[] = $data;
+          $reports[] = $data;
+        }
       }
+    } catch (\Throwable $e) {
+      // Proceed with an empty reports array instead of throwing a 500 error
     }
     $evaluations = EvaluacionEmprendimiento::getEvaluations();
     return view('reports.general.index', compact('reports', 'evaluations'));

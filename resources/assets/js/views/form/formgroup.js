@@ -137,4 +137,4 @@ app || (app = {});
             // console.log('Response server');
         }
     });
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);

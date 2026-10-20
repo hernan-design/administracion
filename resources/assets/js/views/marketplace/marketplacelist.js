@@ -172,15 +172,17 @@ app || (app = {});
                     {
                         targets: 1,
                         render: function (data, type, full, row) {
-                            var data = data.toLowerCase();
-                            return data.charAt(0).toUpperCase() + data.slice(1) + ' <br> '+ full.entity_email.toLowerCase();
+                            var safeData = data ? data.toLowerCase() : '';
+                            var email = full.entity_email ? full.entity_email.toLowerCase() : '';
+                            var capitalizedData = safeData ? safeData.charAt(0).toUpperCase() + safeData.slice(1) : '';
+                            return capitalizedData + ' <br> '+ email;
                         }
                     },
                     {
                         targets: 4,
                         className: 'text-capitalize',
                         render: function (data, type, full, row) {
-                            return data.toLowerCase();
+                            return data ? data.toLowerCase() : '';
                         }
                     },
                     {
@@ -367,4 +369,4 @@ app || (app = {});
         }
    });
 
-})(jQuery, this, this.document);
+})(window.jQuery, window, document);
