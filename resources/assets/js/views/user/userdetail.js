@@ -232,7 +232,7 @@ app || (app = {});
          */
         sendMentorTerms: function (e) {
             this.loadSpinner();
-            _this = this;
+            var _this = this;
 
             var data = {};
             data['codigo_especialidad_destaca'] = this.mentorModel.get('codigo_especialidad_destaca');
@@ -396,7 +396,7 @@ app || (app = {});
             };
             _.extend( this.configAlert, config );
 
-            _this = this;
+            var _this = this;
             //complete proccess
             window.Misc.removeSpinner({
                 'wrap': this.$el,
@@ -550,7 +550,7 @@ app || (app = {});
          * @param Boolean succcess
          */
         onCompleteFetchMentorFiles: function (resp, success) {
-            count = 0;
+            var count = 0;
             if( _.has($.fn, 'chosen') && typeof window.initComponent.chosenTrigger == 'function' )
 
                 window.initComponent.chosenTrigger();

@@ -23,6 +23,24 @@ class LogActivity extends Activity
         });
     }
 
+	public function changes(): \Illuminate\Support\Collection
+	{
+		if ($this->attribute_changes && $this->attribute_changes->isNotEmpty()) {
+			return $this->attribute_changes;
+		}
+
+		$properties = $this->properties;
+		if ($properties instanceof \Illuminate\Support\Collection) {
+			return $properties;
+		}
+
+		if (is_array($properties)) {
+			return collect($properties);
+		}
+
+		return collect([]);
+	}
+
 	public static function getActivitiesList(array $filters = [])
 	{
 		$query = LogActivity::query();

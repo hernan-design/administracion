@@ -160,8 +160,8 @@
         </div>
       </div>
       <div class="row form-group">
-        <div class="col-md-2 col-sm-2 col-xs-2">
-          <button type="submit" class="form-control btn-success"> Actualizar </button>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <button type="submit" class="btn btn-success"> Actualizar </button>
         </div>
       </div>
     {!! Form::close() !!}
