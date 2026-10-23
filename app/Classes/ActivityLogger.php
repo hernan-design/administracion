@@ -18,13 +18,10 @@ class ActivityLogger extends SpatieActivityLogger
             return null;
         }
 
-        $activity = parent::log($description);
-
-        if ($activity) {
-            $activity->codigo_institucion = session('institution')->codigo_institucion ?? null;
-            $activity->save();
+        if (session()->has('institution') && isset(session('institution')->codigo_institucion)) {
+            $this->getActivity()->codigo_institucion = session('institution')->codigo_institucion;
         }
 
-        return $activity;
+        return parent::log($description);
     }
 }

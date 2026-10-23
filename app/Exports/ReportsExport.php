@@ -14,6 +14,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ReportsExport implements FromArray, WithHeadings, ShouldAutoSize, WithStyles
 {
+    protected $headings;
     protected $invoices;
 
     public function __construct(array $headings, array $invoices)
@@ -32,22 +33,23 @@ class ReportsExport implements FromArray, WithHeadings, ShouldAutoSize, WithStyl
         return $this->invoices;
     }
 
-    public function styles(Worksheet $sheet)
-{
+    public function styles(Worksheet $sheet): ?array
+    {
+        $sheet->getParent()->getDefaultStyle()->getFont()->setName('Calibri');
 
-    $sheet->getStyle($sheet->calculateWorksheetDimension())->applyFromArray([
-        'borders' => [
-            'allBorders' => [
-                'borderStyle' => Border::BORDER_THIN,
-                'color' => ['argb' => 'FF000000'],
+        $dimension = $sheet->calculateWorksheetDimension();
+        $sheet->getStyle($dimension)->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['argb' => 'FF000000'],
+                ],
             ],
-        ],
-    ]);
+            'alignment' => [
+                'vertical' => Alignment::VERTICAL_CENTER,
+            ],
+        ]);
 
-    // Configuración de la fuente (font)
-    $sheet->getStyle($sheet->calculateWorksheetDimension())->getFont()->setName('Calibri');
-
-    // Configuración de alineación vertical
-    $sheet->getStyle($sheet->calculateWorksheetDimension())->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-}
+        return null;
+    }
 }

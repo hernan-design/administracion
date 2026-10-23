@@ -411,6 +411,10 @@ class UsuarioController extends Controller
 
   public function exportar(Request $request)
   {
+    ini_set('memory_limit', '-1');
+    ini_set('max_execution_time', 0);
+    set_time_limit(0);
+
     \Artisan::queue('reports:usersmodule', [
       'user' => \Auth::user()->codigo_usuario,
       'institution' => session('institution')->codigo_institucion,

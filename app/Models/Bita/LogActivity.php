@@ -12,6 +12,17 @@ class LogActivity extends Activity
 {
     protected $table = 'bita.activity_log';
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->codigo_institucion) && session()->has('institution') && isset(session('institution')->codigo_institucion)) {
+                $model->codigo_institucion = session('institution')->codigo_institucion;
+            }
+        });
+    }
+
 	public static function getActivitiesList(array $filters = [])
 	{
 		$query = LogActivity::query();
