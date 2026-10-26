@@ -246,35 +246,35 @@ class UsuarioController extends Controller
     DB::beginTransaction();
     try {
 
-      $user = Usuario::where('correo_electronico', $request->inp__Mail)->first();
+      $user = null;
+      if (!empty($request->inp__Mail) && $request->inp__Mail != $request->inp__CurrentEmail) {
+        $user = Usuario::where('correo_electronico', $request->inp__Mail)
+          ->where('codigo_usuario', '!=', $id)
+          ->first();
+      }
 
-      $userIdentification = Usuario::select('usuario.*')
-        ->leftJoin('core.usuario_institucion', 'usuario.codigo_usuario', '=', 'core.usuario_institucion.codigo_usuario' )
-        ->where('usuario.identificacion_usuario', $request->inp__Number)
-        ->where('usuario.tipo_usuario', '!=', 2)
-        ->where('core.usuario_institucion.codigo_institucion', session('institution')->codigo_institucion)
-        ->first();
+      $userIdentification = null;
+      if (!empty($request->inp__Number)) {
+        $userIdentification = Usuario::select('usuario.*')
+          ->leftJoin('core.usuario_institucion', 'usuario.codigo_usuario', '=', 'core.usuario_institucion.codigo_usuario' )
+          ->where('usuario.identificacion_usuario', $request->inp__Number)
+          ->where('usuario.tipo_usuario', '!=', 2)
+          ->where('usuario.codigo_usuario', '!=', $id)
+          ->where('core.usuario_institucion.codigo_institucion', session('institution')->codigo_institucion)
+          ->first();
+      }
 
-
-      if ($user instanceof Usuario && $request->inp__Mail != "") {
+      if ($user instanceof Usuario) {
         return response()->json(['success' => false, 'errors' => 'Ya existe un usuario con este correo electronico']);
-      } else if ($userIdentification != null && $request->inp__Number != ""){
+      } else if ($userIdentification != null){
         return response()->json(['success' => false, 'errors' => 'Ya existe un usuario con este número de identificación']);
       }else {
         $updateDataUsuario = [];
         $updateDataPersona = [];
 
-        if ($request->inp__Mail == "" && $request->inp__Name == "" && $request->inp__Number == "" && $request->inp__BirthDay == "" && $request->inp__Cellphone == "" && $request->inp__Phone == "" && $request->inp__Address == "" && $request->inp__FirstLastName == "" && $request->inp__SecondLastName == "") {
-          return response()->json(['success' => false, 'errors' => 'Debe diligenciar mínimo un campo']);
-        }
-
         // Verificar y agregar valores al array updateDataUsuario
-        if (!empty($request->inp__Mail)) {
-          if ($request->inp__Mail == $request->inp__CurrentEmail) {
-            return response()->json(['success' => false, 'errors' => 'El correo debe ser distinto al actual']);
-          } else {
-            $updateDataUsuario['correo_electronico'] = $request->inp__Mail;
-          }
+        if (!empty($request->inp__Mail) && $request->inp__Mail != $request->inp__CurrentEmail) {
+          $updateDataUsuario['correo_electronico'] = $request->inp__Mail;
         }
         if (!empty($request->inp__Name)) {
           $updateDataUsuario['nombre_usuario'] = $request->inp__Name;
@@ -295,24 +295,21 @@ class UsuarioController extends Controller
           $updateDataUsuario['direccion_usuario'] = $request->inp__Address;
         }
 
-        // Verificar y agregar valores al array updateDataPersona
+        // Verificar y agregar valores al array updateDataPersona y sincronizar usuario
         if (!empty($request->inp__FirstLastName)) {
           $updateDataPersona['primer_apellido_persona'] = $request->inp__FirstLastName;
+          $updateDataUsuario['primer_apellido_usuario_v1'] = $request->inp__FirstLastName;
         }
         if (!empty($request->inp__SecondLastName)) {
           $updateDataPersona['segundo_apellido_persona'] = $request->inp__SecondLastName;
+          $updateDataUsuario['segundo_apellido_usuario_v1'] = $request->inp__SecondLastName;
         }
 
         if (count($updateDataUsuario) > 0) {
           Usuario::where('codigo_usuario', $id)->update($updateDataUsuario);
         }
 
-        if (!empty($request->inp__FirstLastName) || !empty($request->inp__FirstLastName)) {
-          Persona::where('codigo_usuario', $id)->update($updateDataPersona);
-        }
-
-
-        if (!empty($request->inp__SecondLastName) || !empty($request->inp__SecondLastName)) {
+        if (count($updateDataPersona) > 0) {
           Persona::where('codigo_usuario', $id)->update($updateDataPersona);
         }
 

@@ -19,6 +19,7 @@ app || (app = {});
         events: {
             'submit #form-mentor-profile': 'submitMentor',
             'submit #form-update-user': 'onUpdateUser',
+            'click #btn-update-user': 'onUpdateUser',
             'change #my-select-rol':'switchMentorTab',
             'click #btn-mentor-terms':'sendMentorTerms',
             'change #forma_ayuda_mentoria':'onChangeField',
@@ -138,33 +139,36 @@ app || (app = {});
             var errorcellPhone = document.getElementById('error__cellPhone');
             var errorPhone = document.getElementById('error__Phone');
 
-            errorcellPhone.style.display = 'none';
-            errorPhone.style.display = 'none';
+            if (errorcellPhone) errorcellPhone.style.display = 'none';
+            if (errorPhone) errorPhone.style.display = 'none';
 
-            // this.loadSpinnerUpdateUser();
-
-            this.userModel.set({ codigo_usuario: this.parameters['userCode'] });
+            var userCode = this.parameters['userCode'] || $('#form_user_id').val();
+            this.userModel.set({ codigo_usuario: userCode });
 
             var cellphoneInput = document.getElementById('inp__Cellphone');
-            var cellphoneValue = cellphoneInput.value;
+            var cellphoneValue = cellphoneInput ? cellphoneInput.value : '';
             var errorCell = false;
 
             // Validar la longitud y formato del número de celular
             var cellphoneRegex = /^\d{10}$/;
             if (cellphoneValue != "" && !cellphoneRegex.test(cellphoneValue)) {
-                errorcellPhone.innerText = "El número de celular debe tener 10 caracteres.";
-                errorcellPhone.style.display = 'block';
+                if (errorcellPhone) {
+                    errorcellPhone.innerText = "El número de celular debe tener 10 caracteres.";
+                    errorcellPhone.style.display = 'block';
+                }
                 errorCell = true;
             }
 
             var phoneInput = document.getElementById('inp__Phone');
-            var phoneValue = phoneInput.value;
+            var phoneValue = phoneInput ? phoneInput.value : '';
             var errorPhones = false;
 
             // Validar la longitud del número de teléfono
             if (phoneValue != "" && (phoneValue.length < 7 || phoneValue.length > 10)) {
-                errorPhone.innerText = "El número de teléfono debe tener entre 7 y 10 caracteres.";
-                errorPhone.style.display = 'block';
+                if (errorPhone) {
+                    errorPhone.innerText = "El número de teléfono debe tener entre 7 y 10 caracteres.";
+                    errorPhone.style.display = 'block';
+                }
                 errorPhones = true;
             }
 
@@ -172,22 +176,86 @@ app || (app = {});
                 return;
             }
 
+            var $form = this.$('#form-update-user');
+            var data = window.Misc.formToJson($form);
+            var _this = this;
 
-            var data = window.Misc.formToJson(e.target);
-
-            // var response = this.userModel.save(data);
+            this.loadSpinnerUpdateUser();
 
             this.userModel.save(data, {wait: true, patch: true,
                 success: function (model, resp) {
-                    if(resp.success){
+                    if (resp && resp.success) {
+                        // Actualizar panel lateral izquierdo inmediatamente en pantalla
+                        if (data.inp__Name || data.inp__FirstLastName || data.inp__SecondLastName) {
+                            var currentName = data.inp__Name || _this.$el.find('.user-fullname-display').text();
+                            var currentFirst = data.inp__FirstLastName || '';
+                            var currentSecond = data.inp__SecondLastName || '';
+                            var full = $.trim(currentName + ' ' + currentFirst + ' ' + currentSecond);
+                            if (full) {
+                                _this.$el.find('.user-fullname-display').text(full);
+                            }
+                        }
+                        if (data.inp__Address) {
+                            _this.$el.find('.user-address-display .val').text(data.inp__Address);
+                        }
+                        if (data.inp__Number) {
+                            _this.$el.find('.user-id-display .val').text(data.inp__Number);
+                        }
+                        if (data.inp__Mail) {
+                            _this.$el.find('.user-email-display a').text(data.inp__Mail).attr('href', 'mailto:' + data.inp__Mail);
+                            $('#inp__CurrentEmail').val(data.inp__Mail);
+                        }
+                        if (data.inp__Phone) {
+                            _this.$el.find('.user-phone-display .val').text(data.inp__Phone);
+                        }
+                        if (data.inp__Cellphone) {
+                            _this.$el.find('.user-mobile-display .val').text(data.inp__Cellphone);
+                        }
+                        if (data.inp__BirthDay) {
+                            _this.$el.find('.user-birthday-display .val').text(data.inp__BirthDay);
+                        }
+
+                        // Preservar la pestaña de actualización
+                        window.location.hash = '#update';
+
                         setTimeout(function() {
                             location.reload();
-                        }, 1000);
+                        }, 1200);
+                    } else if (resp && !resp.success) {
+                        window.Misc.removeSpinner({
+                            'wrap': _this.$('#update-user'),
+                            'direct': false
+                        });
+                        var errMsg = resp.errors || 'Error al actualizar usuario';
+                        if (typeof errMsg === 'object') {
+                            var list = [];
+                            $.each(errMsg, function(k, v) { list.push(Array.isArray(v) ? v.join(', ') : v); });
+                            errMsg = list.join('<br>');
+                        }
+                        window.Misc.showAlertBox({
+                            'wrapper': _this.$el,
+                            'text': errMsg,
+                            'type': 'alert'
+                        });
                     }
+                },
+                error: function(model, xhr) {
+                    window.Misc.removeSpinner({
+                        'wrap': _this.$('#update-user'),
+                        'direct': false
+                    });
+                    var errText = 'Ocurrió un error al procesar la solicitud.';
+                    try {
+                        var res = JSON.parse(xhr.responseText);
+                        if (res && res.errors) errText = res.errors;
+                    } catch(e) {}
+                    window.Misc.showAlertBox({
+                        'wrapper': _this.$el,
+                        'text': errText,
+                        'type': 'alert'
+                    });
                 }
             });
-
-
         },
 
         /**
@@ -343,6 +411,10 @@ app || (app = {});
 
             if(typeof window.initComponent.multiselectTrigger == 'function' ){
                 window.initComponent.multiselectTrigger();
+            }
+
+            if (window.location.hash && $('#myTab a[href="' + window.location.hash + '"]').length) {
+                $('#myTab a[href="' + window.location.hash + '"]').tab('show');
             }
         },
 

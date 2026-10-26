@@ -24,35 +24,35 @@
                                 onerror="imageDefault(this, '{{ config('tuproyecto.avatar_image') }}')">
                         </div>
                     </div>
-                    <h3>{{ ucwords(strtolower($user->user_fullname)) }}</h3>
+                    <h3 class="user-fullname-display">{{ ucwords(strtolower($user->user_fullname)) }}</h3>
 
                     <ul class="list-unstyled user_data">
-                        <li>
-                            <i class="fa fa-user user-profile-icon"></i> {{ $user->nickname_usuario }}
+                        <li class="user-nickname-display">
+                            <i class="fa fa-user user-profile-icon"></i> <span class="val">{{ $user->nickname_usuario }}</span>
                         </li>
-                        <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> {{ $user->direccion_usuario }}
+                        <li class="user-address-display">
+                            <i class="fa fa-map-marker user-profile-icon"></i> <span class="val">{{ $user->direccion_usuario }}</span>
                         </li>
-                        <li>
-                            <i class="fa fa-briefcase user-profile-icon"></i> {{ $user->profesion_usuario }}
+                        <li class="user-profession-display">
+                            <i class="fa fa-briefcase user-profile-icon"></i> <span class="val">{{ $user->profesion_usuario }}</span>
                         </li>
-                        <li>
-                            <i class="fa fa-address-card"></i> {{ $user->identificacion_usuario }}
+                        <li class="user-id-display">
+                            <i class="fa fa-address-card"></i> <span class="val">{{ $user->identificacion_usuario }}</span>
                         </li>
-                        <li class="m-top-xs">
+                        <li class="m-top-xs user-email-display">
                             <i class="fa fa-at user-profile-icon"></i>
                             <a href="mailto:{{ $user->correo_electronico }}"
                                 target="_top">{{ $user->correo_electronico }}</a>
                         </li>
-                        <li>
+                        <li class="user-birthday-display">
                             <i class="fa fa-calendar user-profile-icon"></i>
-                            {{ date('j F, Y', strtotime($user->fecha_nacimiento_usuario)) }}
+                            <span class="val">{{ !empty($user->fecha_nacimiento_usuario) ? date('j F, Y', strtotime($user->fecha_nacimiento_usuario)) : '' }}</span>
                         </li>
-                        <li>
-                            <i class="fa fa-phone user-profile-icon"></i> {{ $user->telefono_usuario }}
+                        <li class="user-phone-display">
+                            <i class="fa fa-phone user-profile-icon"></i> <span class="val">{{ $user->telefono_usuario }}</span>
                         </li>
-                        <li>
-                            <i class="fa fa-mobile user-profile-icon"></i> {{ $user->movil_usuario }}
+                        <li class="user-mobile-display">
+                            <i class="fa fa-mobile user-profile-icon"></i> <span class="val">{{ $user->movil_usuario }}</span>
                         </li>
                         <li>
                             <i class="fa fa-check"></i> Ultima conexion: {{ $user->ultimo_ingreso_usuario }}
@@ -112,56 +112,57 @@
   </script>
 
     <script type="text/template" id="update-user-tpl">
-    {!! Form::open( array('action' => null, 'data-abide' => '', 'id' => 'form-update-user') ) !!}
-    <input type="hidden" name="inp__CurrentEmail" id="inp__CurrentEmail" value={{$user->correo_electronico}}>
+    {!! Form::open( array('action' => null, 'id' => 'form-update-user') ) !!}
+    <input type="hidden" name="user_id" id="form_user_id" value="{{ $user->codigo_usuario }}">
+    <input type="hidden" name="inp__CurrentEmail" id="inp__CurrentEmail" value="{{ $user->correo_electronico }}">
       <div class="row form-group">
         <div class="col-md-4 col-sm-12 col-xs-12">
           <label> Nombre </label>
-          <input type="text" name="inp__Name" id="inp__Name" class="form-control" maxlength="512" placeholder={{$user->nombre_usuario}} >
+          <input type="text" name="inp__Name" id="inp__Name" class="form-control" maxlength="512" value="{{ $user->nombre_usuario }}" >
         </div>
         <div class="col-md-4 col-sm-12 col-xs-12">
           <label> Primer Apellido </label>
-          <input type="text" name="inp__FirstLastName" id="inp__FirstLastName" class="form-control" maxlength="256" placeholder={{$user->primer_apellido_persona}}>
+          <input type="text" name="inp__FirstLastName" id="inp__FirstLastName" class="form-control" maxlength="256" value="{{ $user->primer_apellido_persona }}">
         </div>
         <div class="col-md-4 col-sm-12 col-xs-12">
           <label> Segundo Apellido </label>
-          <input type="text" name="inp__SecondLastName" id="inp__SecondLastName" class="form-control" maxlength="256" placeholder={{$user->segundo_apellido_persona}}>
+          <input type="text" name="inp__SecondLastName" id="inp__SecondLastName" class="form-control" maxlength="256" value="{{ $user->segundo_apellido_persona }}">
         </div>
       </div>
       <div class="row form-group">
         <div class="col-md-4 col-sm-12 col-xs-12">
           <label> Correo Electronico </label>
-          <input type="email" name="inp__Mail" id="inp__Mail" class="form-control" maxlength="250" placeholder={{$user->correo_electronico}}>
+          <input type="email" name="inp__Mail" id="inp__Mail" class="form-control" maxlength="250" value="{{ $user->correo_electronico }}">
       </div>
       <div class="col-md-4 col-sm-12 col-xs-12">
         <label> Número Identificación </label>
-        <input type="number" name="inp__Number" id="inp__Number" class="form-control" maxlength="512" placeholder={{$user->identificacion_usuario}}>
+        <input type="number" name="inp__Number" id="inp__Number" class="form-control" maxlength="512" value="{{ $user->identificacion_usuario }}">
     </div>
     <div class="col-md-4 col-sm-12 col-xs-12">
       <label> Fecha Nacimiento </label>
-      <input type="date" name="inp__BirthDay" id="inp__BirthDay" class="form-control" data-inputmask="'mask':'9999-99-99'" placeholder={{$user->fecha_nacimiento_usuario}}>
+      <input type="date" name="inp__BirthDay" id="inp__BirthDay" class="form-control" value="{{ $user->fecha_nacimiento_usuario }}">
     </div>
       </div>
 
       <div class="row form-group">
         <div class="col-md-4 col-sm-12 col-xs-12">
           <label> Celular </label>
-          <input type="number" name="inp__Cellphone" id="inp__Cellphone" class="form-control" minlength="10" maxlength="10" placeholder={{$user->movil_usuario}}>
+          <input type="number" name="inp__Cellphone" id="inp__Cellphone" class="form-control" minlength="10" maxlength="10" value="{{ $user->movil_usuario }}">
           <span id="error__cellPhone" class="error-message" style="color: red;"></span>
       </div>
         <div class="col-md-4 col-sm-12 col-xs-12">
           <label> Telefono </label>
-          <input type="number" name="inp__Phone" id="inp__Phone" class="form-control" minlength="7" maxlength="10" placeholder={{$user->telefono_usuario}}>
+          <input type="number" name="inp__Phone" id="inp__Phone" class="form-control" minlength="7" maxlength="10" value="{{ $user->telefono_usuario }}">
           <span id="error__Phone" class="error-message" style="color: red;"></span>
         </div>
         <div class="col-md-4 col-sm-12 col-xs-12">
           <label> Dirección Domicilio </label>
-          <input type="text" name="inp__Address" id="inp__Address" class="form-control" maxlength="250" placeholder={{$user->direccion_usuario}}>
+          <input type="text" name="inp__Address" id="inp__Address" class="form-control" maxlength="250" value="{{ $user->direccion_usuario }}">
         </div>
       </div>
       <div class="row form-group">
         <div class="col-md-4 col-sm-6 col-xs-12">
-          <button type="submit" class="btn btn-success"> Actualizar </button>
+          <button type="submit" id="btn-update-user" class="btn btn-success"> Actualizar </button>
         </div>
       </div>
     {!! Form::close() !!}
