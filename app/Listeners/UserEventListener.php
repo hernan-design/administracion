@@ -18,6 +18,18 @@ class UserEventListener
             \Cookie::queue(\Cookie::forever('_inst_id', session('institution')->codigo_institucion));
             \Cookie::queue(\Cookie::forever('_user_id', $user->codigo_usuario));
 
+            // Log activity
+            activity()
+                ->causedBy($user)
+                ->performedOn($user)
+                ->withProperties([
+                    'attributes' => [
+                        'user' => $user->nombre_usuario,
+                        'user_id' => $user->codigo_usuario
+                    ]
+                ])
+                ->log('activitylog.user.session.platform');
+
             // CheckUser on Broadcast
             event(new CheckUser($user));
 
