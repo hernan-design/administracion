@@ -159,7 +159,7 @@ app || (app = {});
 
             var data = {codigo_asesoria: this.$codigo_asesoria.val()}
 
-            _this = this;
+            var _this = this;
             if(data.codigo_asesoria != null && data.codigo_asesoria != ''){
                 $.ajax({
                     data: data,

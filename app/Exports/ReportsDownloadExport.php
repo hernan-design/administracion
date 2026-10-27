@@ -34,22 +34,23 @@ class ReportsDownloadExport implements FromArray, WithHeadings, ShouldAutoSize, 
         return $this->invoices;
     }
 
-    public function styles(Worksheet $sheet)
-{
-
-    $sheet->getStyle($sheet->calculateWorksheetDimension())->applyFromArray([
-        'borders' => [
-            'allBorders' => [
-                'borderStyle' => Border::BORDER_THIN,
-                'color' => ['argb' => 'FF000000'],
+    public function styles(Worksheet $sheet): ?array
+    {
+        $sheet->getStyle($sheet->calculateWorksheetDimension())->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['argb' => 'FF000000'],
+                ],
             ],
-        ],
-    ]);
+        ]);
 
-    // Configuración de la fuente (font)
-    $sheet->getStyle($sheet->calculateWorksheetDimension())->getFont()->setName('Calibri');
+        // Configuración de la fuente (font)
+        $sheet->getStyle($sheet->calculateWorksheetDimension())->getFont()->setName('Calibri');
 
-    // Configuración de alineación vertical
-    $sheet->getStyle($sheet->calculateWorksheetDimension())->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-}
+        // Configuración de alineación vertical
+        $sheet->getStyle($sheet->calculateWorksheetDimension())->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+
+        return null;
+    }
 }

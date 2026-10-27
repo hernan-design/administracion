@@ -364,7 +364,7 @@ app || (app = {});
         onFilterExport: function (e) {
 
             e.preventDefault();
-            data = window.Misc.formToJson(this.$formFilters);
+            var data = window.Misc.formToJson(this.$formFilters);
             window.Misc.redirect( window.Misc.urlFull( Route.route( 'marketplace.exportar', data) ) );
         }
    });

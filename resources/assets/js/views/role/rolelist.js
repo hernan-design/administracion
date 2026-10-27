@@ -181,7 +181,7 @@ app || (app = {});
                                     'text': text,
                                     'type': type
                                 }
-                                confCrop =  $.extend({}, _this.configAlert, config);
+                                var confCrop =  $.extend({}, _this.configAlert, config);
 
                                 //complete proccess
                                 if( resp.success !== undefined ){
@@ -206,8 +206,8 @@ app || (app = {});
          */
         onRolsExport: function (e) {
             e.preventDefault();
-            data = window.Misc.formToJson(this.$formFilters);
-            console.log(data);
+            var data = window.Misc.formToJson(this.$formFilters);
+            data.rol = 'exportar';
             window.Misc.redirect( window.Misc.urlFull( Route.route( 'rol.show', data) ) );
         },
     });

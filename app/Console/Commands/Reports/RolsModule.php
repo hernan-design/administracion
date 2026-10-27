@@ -48,6 +48,10 @@ class RolsModule extends Command
      */
     public function handle()
     {
+        ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', 0);
+        set_time_limit(0);
+
         try {
             $header = $data = [];
 
@@ -174,19 +178,16 @@ class RolsModule extends Command
 
             $getLogRol = LogActivity::select('id', 'description', 'properties', 'subject_id', 'created_at')
                         ->whereIn('subject_id', $usersId)
-                        ->where('codigo_institucion', 30)
+                        ->where('codigo_institucion', $institution->codigo_institucion)
                         ->where('description', 'like', 'activitylog.user.role.%')
                         ->orderBy('id', 'desc')
                         ->get();
 
+            $logsBySubject = $getLogRol->groupBy('subject_id');
+
             $dataInform = collect([]);
             foreach ($usuarios as $usuario) {
-              $dataHistorico = [];
-              foreach ($getLogRol as $key => $value) {
-                if ($value->subject_id==$usuario->codigo_usuario) {
-                 $dataHistorico[] = $value;
-                }
-              }
+              $dataHistorico = $logsBySubject->get($usuario->codigo_usuario, collect([]))->all();
               $historico_log_rol = $this->getLogRol($dataHistorico);
               unset($record);
               $record[] = $usuario->codigo_usuario;
@@ -199,8 +200,6 @@ class RolsModule extends Command
               $record[] =  $historico_log_rol;
               $record[] = $usuario->fecha_aceptacion_privacidad;
               $record[] = $usuario->fecha_aceptacion_terminos;
-              //$record[] = $usuario->telefono_usuario;
-              //$record[] = $usuario->movil_usuario;
               $dataInform[] = $record;
             }
 

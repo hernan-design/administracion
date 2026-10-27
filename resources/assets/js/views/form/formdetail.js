@@ -137,7 +137,7 @@ app || (app = {});
         onFilterExport: function (e) {
             e.preventDefault();
             e.stopImmediatePropagation();
-            data = window.Misc.formToJson(this.$formFilters);
+            var data = window.Misc.formToJson(this.$formFilters);
             data.evaluation = this.model.get('codigo_encuesta');
             window.Misc.redirect( window.Misc.urlFull( Route.route( 'formulario.evaluacion.exportar.index', data) ) );
         }

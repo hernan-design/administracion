@@ -81,7 +81,10 @@ return [
 			'key'    => env('AWS_BUCKET_KEY','AKIAY4SNKXXZPEMCUJNS'),
 			'secret' => env('AWS_BUCKET_SECRET', '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'),
 			'region' => env('AWS_REGION', 'us-west-2'),
-			'bucket' => env('AWS_BUCKET_NAME', 'static-dev.tuproyecto.com')
+			'bucket' => env('AWS_BUCKET_NAME', 'static-dev.tuproyecto.com'),
+			'http'   => [
+				'verify' => env('AWS_VERIFY', false),
+			],
 			// 'url' => 'drp6skpdlhxna.cloudfront.net',
 		],
 

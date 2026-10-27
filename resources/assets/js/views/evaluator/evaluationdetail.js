@@ -244,7 +244,7 @@ app || (app = {});
         */
         onFilterExport: function (e) {
             e.preventDefault();
-            data = window.Misc.formToJson(this.$formFilters);
+            var data = window.Misc.formToJson(this.$formFilters);
             data.evaluation = this.model.get('codigo_evaluacion_emprendimiento');
             window.Misc.redirect( window.Misc.urlFull( Route.route( 'evaluacion.exportar', data) ) );
         }

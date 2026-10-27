@@ -141,7 +141,7 @@ app || (app = {});
             e.preventDefault();
             e.stopImmediatePropagation();
 
-            data = window.Misc.formToJson(this.$formFilters);
+            var data = window.Misc.formToJson(this.$formFilters);
             data.evaluation = this.model.get('codigo_encuesta');
             data.curso = this.parameters.dataFilter['curso'];
 

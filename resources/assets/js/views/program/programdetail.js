@@ -1908,14 +1908,14 @@ app || (app = {});
          */
         onFilterExport: function (e) {
             e.preventDefault();
-            data = window.Misc.formToJson(this.$('#form-filter-program'));
+            var data = window.Misc.formToJson(this.$('#form-filter-program'));
             data.program = this.model.get('codigo_convocatoria');
             window.Misc.redirect( window.Misc.urlFull( Route.route( 'convocatoria.reporte.index', data) ) );
         },
 
         onFilterExportNoComplete: function (e) {
             e.preventDefault();
-            data = window.Misc.formToJson(this.$('#form-filter-program'));
+            var data = window.Misc.formToJson(this.$('#form-filter-program'));
             data.program = this.model.get('codigo_convocatoria');
             data.type_report = 'form_no_complete';
             window.Misc.redirect( window.Misc.urlFull( Route.route( 'convocatoria.reporte.index', data) ) );

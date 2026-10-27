@@ -25,11 +25,25 @@ class ReportsExport implements FromArray, WithHeadings, ShouldAutoSize, WithStyl
 
     public function headings(): array
     {
+      if (isset($this->headings[0]) && is_array($this->headings[0])) {
+        return $this->headings[0];
+      }
       return $this->headings;
     }
 
     public function array(): array
     {
+        if ($this->invoices instanceof \Illuminate\Support\Collection) {
+            return $this->invoices->toArray();
+        }
+        if (isset($this->invoices[0])) {
+            if ($this->invoices[0] instanceof \Illuminate\Support\Collection) {
+                return $this->invoices[0]->toArray();
+            }
+            if (is_array($this->invoices[0]) && isset($this->invoices[0][0]) && is_array($this->invoices[0][0])) {
+                return $this->invoices[0];
+            }
+        }
         return $this->invoices;
     }
 
