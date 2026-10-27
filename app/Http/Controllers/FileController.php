@@ -120,7 +120,7 @@ class FileController extends Controller
 								throw new \Exception('file crop is undefined');
 							}
 							// open file a image resource
-							$img = Image::read($input_file_path);
+							$img = Image::decodePath($input_file_path);
 							break;
 
 						case 'url':
@@ -129,7 +129,7 @@ class FileController extends Controller
 							copy($request->file_name, $input_file_path);
 
 							// open file a image resource
-							$img = Image::read($input_file_path);
+							$img = Image::decodePath($input_file_path);
 							break;
 
 						default:
@@ -141,10 +141,10 @@ class FileController extends Controller
 				}
 
 				// crop image
-				$img->crop( intval(Input::get('w')), intval(Input::get('h')), intval(Input::get('x')), intval(Input::get('y')) );
-				if(Input::has('targ_w') && Input::has('targ_h')) {
+				$img->crop( intval($request->input('w')), intval($request->input('h')), intval($request->input('x')), intval($request->input('y')) );
+				if($request->filled('targ_w') && $request->filled('targ_h')) {
 					// now you are able to resize the instance
-					$img->resize(Input::get('targ_w'), Input::get('targ_h'));
+					$img->resize(intval($request->input('targ_w')), intval($request->input('targ_h')));
 				}
 				$img->save($output_file_path, 100);
 
