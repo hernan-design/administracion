@@ -49,7 +49,8 @@
 		<script>window.document.platform = "{{ URL::to(session('institution')->url_institucion) }}";</script>
 		{{-- Libraries so: foundation, underscore, backbone, etc --}}
 		<script src="{{ asset('js/vendor-legacy.js') }}?v={{ filemtime(public_path('js/vendor-legacy.js')) }}"></script>
-		@vite(['resources/assets/js/pre-app.js', 'resources/assets/js/app.js', 'resources/assets/js/components/main.jsx'])
+		<script src="{{ asset('js/summernote-legacy.js') }}?v={{ filemtime(public_path('js/summernote-legacy.js')) }}"></script>
+		@vite(['resources/assets/js/pre-app.js', 'resources/assets/js/components/main.jsx', 'resources/assets/js/app.js'])
 		{{-- Realtime --}}
 		 @if (Auth::check() && $app->environment('production'))
 			{{-- <script src="{{ elixir('js/realtime.js') }}"></script>  --}}

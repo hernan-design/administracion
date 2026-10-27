@@ -1,18 +1,16 @@
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Component } from 'react';
-const $ = window.$;
+import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
 
+import ReactSummernote from './react-summernote.jsx';
+
 import Backbone from 'backbone';
-// import ReactSummernote from 'react-summernote';
 import '../helpers/misc.js';
 const Misc = window.Misc;
 const { formToJson, getCsrf, removeSpinner, setSpinner } = Misc;
 const laroute = window.Route;
-// import "summernote/dist/summernote.js";
-// import "summernote-cleaner/summernote-cleaner.js";
-// import "react-summernote/lang/summernote-es-ES.js";
 
 class ProjectEditor extends Component {
 
@@ -78,8 +76,7 @@ class ProjectEditor extends Component {
     */
     handleChange(content) {
         // validate if the editor content is really empty
-        if (this.editor.isEmpty()) {
-            this.editor.replace('');
+        if (this.editor && typeof this.editor.isEmpty === 'function' && this.editor.isEmpty()) {
             this.writeValue(this.props.content, '');
         } else {
             this.writeValue(this.props.content, content);
@@ -192,11 +189,13 @@ class ProjectEditor extends Component {
             <div className={`editor-content ${this.props.className}`} ref={node => { this.nodeEditor = node; }}>
                 <div className="row">
                     <div className={column ? column : "col-md-6"}>
-                        <textarea
+                        <ReactSummernote
                             value={this.state.value}
-                            onChange={(e) => this.handleChange(e.target.value)}
-                            className="form-control"
-                            style={{minHeight: '200px'}}
+                            options={settings}
+                            onChange={this.handleChange}
+                            onImageUpload={this.imageUpload}
+                            ref={(el) => { this.refEditor(el); if (typeof editorRef === 'function') editorRef(el); }}
+                            {...props}
                         />
                         <input
                             type="hidden"
@@ -235,7 +234,7 @@ ProjectEditor.defaultProps = {
     formCreate: '',
     nameField: '',
     className: '',
-    placeholder: '¡Edita tu contenido aquí!',
+    placeholder: '',
     required: false,
     requiredField: false,
     options: {},

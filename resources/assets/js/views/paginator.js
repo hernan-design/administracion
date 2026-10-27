@@ -94,8 +94,8 @@ app || (app = {});
             var splitAt = [],
                 len = this.collection.state.totalPages,
                 maxLen1_2 = Math.floor(this.maxLen / 2),
-                startPag = 0;
-            maxLen1_2End = len - maxLen1_2;
+                startPag = 0,
+                maxLen1_2End = len - maxLen1_2;
 
             splitAt[0] = maxLen1_2;
             startPag = this.collection.state.currentPage - maxLen1_2 > 0 ? this.collection.state.currentPage - maxLen1_2 : 0;
@@ -118,9 +118,9 @@ app || (app = {});
             var items = new Array(),
                 startPag = 0,
                 splitAt = [0, 0],
-                flagHellip = true;
+                flagHellip = true,
+                confPagination = this.calSplit();
 
-            confPagination = this.calSplit();
             startPag = confPagination.startPag;
             splitAt = confPagination.splitAt;
 

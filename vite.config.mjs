@@ -30,7 +30,7 @@ export default defineConfig({
     build: {
         commonjsOptions: {
             transformMixedEsModules: true,
-            requireReturnsDefault: 'auto',
+            requireReturnsDefault: 'preferred',
             ignoreTryCatch: false
         }
     },
@@ -67,7 +67,7 @@ export default defineConfig({
     },
     optimizeDeps: {
         exclude: ['jquery'],
-        include: ['react', 'react-dom', 'backbone', 'underscore', 'socket.io-client', 'react-summernote'],
+        include: ['react', 'react-dom', 'backbone', 'underscore', 'socket.io-client'],
         entries: []
     }
 });
