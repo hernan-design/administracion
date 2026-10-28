@@ -49,6 +49,7 @@ class Rol extends LaratrustRole
 		    case 'admin': return 2;
 			case 'user': return 3;
 			case 'mentor': return 7;
+			case 'gestor-de-mentorias': return 56;
 			case 'evaluador': return 9;
 			case 'seller': return 14;
 			case 'associated': return 39;

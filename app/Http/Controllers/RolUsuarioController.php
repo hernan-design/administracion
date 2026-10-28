@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use DB, Log;
 use App\Models\Seguridad\Usuario,
 	App\Models\Seguridad\RolUsuario,
-	App\Models\Seguridad\Rol;
+	App\Models\Seguridad\Rol,
+	App\Models\Core\UsuarioInstitucion,
+	App\Models\Param\TerminosCondiciones,
+	App\Models\Seguridad\AceptacionTerminos,
+	App\Models\Core\Estado;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Bita\LogActivity;
@@ -72,6 +76,35 @@ class RolUsuarioController extends Controller
 
 				if($role->id == Rol::getRol('mentor'))
 				{
+					// Ensure usuario_institucion exists
+					$userInstitution = UsuarioInstitucion::where('codigo_usuario', $user->codigo_usuario)
+						->where('codigo_institucion', session('institution')->codigo_institucion)
+						->first();
+
+					if(!$userInstitution instanceof UsuarioInstitucion) {
+						$userInstitution = new UsuarioInstitucion();
+						$userInstitution->codigo_usuario = $user->codigo_usuario;
+						$userInstitution->codigo_institucion = session('institution')->codigo_institucion;
+						$userInstitution->codigo_estado = Estado::getState('active');
+						$userInstitution->save();
+					}
+
+					// Ensure mentoring terms acceptance exists
+					$terms = TerminosCondiciones::termsAndConditions(TerminosCondiciones::getTypeTerms('mentoring'));
+					if($terms instanceof TerminosCondiciones && $userInstitution instanceof UsuarioInstitucion) {
+						$acceptanceTerms = AceptacionTerminos::where('codigo_usuario_institucion', $userInstitution->codigo_usuario_institucion)
+							->where('codigo_version_terminos', $terms->codigo_version_terminos)
+							->first();
+						if(!$acceptanceTerms instanceof AceptacionTerminos) {
+							$acceptanceTerms = new AceptacionTerminos();
+							$acceptanceTerms->codigo_usuario_institucion = $userInstitution->codigo_usuario_institucion;
+							$acceptanceTerms->codigo_version_terminos = $terms->codigo_version_terminos;
+							$acceptanceTerms->codigo_estado = Estado::getState('active');
+							$acceptanceTerms->fecha_aceptacion_terminos = date('Y-m-d H:i:s');
+							$acceptanceTerms->save();
+						}
+					}
+
 					$user->sync_algolia = 1;
 					$user->save();
 					$user->syncIndex();

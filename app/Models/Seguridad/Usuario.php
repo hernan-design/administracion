@@ -472,12 +472,14 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
                 ->whereNotIn('usuario_institucion.codigo_estado', [Estado::getState('inactive'), Estado::getState('removed')]);
         });
 
-        $query->join('seguridad.aceptacion_terminos', 'aceptacion_terminos.codigo_usuario_institucion', '=', 'usuario_institucion.codigo_usuario_institucion');
-        $query->join('param.version_terminos', 'version_terminos.codigo_version_terminos', '=', 'aceptacion_terminos.codigo_version_terminos');
-        $query->join('param.terminos_condiciones', function($join) {
-            $join->on('terminos_condiciones.codigo_terminos_condiciones', '=', 'version_terminos.codigo_terminos_condiciones')
-                ->where('terminos_condiciones.codigo_estado', '=', Estado::getState('active'))
-                ->where('terminos_condiciones.tipo_terminos', '=', TerminosCondiciones::getTypeTerms('mentoring'));
+        $query->leftJoin('seguridad.aceptacion_terminos', function($join) {
+            $join->on('aceptacion_terminos.codigo_usuario_institucion', '=', 'usuario_institucion.codigo_usuario_institucion')
+                ->whereIn('aceptacion_terminos.codigo_version_terminos', function($sub) {
+                    $sub->select('vt.codigo_version_terminos')
+                        ->from('param.version_terminos as vt')
+                        ->join('param.terminos_condiciones as tc', 'tc.codigo_terminos_condiciones', '=', 'vt.codigo_terminos_condiciones')
+                        ->where('tc.tipo_terminos', '=', TerminosCondiciones::getTypeTerms('mentoring'));
+                });
         });
 
         if( isset($filters['nombre_usuario']) && !empty($filters['nombre_usuario']) ) {
@@ -519,7 +521,6 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
             $query->orderBy(DB::raw("(CASE mentor.codigo_estado WHEN ".Estado::getState('review')." THEN mentor.codigo_estado END)"));
         }
 
-        $query->whereRaw('aceptacion_terminos.fecha_aceptacion_terminos is not null');
         $query->where('usuario.tipo_usuario', '=',  self::typeUser('person'));
 
         // Filter Order
