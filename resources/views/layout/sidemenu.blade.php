@@ -27,6 +27,10 @@
 				</li>
 				@php $parents = App\Models\Param\Menu::getParents(App\Models\Param\TipoMenu::getType('admin')); @endphp
 				@foreach ($parents as $parent)
+					{{-- Omitir menu simple 'reportes' para conservar unicamente el modulo Reportes con submodulos --}}
+					@if($parent->ruta_menu_institucion == 'reportes')
+						@continue
+					@endif
 					<li>
 						<a {{ $parent->ruta_menu_institucion ? sprintf('href=%s', url($parent->ruta_menu_institucion)) : ''}}>
 							<i class="{{ $parent->icono_menu_item }}"></i>{{ $parent->nombre_item_menu }}
