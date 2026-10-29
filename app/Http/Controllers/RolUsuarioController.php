@@ -105,9 +105,13 @@ class RolUsuarioController extends Controller
 						}
 					}
 
-					$user->sync_algolia = 1;
-					$user->save();
-					$user->syncIndex();
+					try {
+						$user->sync_algolia = 1;
+						$user->save();
+						$user->syncIndex();
+					} catch (\Exception $algoliaEx) {
+						Log::warning('RolUsuarioController:store Algolia sync error: ' . $algoliaEx->getMessage());
+					}
 				}
 				// Commit Transaction
 				DB::commit();
@@ -191,6 +195,7 @@ class RolUsuarioController extends Controller
 
 					if($role->id == Rol::getRol('mentor'))
 					{
+						try {
 						$user->sync_algolia = 3;
 						$user->save();
 						$user->desyncIndex();
@@ -198,6 +203,9 @@ class RolUsuarioController extends Controller
 						$user->sync_algolia = 1;
 						$user->save();
 						$user->syncIndex();
+					} catch (\Exception $algoliaEx) {
+						Log::warning('RolUsuarioController:destroy Algolia sync error: ' . $algoliaEx->getMessage());
+					}
 
 					}
 

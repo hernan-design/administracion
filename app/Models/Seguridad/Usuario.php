@@ -893,8 +893,28 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
 			$role = $role['id'];
 		}
 
-		$this->roles()->wherePivot('codigo_institucion',session('institution')->codigo_institucion)
-		->attach($role, ['codigo_institucion' => session('institution')->codigo_institucion]);
+		$institutionId = session('institution')->codigo_institucion;
+		$table = config('laratrust.tables.role_user', 'seguridad.rol_usuario');
+
+		$exists = \DB::table($table)
+			->where('user_id', $this->codigo_usuario)
+			->where('role_id', $role)
+			->where('codigo_institucion', $institutionId)
+			->exists();
+
+		if(!$exists) {
+			$this->roles()->wherePivot('codigo_institucion', $institutionId)
+				->attach($role, [
+					'codigo_institucion' => $institutionId,
+					'codigo_estado' => \App\Models\Core\Estado::getState('active')
+				]);
+		} else {
+			\DB::table($table)
+				->where('user_id', $this->codigo_usuario)
+				->where('role_id', $role)
+				->where('codigo_institucion', $institutionId)
+				->update(['codigo_estado' => \App\Models\Core\Estado::getState('active')]);
+		}
 	}
 
   /**

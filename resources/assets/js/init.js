@@ -619,7 +619,7 @@ var app = app || {};
                 });
             }
 
-            var id, toUrl,
+            var id, toUrl, toRoute,
             sendData = {};
 
             var config = {
@@ -642,7 +642,7 @@ var app = app || {};
 
                             _.extend(config[selector], {
                                 afterSelect: function(values){
-                                    toRoute = $el.data('route');
+                                    var toRoute = $el.data('route');
                                     sendData.data_id = $el.data('id');
                                     sendData.option_id = values[0];
                                     sendData.data_param = $el.data('param');
@@ -675,7 +675,7 @@ var app = app || {};
                         if( $el.hasClass('selectableOptgroup') ) {
                             _.extend(config[selector], {
                                 afterSelect: function(values){
-                                toRoute = $el.data('route');
+                                var toRoute = $el.data('route');
                                 sendData.data_id = $el.data('id');
                                 sendData.option_id = values;
                                 setPostXhr(Route.route( toRoute + '.index' ), sendData);

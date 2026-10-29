@@ -149,11 +149,11 @@ app || (app = {});
             var cellphoneValue = cellphoneInput ? cellphoneInput.value : '';
             var errorCell = false;
 
-            // Validar la longitud y formato del número de celular
+            // Validar la longitud y formato del nÃºmero de celular
             var cellphoneRegex = /^\d{10}$/;
             if (cellphoneValue != "" && !cellphoneRegex.test(cellphoneValue)) {
                 if (errorcellPhone) {
-                    errorcellPhone.innerText = "El número de celular debe tener 10 caracteres.";
+                    errorcellPhone.innerText = "El nÃºmero de celular debe tener 10 caracteres.";
                     errorcellPhone.style.display = 'block';
                 }
                 errorCell = true;
@@ -163,10 +163,10 @@ app || (app = {});
             var phoneValue = phoneInput ? phoneInput.value : '';
             var errorPhones = false;
 
-            // Validar la longitud del número de teléfono
+            // Validar la longitud del nÃºmero de telÃ©fono
             if (phoneValue != "" && (phoneValue.length < 7 || phoneValue.length > 10)) {
                 if (errorPhone) {
-                    errorPhone.innerText = "El número de teléfono debe tener entre 7 y 10 caracteres.";
+                    errorPhone.innerText = "El nÃºmero de telÃ©fono debe tener entre 7 y 10 caracteres.";
                     errorPhone.style.display = 'block';
                 }
                 errorPhones = true;
@@ -215,7 +215,7 @@ app || (app = {});
                             _this.$el.find('.user-birthday-display .val').text(data.inp__BirthDay);
                         }
 
-                        // Preservar la pestaña de actualización
+                        // Preservar la pestaÃ±a de actualizaciÃ³n
                         window.location.hash = '#update';
 
                         setTimeout(function() {
@@ -244,7 +244,7 @@ app || (app = {});
                         'wrap': _this.$('#update-user'),
                         'direct': false
                     });
-                    var errText = 'Ocurrió un error al procesar la solicitud.';
+                    var errText = 'OcurriÃ³ un error al procesar la solicitud.';
                     try {
                         var res = JSON.parse(xhr.responseText);
                         if (res && res.errors) errText = res.errors;
@@ -280,11 +280,6 @@ app || (app = {});
             var selection = $("#my-select-rol").val();
 
             if(_.contains(selection, '7') ){
-
-                if (typeof e !== 'undefined') {
-                    window.Misc.redirect(  window.Misc.urlFull( Route.route('usuario.show', {usuario: this.parameters['userCode'] }) ) );
-                }
-
                 this.$('#mentoring-tab-list-item').show();
                 this.ready();
 
