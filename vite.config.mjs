@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import fs from 'fs';
 
 export default defineConfig({
     plugins: [
@@ -17,6 +18,16 @@ export default defineConfig({
             refresh: true,
         }),
         react(),
+        {
+            name: 'copy-gentelella-images',
+            closeBundle() {
+                const src = path.resolve(__dirname, 'resources/assets/libs/gentelella/production/images');
+                const dest = path.resolve(__dirname, 'public/build/images');
+                if (fs.existsSync(src)) {
+                    fs.cpSync(src, dest, { recursive: true });
+                }
+            }
+        }
     ],
     resolve: {
         alias: {

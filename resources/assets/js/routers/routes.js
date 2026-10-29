@@ -1792,9 +1792,11 @@ app || (app = {});
             this.projectModel = new app.ProjectModel();
             this.projectModel.idAttribute = 'nickname_usuario';
             this.projectModel.set( {'nickname_usuario': entidad}, {'silent':true} );
-            _this = this;
+            var _this = this;
             this.projectModel.fetch({wait:true}).done(function(){
-                _this.projectCreateEditView.render();
+                if (_this.projectCreateEditView) {
+                    _this.projectCreateEditView.render();
+                }
             });;
 
 

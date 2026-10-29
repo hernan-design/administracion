@@ -1,3 +1,4 @@
+import './helpers/states.js';
 import './components/main.jsx';
 import.meta.glob('./models/*.js', { eager: true });
 import.meta.glob('./collections/*.js', { eager: true });

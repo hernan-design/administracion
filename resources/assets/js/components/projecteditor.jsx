@@ -53,7 +53,7 @@ class ProjectEditor extends Component {
         $nodeEditor.find('[data-toggle="dropdown"]').off('bs.dropdown');
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
 
         let data = nextProps.formCreate ? formToJson(nextProps.formCreate) : {};
         this.defaultValue = nextProps.content.get(nextProps.nameField) || data[nextProps.nameField] || '';

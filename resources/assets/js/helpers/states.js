@@ -443,7 +443,8 @@
 		    return _tp;
 		});
 	}
-	else if (typeof module === 'object' && module.exports){
+	window._tp = _tp;
+	if (typeof module === "object" && module.exports){
 		module.exports = _tp;
 	}
 	else {
