@@ -134,18 +134,20 @@ class Events extends Command
       $file = Excel::store($export, $filepath, 's3', null, [
         'visibility' => 'public',
       ]);
-
-
-    $fileUrl = Storage::disk('s3')->url($filepath);
+      $fileUrl = Storage::disk('s3')->url($filepath);
 
       // Send mail
-      $data = [];
-      $data['_template'] = 'emails.report';
-      $data['_subject'] = 'Reporte general eventos';
-      $data['_to'] = $user->correo_electronico;
-      $data['_to_name'] = ucwords(strtolower($user->nombre_usuario));
-      $data['_inst'] = Institucion::institution('compensar');
-      $data['_url'] = $fileUrl;
-      SendEmail::notification($data);
+      try {
+        $data = [];
+        $data['_template'] = 'emails.report';
+        $data['_subject'] = 'Reporte general eventos';
+        $data['_to'] = $user->correo_electronico;
+        $data['_to_name'] = ucwords(strtolower($user->nombre_usuario));
+        $data['_inst'] = Institucion::institution('compensar');
+        $data['_url'] = $fileUrl;
+        SendEmail::notification($data);
+      } catch (\Throwable $e) {
+        \Log::warning('Events.php SendEmail: ' . $e->getMessage());
+      }
     }
 }

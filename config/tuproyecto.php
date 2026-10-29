@@ -34,13 +34,13 @@ return array(
 
 	'header_logo' => 'https://lh3.googleusercontent.com/-LhFQNEyTy3M/VI90FGjAIMI/AAAAAAAAL6k/EiZKL3ywp34/w30-h27-no/TuProyecto_Barra.png',
 
-	'logo' => 'http://static.tuproyecto.com/images/institutions/logo-amarillo-blanco-100x19.png',
+	'logo' => 'https://s3-us-west-2.amazonaws.com/static.tuproyecto.com/images/institutions/logo-amarillo-blanco-100x19.png',
 
 	'color' => '#000000',
 
 	'url' => 'http://tuproyecto.com',
 
-	'favicon' => 'http://static.tuproyecto.com/images/institutions/favicon.ico.png',
+	'favicon' => 'https://s3-us-west-2.amazonaws.com/static.tuproyecto.com/images/institutions/favicon.ico.png',
 
 	'description' => 'Construye TuProyecto. Recibe aportes y opiniones de mentores para llevarlo a una etapa de financiación. Es TuProyecto pero no estas solo.',
 

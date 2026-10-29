@@ -1,7 +1,7 @@
 <div class="left_col scroll-view">
 	<div class="navbar nav_title" style="border: 0;">
 		<a href="{{ route('dashboard') }}" class="site_title p-1">
-			<img src="{{ session('institution')->logo_admin_institucion ? session('institution')->logo_admin_institucion : session('institution')->logo_institucion }}" alt="{{ session('institution')->nombre_institucion }}" style="width: 50px;height:auto;">
+			<img src="{{ str_replace(['https://static.tuproyecto.com/', 'http://static.tuproyecto.com/'], 'https://s3-us-west-2.amazonaws.com/static.tuproyecto.com/', session('institution')->logo_admin_institucion ? session('institution')->logo_admin_institucion : session('institution')->logo_institucion) }}" alt="{{ session('institution')->nombre_institucion }}" style="width: 50px;height:auto;">
 			<span class="position-absolute">{{ session('institution')->sigla_institucion }}</span>
 		</a>
 	</div>

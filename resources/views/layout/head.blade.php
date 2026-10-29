@@ -7,8 +7,8 @@
 
 <title>Administración | {{ session('institution') ? session('institution')->nombre_institucion : 'TuProyecto' }}</title>
 
-<link rel="shortcut icon" href="{{ (session('metatags') && isset(session('metatags')->favicon)) ? session('metatags')->favicon : 'https://static.tuproyecto.com/images/institutions/favicon.ico.png' }}" />
-<link rel="icon" type="image/x-icon" href="{{ (session('metatags') && isset(session('metatags')->favicon)) ? session('metatags')->favicon : 'https://static.tuproyecto.com/images/institutions/favicon.ico.png' }}">
+<link rel="shortcut icon" href="{{ (session('metatags') && isset(session('metatags')->favicon)) ? session('metatags')->favicon : 'https://s3-us-west-2.amazonaws.com/static.tuproyecto.com/images/institutions/favicon.ico.png' }}" />
+<link rel="icon" type="image/x-icon" href="{{ (session('metatags') && isset(session('metatags')->favicon)) ? session('metatags')->favicon : 'https://s3-us-west-2.amazonaws.com/static.tuproyecto.com/images/institutions/favicon.ico.png' }}">
 <meta name="description" content="{{ session('institution') ? session('institution')->descripcion_institucion : 'Plataforma' }}">
 
 

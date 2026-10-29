@@ -20,25 +20,30 @@ class GestionController extends Controller
     {
         if($request->ajax()){
             $reports = [];
-            $s3 = AWS::createClient('s3');
 
-            $results = $s3->ListObjects([
-                'Bucket' => env('AWS_BUCKET_NAME', 'static-dev.tuproyecto.com'),
-                'Prefix' => 'reports/'.session('institution')->codigo_institucion.'/'.Auth::user()->codigo_usuario
-            ]);
+            try {
+                $s3 = AWS::createClient('s3');
 
-            if(!is_null($results['Contents'])){
-                foreach ($results['Contents'] as $object) {
-                    list($folder, $institution, $user, $name_report) = explode("/", $object['Key']);
+                $results = $s3->ListObjects([
+                    'Bucket' => env('AWS_BUCKET_NAME', 'static-dev.tuproyecto.com'),
+                    'Prefix' => 'reports/'.session('institution')->codigo_institucion.'/'.Auth::user()->codigo_usuario
+                ]);
 
-                    $data['key'] = $object['Key'];
-                    $data['name'] =  $name_report;
-                    $data['date'] =  date('Y-m-d H:i:s', strtotime($object['LastModified']));
-                    $data['size'] =  TuProyecto::formatBytes($object['Size']);
-                    $data['download'] = config('tuproyecto.url_download_aws')."/{$object['Key']}";
+                if(!is_null($results['Contents'])){
+                    foreach ($results['Contents'] as $object) {
+                        list($folder, $institution, $user, $name_report) = explode("/", $object['Key']);
 
-                    $reports[] = $data;
+                        $data['key'] = $object['Key'];
+                        $data['name'] =  $name_report;
+                        $data['date'] =  date('Y-m-d H:i:s', strtotime($object['LastModified']));
+                        $data['size'] =  TuProyecto::formatBytes($object['Size']);
+                        $data['download'] = config('tuproyecto.url_download_aws')."/{$object['Key']}";
+
+                        $reports[] = $data;
+                    }
                 }
+            } catch (\Throwable $e) {
+                Log::warning('GestionController S3 ListObjects: ' . $e->getMessage());
             }
 
             return Datatables::of($reports)->make(true);
@@ -58,14 +63,12 @@ class GestionController extends Controller
         try{
             $deleteReport = Storage::delete('reports/'.session('institution')->codigo_institucion.'/'.Auth::user()->codigo_usuario.'/'.$id);
             if(!$deleteReport){
-                throw new \Exception("Reporte no eliminado {$id}");
+                return response()->json(['success' => false, 'message' => 'No fue posible eliminar el reporte.']);
             }
-
             return response()->json(['success' => true, 'message' => 'Se ha eliminado el reporte correctamente.']);
         }catch(\Exception $e){
             Log::error(sprintf('%s:%s', 'GestionController:destroy', $e->getMessage()));
             return response()->json(['success' => false, 'errors' => trans('app.exception')]);
         }
-
     }
 }
