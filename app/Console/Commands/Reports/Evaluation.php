@@ -4,6 +4,7 @@ namespace App\Console\Commands\Reports;
 // Se añade tiempo maximo de ejecucion en consultas SQL
 ini_set('max_execution_time', 3600);
 set_time_limit(3600);
+ini_set('memory_limit', '1024M');
 
 use App\Models\Core\AsignacionJurado;
 use App\Models\Core\Estado;
@@ -144,6 +145,17 @@ class Evaluation extends Command
         $header[] = 'Puntaje final de la evaluación';
         $header[] = 'Resultado';
 
+        // Indexar respuestas y comentarios por resultado para optimizar procesamiento
+        $answersByResult = [];
+        foreach ($answers as $ans) {
+          $answersByResult[$ans->codigo_resultado_evaluacion][] = $ans;
+        }
+
+        $commentaryByResult = [];
+        foreach ($evaluation_commentary as $comm) {
+          $commentaryByResult[$comm->codigo_resultado_evaluacion] = $comm->commentary;
+        }
+
         $dataReport = collect([]);
         foreach ($data as $value) {
           unset($record);
@@ -156,8 +168,8 @@ class Evaluation extends Command
           $record[] = $value->fecha_resultado_evaluacion;
 
           $result = 0;
-          foreach ($answers as $item_answers) {
-            if ($value->codigo_resultado == $item_answers->codigo_resultado_evaluacion) {
+          if (isset($answersByResult[$value->codigo_resultado])) {
+            foreach ($answersByResult[$value->codigo_resultado] as $item_answers) {
               foreach ($questions as $item_questions) {
                 if ($item_questions->codigo_item_evaluacion == $item_answers->codigo_item_evaluacion) {
                   if ($item_questions->codigo_grupo_item_eval == $item_answers->codigo_grupo_item_eval) {
@@ -173,10 +185,8 @@ class Evaluation extends Command
             }
           }
 
-          foreach ($evaluation_commentary as $commentary) {
-            if ($value->codigo_resultado == $commentary->codigo_resultado_evaluacion) {
-              $record[] = $commentary->commentary;
-            }
+          if (isset($commentaryByResult[$value->codigo_resultado])) {
+            $record[] = $commentaryByResult[$value->codigo_resultado];
           }
 
           if ($value->cod_ciudad_empre == 2257) {
@@ -202,23 +212,31 @@ class Evaluation extends Command
         );
 
         // Genera el archivo Excel y guárdalo en storage/app/reports
-        $file = Excel::store($export,$filepath,'s3', null, [
-          'visibility' => 'public',
-      ]);
-
-      $fileUrl = Storage::disk('s3')->url($filepath);
+        try {
+          $file = Excel::store($export, $filepath, 's3', null, [
+            'visibility' => 'public',
+          ]);
+          $fileUrl = Storage::disk('s3')->url($filepath);
+        } catch (\Throwable $e) {
+          \Log::warning('Evaluation.php S3 upload failed, saving to local: ' . $e->getMessage());
+          $file = Excel::store($export, $filepath, 'local');
+          $fileUrl = url('reportes/gestion');
+        }
 
         if (isset($institution) && isset($user->codigo_usuario)) {
           // Send mail
-          $data = [];
-          $data['_template'] = 'emails.report';
-          $data['_subject'] = 'Reporte evaluaciones';
-          $data['_to'] = $user->correo_electronico;
-          $data['_to'] = $user->correo_electronico;
-          $data['_to_name'] = ucwords(strtolower($user->nombre_usuario));
-          $data['_inst'] = $institution;
-          $data['_url'] = $fileUrl;
-          SendEmail::notification($data);
+          try {
+            $data = [];
+            $data['_template'] = 'emails.report';
+            $data['_subject'] = 'Reporte evaluaciones';
+            $data['_to'] = $user->correo_electronico;
+            $data['_to_name'] = ucwords(strtolower($user->nombre_usuario));
+            $data['_inst'] = $institution;
+            $data['_url'] = $fileUrl;
+            SendEmail::notification($data);
+          } catch (\Throwable $e) {
+            \Log::warning('Evaluation.php SendEmail: ' . $e->getMessage());
+          }
         }
       } catch (\Exception $e) {
         \Log::error(sprintf('%s:%s', 'ReportMonitoreo:Command', $e->getMessage()));
