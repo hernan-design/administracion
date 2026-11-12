@@ -1541,38 +1541,45 @@
 	</script>
 
   <script>
-    document.getElementById("imagen_patrocinador").addEventListener("change", function(event) {
+    $(document).on("change", "#imagen_patrocinador", function(event) {
         var fileInput = event.target;
-        var file = fileInput.files[0];
+        var file = fileInput.files && fileInput.files[0];
         if (file) {
             var fileType = file.type;
             var acceptedTypes = ["image/png", "image/jpeg"];
             if (!acceptedTypes.includes(fileType)) {
                 alert("El formato de la imagen debe ser png o jpg");
                 fileInput.value = "";
-
             }
         }
     });
-    </script>
+  </script>
 
 	<script>
 			setTimeout(function(){
 				$('#event-project-editor').clone().appendTo("#CloneDiv");
-				element = document.getElementsByClassName('editor-content-preview x_panel').item(0);
+				var element = document.getElementsByClassName('editor-content-preview x_panel').item(0);
 				$("#CloneDiv").remove();
-				element1 = document.getElementsByClassName('note-editable').item(0);
-				element1.removeChild(element1.children[0]);
-				element2 = document.getElementsByClassName('note-editing-area').item(0);
-				element2.removeChild(element2.children[0]);
-				for (let index = 0; index < element.children.length; index++) {
-					cloneElement(element,element1)
+				var element1 = document.getElementsByClassName('note-editable').item(0);
+				if (element1 && element1.children && element1.children[0]) {
+					element1.removeChild(element1.children[0]);
+				}
+				var element2 = document.getElementsByClassName('note-editing-area').item(0);
+				if (element2 && element2.children && element2.children[0]) {
+					element2.removeChild(element2.children[0]);
+				}
+				if (element && element.children && element1) {
+					for (let index = 0; index < element.children.length; index++) {
+						cloneElement(element, element1);
+					}
 				}
 			}, 1000);
 
-			function cloneElement(element,element1){
+			function cloneElement(element, element1){
 				setTimeout(function(){
-					element1.appendChild(element.children[0]);
+					if (element && element.children && element.children[0] && element1) {
+						element1.appendChild(element.children[0]);
+					}
 				}, 200);
 			}
 	  </script>

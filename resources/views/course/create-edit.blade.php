@@ -426,20 +426,19 @@
 	</div>
 
   <script>
-    document.getElementById("imagen_patrocinador").addEventListener("change", function(event) {
+    $(document).on("change", "#imagen_patrocinador", function(event) {
         var fileInput = event.target;
-        var file = fileInput.files[0];
+        var file = fileInput.files && fileInput.files[0];
         if (file) {
             var fileType = file.type;
             var acceptedTypes = ["image/png", "image/jpeg"];
             if (!acceptedTypes.includes(fileType)) {
                 alert("El formato de la imagen debe ser png o jpg");
                 fileInput.value = "";
-
             }
         }
     });
-    </script>
+  </script>
 
 	<script type="text/template" id="organizers-list-tpl">
 		<div class="x_panel">
