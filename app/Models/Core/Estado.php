@@ -114,7 +114,7 @@ class Estado extends Model
         return $query->get();
     }
 
-	public static function getStates(Array $denied = [], Array $allowed = [], $filter)
+	public static function getStates(Array $denied = [], Array $allowed = [], $filter = null)
 	{
 		$query = Estado::query();
 		$query->select('codigo_estado', 'nombre_estado');
@@ -128,7 +128,7 @@ class Estado extends Model
 		}
 
 		if($filter){
-			$query->whereRaw("nombre_estado ilike '%".$filter."%'");
+			$query->whereRaw("nombre_estado ilike ?", ['%' . $filter . '%']);
 		}
 
 		$query->orderby('nombre_estado', 'asc');

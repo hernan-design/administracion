@@ -89,7 +89,7 @@ class EvaluacionEmprendimiento extends Model
 
           // Filters
           if(isset($filters['q']) && !empty($filters['q'])) {
-            $query->whereRaw("nombre_evaluacion_emprendimiento ilike '%".$filters['q']."%'");
+            $query->whereRaw("nombre_evaluacion_emprendimiento ilike ?", ['%' . $filters['q'] . '%']);
           }
 
           $query->orderBy('text', 'asc');
@@ -130,7 +130,7 @@ class EvaluacionEmprendimiento extends Model
 		$query->where('codigo_estado', Estado::getState('active'));
 
 		if(isset($filters['q']) && !empty($filters['q'])){
-			$query->whereRaw("nombre_evaluacion_emprendimiento ilike '%".$filters['q']."%'");
+			$query->whereRaw("nombre_evaluacion_emprendimiento ilike ?", ['%' . $filters['q'] . '%']);
 		}
 
 		$query->orderby('text', 'asc');

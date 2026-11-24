@@ -33,7 +33,7 @@ class Patrocinador extends Model
 		$query->select('codigo_patrocinador as id', DB::raw('initcap(nombre_patrocinador) as text') );
 
 		if(Input::has('q')){
-			$query->whereRaw("nombre_patrocinador ilike '%".Input::get("q")."%'");
+			$query->whereRaw("nombre_patrocinador ilike ?", ['%' . Input::get("q") . '%']);
 		}
 
 		$query->orderBy('nombre_patrocinador', 'asc');

@@ -42,7 +42,7 @@ class ProfesionPersona extends Model
 		$query->select('codigo_profesion_persona', 'nombnre_profesion_persona', 'codigo_estado');
 
 		if(isset($filters['nombnre_profesion_persona']) && !empty($filters['nombnre_profesion_persona'])) {
-			$query->whereRaw("nombnre_profesion_persona ilike '%".$filters['nombnre_profesion_persona']."%'");
+			$query->whereRaw("nombnre_profesion_persona ilike ?", ['%' . $filters['nombnre_profesion_persona'] . '%']);
 		}
 
 		if(isset($filters['codigo_estado']) && !empty($filters['codigo_estado'])) {
@@ -60,7 +60,7 @@ class ProfesionPersona extends Model
 		$query->select('codigo_profesion_persona as id', 'nombnre_profesion_persona as text');
 
 		if(isset($filters['q']) && !empty($filters['q'])) {
-			$query->whereRaw("nombnre_profesion_persona ilike '%".$filters['q']."%'");
+			$query->whereRaw("nombnre_profesion_persona ilike ?", ['%' . $filters['q'] . '%']);
 		}
 
 		$query->orderby('nombnre_profesion_persona', 'asc');

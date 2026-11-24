@@ -82,7 +82,7 @@ class Encuesta extends Model
     }
 
     public static function getSurveyUrl($url) {
-		return Encuesta::whereRaw("trim(lower(url_encuesta)) = trim(lower('$url'))")
+		return Encuesta::whereRaw("trim(lower(url_encuesta)) = trim(lower(?))", [$url])
 			->whereRaw("trim(lower(url_encuesta)) != ''")
 			->whereNotNull('url_encuesta')
 			->join('core.encuesta_institucion', function($join) {
@@ -259,7 +259,7 @@ class Encuesta extends Model
 
 		// Filters
 		if(Input::has('q')) {
- 			$query->whereRaw("nombre_encuesta ilike '%".Input::get('q')."%'");
+ 			$query->whereRaw("nombre_encuesta ilike ?", ['%' . Input::get('q') . '%']);
  		}
 
 		$query->orderBy('text', 'asc');

@@ -60,11 +60,11 @@ class Asesoria extends Model
 		}
 
 		if( isset($filters['correo_electronico']) && !empty($filters['correo_electronico']) ) {
-			$query->whereRaw("mentor.correo_electronico ilike '%".$filters['correo_electronico']."%'" );
+			$query->whereRaw("mentor.correo_electronico ilike ?", ['%' . $filters['correo_electronico'] . '%']);
 		}
 
 		if(isset($filters['nombre_usuario']) && !empty($filters['nombre_usuario'])){
-			$query->whereRaw("(COALESCE(trim(mentor.nombre_usuario), '') || ' ' || COALESCE(trim(pmentor.primer_apellido_persona), '') || ' ' || COALESCE(trim(pmentor.segundo_apellido_persona), '')) ilike '%".trim($filters['nombre_usuario'])."%'");
+			$query->whereRaw("(COALESCE(trim(mentor.nombre_usuario), '') || ' ' || COALESCE(trim(pmentor.primer_apellido_persona), '') || ' ' || COALESCE(trim(pmentor.segundo_apellido_persona), '')) ilike ?", ['%' . trim($filters['nombre_usuario']) . '%']);
 		}
 
 		$query->orderBy('fecha_asesoria', 'desc');
@@ -117,11 +117,11 @@ class Asesoria extends Model
 		}
 
 	    if( isset($filters['correo_electronico_mentor']) && !empty($filters['correo_electronico_mentor']) ) {
-			$query->whereRaw("mentor.correo_electronico ilike '%".$filters['correo_electronico_mentor']."%'" );
+			$query->whereRaw("mentor.correo_electronico ilike ?", ['%' . $filters['correo_electronico_mentor'] . '%']);
 		}
 
 	    if( isset($filters['correo_electronico_emprendedor']) && !empty($filters['correo_electronico_emprendedor']) ) {
-			$query->whereRaw("emprendedor.correo_electronico ilike '%".$filters['correo_electronico_emprendedor']."%'" );
+			$query->whereRaw("emprendedor.correo_electronico ilike ?", ['%' . $filters['correo_electronico_emprendedor'] . '%']);
 		}
 
 	    if( isset($filters['codigo_tipo_asesoria']) && !empty($filters['codigo_tipo_asesoria']) ) {

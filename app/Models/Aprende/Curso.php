@@ -95,7 +95,7 @@ class Curso extends Model
 
 		// Filters
 		if(isset($filters['nombre_curso']) && !empty($filters['nombre_curso'])) {
- 			$query->whereRaw("curso.nombre_curso ilike '%".$filters['nombre_curso']."%'");
+ 			$query->whereRaw("curso.nombre_curso ilike ?", ['%' . $filters['nombre_curso'] . '%']);
  		}
 
 		if(isset($filters['tipo_curso']) && !empty($filters['tipo_curso'])) {
@@ -164,7 +164,7 @@ class Curso extends Model
 
 		// Filters
 		if(isset($filters['q']) && !empty($filters['q'])) {
- 			$query->whereRaw("nombre_curso ilike '%".$filters['q']."%'");
+ 			$query->whereRaw("nombre_curso ilike ?", ['%' . $filters['q'] . '%']);
  		}
 
 		// Order
@@ -194,7 +194,7 @@ class Curso extends Model
 
 
       if(isset($filters['nombre_encuesta']) && !empty($filters['nombre_encuesta'])){
-        $query->whereRaw("nombre_encuesta ilike '%".trim($filters['nombre_encuesta'])."%'");
+        $query->whereRaw("nombre_encuesta ilike ?", ['%' . trim($filters['nombre_encuesta']) . '%']);
       }
 
       if(isset($filters['codigo_estado']) && !empty($filters['codigo_estado'])){

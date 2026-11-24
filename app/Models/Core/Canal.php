@@ -64,7 +64,7 @@ class Canal extends BaseModel
 		$query->select('codigo_canal', 'codigo_estado', 'codigo_institucion', 'nombre_canal', 'descripcion_canal', 'canal_abierto', 'canal_defecto', 'codigo_categoria_canal', 'contador_inscritos');
 
 		if(isset($filters['nombre_canal']) && !empty($filters['nombre_canal'])){
-			$query->whereRaw("nombre_canal  ilike '%".$filters['nombre_canal']."%'");
+			$query->whereRaw("nombre_canal ilike ?", ['%' . $filters['nombre_canal'] . '%']);
 		}
 
 		if(isset($filters['tipo_canal']) && !empty($filters['tipo_canal'])){

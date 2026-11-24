@@ -72,11 +72,11 @@ class AsignacionJurado extends Model
 
         if( isset($filters['email']) && !empty($filters['email']) ) {
             $email = trim($filters['email']);
-            $query->whereRaw("trim(lower(person.correo_electronico)) ilike trim(lower('%$email%'))");
+            $query->whereRaw("trim(lower(person.correo_electronico)) ilike trim(lower(?))", ['%' . $email . '%']);
         }
 
         if( isset($filters['emprendimiento']) && !empty($filters['emprendimiento']) ) {
-			$query->whereRaw("usuario.nombre_usuario ilike '%".trim($filters['emprendimiento'])."%'");
+			$query->whereRaw("usuario.nombre_usuario ilike ?", ['%' . trim($filters['emprendimiento']) . '%']);
  		}
 
         if( isset($filters['fecha_asignacion']) && !empty($filters['fecha_asignacion']) ) {
@@ -92,11 +92,13 @@ class AsignacionJurado extends Model
         }
 
         if( (isset($filters['sortby']) && !empty($filters['sortby'])) && (isset($filters['scoring']) && !empty($filters['scoring'])) ) {
-            $query->whereRaw( sprintf('%s %s %s', "puntaje_total_eval_emprendi", $filters['sortby'], $filters['scoring']) );
+            $operator = in_array($filters['sortby'], ['=', '!=', '>', '<', '>=', '<=']) ? $filters['sortby'] : '=';
+            $query->whereRaw("puntaje_total_eval_emprendi {$operator} ?", [(float)$filters['scoring']]);
         }
 
         if( (isset($filters['sortby_2']) && !empty($filters['sortby_2'])) && (isset($filters['scoring_2']) && !empty($filters['scoring_2'])) ) {
-            $query->whereRaw( sprintf('%s %s %s', "puntaje_total_eval_emprendi", $filters['sortby_2'], $filters['scoring_2']) );
+            $operator2 = in_array($filters['sortby_2'], ['=', '!=', '>', '<', '>=', '<=']) ? $filters['sortby_2'] : '=';
+            $query->whereRaw("puntaje_total_eval_emprendi {$operator2} ?", [(float)$filters['scoring_2']]);
         }
 
 		$query->where('fase.codigo_evaluacion_emprendimiento', $evaluation->codigo_evaluacion_emprendimiento);
@@ -148,7 +150,7 @@ class AsignacionJurado extends Model
         }
 
         if( isset($filters['emprendimiento']) && !empty($filters['emprendimiento']) ) {
-            $query->whereRaw("usuario.nombre_usuario ilike '%".trim($filters['emprendimiento'])."%'");
+            $query->whereRaw("usuario.nombre_usuario ilike ?", ['%' . trim($filters['emprendimiento']) . '%']);
         }
 
         if( isset($filters['number_register']) && !empty($filters['number_register']) ) {

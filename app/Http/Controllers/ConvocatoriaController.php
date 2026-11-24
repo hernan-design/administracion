@@ -791,12 +791,11 @@ class ConvocatoriaController extends Controller
 
 		if(isset($filters['email']) && !empty($filters['email'])){
 			$email = trim($filters['email']);
-			$query->whereRaw("trim(lower(person.correo_electronico)) = trim(lower('$email'))");
+			$query->whereRaw("trim(lower(person.correo_electronico)) = trim(lower(?))", [$email]);
 		}
 
 		if(isset($filters['nickname_usuario']) && !empty($filters['nickname_usuario'])){
-			$email = trim($filters['nickname_usuario']);
-			$query->whereRaw("entity.nickname_usuario ilike '%".trim($filters['nickname_usuario'])."%'");
+			$query->whereRaw("entity.nickname_usuario ilike ?", ['%' . trim($filters['nickname_usuario']) . '%']);
 		}
 		return $query = $query->first();
 	}

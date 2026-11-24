@@ -96,7 +96,7 @@ class RegistroFaseUsuario extends Model
 
 		if(isset($filters['email']) && !empty($filters['email'])){
 			$email = trim($filters['email']);
-			$query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower('$email'))");
+			$query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower(?))", [$email]);
 		}
 
 		if(isset($filters['number_register']) && !empty($filters['number_register'])){
@@ -187,7 +187,7 @@ class RegistroFaseUsuario extends Model
 
 		if(isset($filters['email']) && !empty($filters['email'])){
 			$email = trim($filters['email']);
-			$query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower('$email'))");
+			$query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower(?))", [$email]);
 		}
 
 		if(isset($filters['number_register']) && !empty($filters['number_register'])){
@@ -291,7 +291,7 @@ class RegistroFaseUsuario extends Model
 
     if(isset($filters['email']) && !empty($filters['email'])){
       $email = trim($filters['email']);
-      $query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower('$email'))");
+      $query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower(?))", [$email]);
     }
 
     if(isset($filters['number_register']) && !empty($filters['number_register'])){
@@ -363,11 +363,11 @@ class RegistroFaseUsuario extends Model
 
 		if(isset($filters['email']) && !empty($filters['email'])){
 			$email = trim($filters['email']);
-			$query->whereRaw("trim(lower(person.correo_electronico)) = trim(lower('$email'))");
+			$query->whereRaw("trim(lower(person.correo_electronico)) = trim(lower(?))", [$email]);
 		}
 
 		if(isset($filters['emprendimiento']) && !empty($filters['emprendimiento'])) {
-			$query->whereRaw("entity.nombre_usuario ilike '%".trim($filters['emprendimiento'])."%'");
+			$query->whereRaw("entity.nombre_usuario ilike ?", ['%' . trim($filters['emprendimiento']) . '%']);
 		}
 
 		if(isset($filters['number_register']) && !empty($filters['number_register'])){
@@ -448,11 +448,11 @@ class RegistroFaseUsuario extends Model
 
     if(isset($filters['email']) && !empty($filters['email'])){
       $email = trim($filters['email']);
-      $query->whereRaw("trim(lower(person.correo_electronico)) = trim(lower('$email'))");
+      $query->whereRaw("trim(lower(person.correo_electronico)) = trim(lower(?))", [$email]);
     }
 
     if(isset($filters['emprendimiento']) && !empty($filters['emprendimiento'])) {
-      $query->whereRaw("entity.nombre_usuario ilike '%".trim($filters['emprendimiento'])."%'");
+      $query->whereRaw("entity.nombre_usuario ilike ?", ['%' . trim($filters['emprendimiento']) . '%']);
     }
 
     if(isset($filters['number_register']) && !empty($filters['number_register'])){
@@ -576,11 +576,11 @@ class RegistroFaseUsuario extends Model
 
 		if(isset($filters['correo_electronico']) && !empty($filters['correo_electronico'])){
 			$email = trim($filters['correo_electronico']);
-			$query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower('$email'))");
+			$query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower(?))", [$email]);
 		}
 
 		if( isset($filters['nombre_usuario']) && !empty($filters['nombre_usuario']) ) {
-			$query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike '%".trim($filters['nombre_usuario'])."%'");
+			$query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike ?", ['%' . trim($filters['nombre_usuario']) . '%']);
 		}
 
 		$query->where('convocatoria.codigo_convocatoria', $program->codigo_convocatoria);

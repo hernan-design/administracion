@@ -33,7 +33,7 @@ class UserEventListener
             // CheckUser on Broadcast
             event(new CheckUser($user));
 
-        }catch(\Predis\Connection\ConnectionException $e){
+        }catch(\Throwable $e){
             \Log::error( sprintf('Broadcasting server: %s, %s.', $e->getMessage(), 'onUserLogin') );
         }
     }

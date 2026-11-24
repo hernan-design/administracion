@@ -71,7 +71,7 @@ app || (app = {});
 					el: el,
 					collection: _this.collection,
 					parameters: {
-						'nameForm': _this.$formFilter,
+						'nameForm': '#form-course-filter',
 						'callBackFilter': function (newDataFilter) {
 
                             // navigate to route

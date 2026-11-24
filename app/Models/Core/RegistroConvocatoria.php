@@ -34,10 +34,10 @@ class RegistroConvocatoria extends Model
 			(
 				select ue.codigo_usuario_encuesta
 				from core.usuario_encuesta as ue
-				where ue.codigo_usuario = ($id_user) and ue.codigo_encuesta = ($id_survey)
+				where ue.codigo_usuario = ? and ue.codigo_encuesta = ?
 				order by ue.codigo_usuario_encuesta desc
 				limit 1
-			)"
+			)", [$id_user, $id_survey]
 		);
 		$data = $query->first();
 

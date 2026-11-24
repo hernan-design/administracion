@@ -35,7 +35,7 @@ class CategoriaProceso extends Model
 				$join->on('categoria_proceso.codigo_categoria_proceso', '=', 'categoria_proceso_insti.codigo_categoria_proceso')
 					->where('categoria_proceso_insti.codigo_institucion', '=', session('institution')->codigo_institucion);
 			});
-			$query->whereRaw("nombre_categoria_proceso ilike trim('%".$data['nombre_categoria_proceso']."%')");
+			$query->whereRaw("nombre_categoria_proceso ilike trim(?)", ['%' . $data['nombre_categoria_proceso'] . '%']);
 			$exist = $query->first();
 
 			if($exist instanceof CategoriaProceso){
@@ -61,7 +61,7 @@ class CategoriaProceso extends Model
 				$join->on('categoria_proceso.codigo_categoria_proceso', '=', 'categoria_proceso_insti.codigo_categoria_proceso')
 					->where('categoria_proceso_insti.codigo_institucion', '=', session('institution')->codigo_institucion);
 			});
-			$query->whereRaw("nombre_categoria_proceso ilike trim('%".$data['nombre_categoria_proceso']."%')");
+			$query->whereRaw("nombre_categoria_proceso ilike trim(?)", ['%' . $data['nombre_categoria_proceso'] . '%']);
 			$query->where('categoria_proceso.codigo_categoria_proceso', '<>', $this->codigo_categoria_proceso);
 			$exist = $query->first();
 
@@ -85,7 +85,7 @@ class CategoriaProceso extends Model
 		});
 
 		if(isset($filters['nombre_categoria_proceso']) && !empty($filters['nombre_categoria_proceso'])){
-			$query->whereRaw("nombre_categoria_proceso ilike '%".$filters['nombre_categoria_proceso']."%'");
+			$query->whereRaw("nombre_categoria_proceso ilike ?", ['%' . $filters['nombre_categoria_proceso'] . '%']);
 		}
 
 		if(isset($filters['codigo_estado']) && !empty($filters['codigo_estado'])){

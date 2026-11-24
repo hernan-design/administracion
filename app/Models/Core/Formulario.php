@@ -85,7 +85,7 @@ class Formulario extends BaseModel
 		});
 
 		if(isset($filters['nombre_encuesta']) && !empty($filters['nombre_encuesta'])){
-			$query->whereRaw("nombre_encuesta ilike '%".trim($filters['nombre_encuesta'])."%'");
+			$query->whereRaw("nombre_encuesta ilike ?", ['%' . trim($filters['nombre_encuesta']) . '%']);
 		}
 
 		if(isset($filters['codigo_estado']) && !empty($filters['codigo_estado'])){
@@ -134,7 +134,7 @@ class Formulario extends BaseModel
 
 		// Filters
 		if(isset($filters['q']) && !empty($filters['q'])) {
- 			$query->whereRaw("nombre_encuesta ilike '%".$filters['q']."%'");
+ 			$query->whereRaw("nombre_encuesta ilike ?", ['%' . $filters['q'] . '%']);
  		}
 
 		$query->orderBy('text', 'asc');

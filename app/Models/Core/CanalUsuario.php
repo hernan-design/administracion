@@ -42,11 +42,11 @@ class CanalUsuario extends Model
 		$query->leftjoin('core.ciudad', 'usuario.codigo_ciudad', '=', 'ciudad.codigo_ciudad');
 
 		if(isset($filters['correo_electronico']) && !empty($filters['correo_electronico'])){
-			$query->whereRaw("correo_electronico ilike '%".$filters['correo_electronico']."%'");
+			$query->whereRaw("correo_electronico ilike ?", ['%' . $filters['correo_electronico'] . '%']);
 		}
 
 		if(isset($filters['nombre_usuario']) && !empty($filters['nombre_usuario'])){
-			$query->whereRaw("nombre_usuario ilike '%".$filters['nombre_usuario']."%'");
+			$query->whereRaw("nombre_usuario ilike ?", ['%' . $filters['nombre_usuario'] . '%']);
 		}
 
 		// Get total posts

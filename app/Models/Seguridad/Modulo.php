@@ -51,7 +51,7 @@ class Modulo extends Model
 		endswitch;
     }
 
-	public static function getModules(Array $denied = [], Array $allowed = [], $filter)
+	public static function getModules(Array $denied = [], Array $allowed = [], $filter = null)
 	{
 		$query = Modulo::query();
 		$query->select('codigo_modulo', DB::raw('initcap(nombre_modulo) as nombre_modulo'));
@@ -65,7 +65,7 @@ class Modulo extends Model
 		}
 
 		if($filter){
-			$query->whereRaw("nombre_modulo ilike '%".$filter."%'");
+			$query->whereRaw("nombre_modulo ilike ?", ['%' . $filter . '%']);
 		}
 
 		$query->orderby('nombre_modulo', 'asc');

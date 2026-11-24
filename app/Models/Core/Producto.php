@@ -86,7 +86,7 @@ class Producto extends Model
       	$query->join('core.estado', 'producto.codigo_estado', '=', 'estado.codigo_estado');
 
         if( isset($filters['name_product']) && !empty($filters['name_product']) ) {
-            $query->whereRaw("nombre_producto ilike '%".trim($filters['name_product'])."%'");
+            $query->whereRaw("nombre_producto ilike ?", ['%' . trim($filters['name_product']) . '%']);
         }
 
 	    if( isset($filters['seg_codigo_usuario']) && !empty($filters['seg_codigo_usuario']) ) {

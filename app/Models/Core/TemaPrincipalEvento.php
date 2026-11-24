@@ -52,7 +52,7 @@ class TemaPrincipalEvento extends Model
 
 		if($request->has('q')) {
 			$query->where( function($query) use($request) {
-				$query->whereRaw("tema_principal_evento.nombre_tema_principal_evento ilike '%".$request->q."%'");
+				$query->whereRaw("tema_principal_evento.nombre_tema_principal_evento ilike ?", ['%' . $request->q . '%']);
 			});
 		}
 

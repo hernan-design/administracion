@@ -148,7 +148,7 @@ app || (app = {});
                 data.codigo_convocatoria = this.parameters['codigo_convocatoria'];
 
                 this.$listcontentevaluator.html('');
-            _this = this;
+            var _this = this;
             $.get(document.url + Route.route('asignacionautomatica.index'), data, function (resp) {
 
                 if ( resp ) {

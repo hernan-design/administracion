@@ -138,7 +138,7 @@ class Evento extends BaseModel
 		});
 
 		if(isset($filters['nombre_evento']) && !empty($filters['nombre_evento'])){
-			$query->whereRaw("nombre_evento  ilike '%".$filters['nombre_evento']."%'");
+			$query->whereRaw("nombre_evento ilike ?", ['%' . $filters['nombre_evento'] . '%']);
 		}
 
 		if(isset($filters['codigo_estado']) && !empty($filters['codigo_estado'])){
@@ -221,7 +221,7 @@ class Evento extends BaseModel
 
 		// Filters
 		if(isset($filters['q']) && !empty($filters['q'])) {
- 			$query->whereRaw("nombre_evento ilike '%".$filters['q']."%'");
+ 			$query->whereRaw("nombre_evento ilike ?", ['%' . $filters['q'] . '%']);
  		}
 
 		// Order
@@ -308,11 +308,11 @@ class Evento extends BaseModel
     $query->leftJoin('core.ciudad', 'ciudad.codigo_ciudad', '=', 'usuario.codigo_ciudad');
 
     if( isset($filters['nombre_usuario']) && !empty($filters['nombre_usuario']) ) {
-      $query->whereRaw("usuario.nombre_usuario ilike '%".trim($filters['nombre_usuario'])."%'" );
+      $query->whereRaw("usuario.nombre_usuario ilike ?", ['%' . trim($filters['nombre_usuario']) . '%']);
     }
 
     if( isset($filters['nickname_usuario']) && !empty($filters['nickname_usuario']) ) {
-      $query->whereRaw("usuario.nickname_usuario ilike '%".trim($filters['nickname_usuario'])."%'" );
+      $query->whereRaw("usuario.nickname_usuario ilike ?", ['%' . trim($filters['nickname_usuario']) . '%']);
     }
 
     if( isset($filters['nombre_ciudad']) && !empty($filters['nombre_ciudad']) ) {

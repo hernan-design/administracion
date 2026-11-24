@@ -94,7 +94,7 @@ class AsignacionMarketplace extends Model
 		$query->join('core.asignacion_marketplace', 'usuario.codigo_usuario', '=', 'asignacion_marketplace.codigo_usuario');
 
 		if( isset($filters['q']) && !empty($filters['q']) ) {
-            $query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike '%".trim($filters['q'])."%'");
+            $query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike ?", ['%' . trim($filters['q']) . '%']);
         }
 
 		$query->whereIn('asignacion_marketplace.codigo_estado', [Estado::getState('active')]);

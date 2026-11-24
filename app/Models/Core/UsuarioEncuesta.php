@@ -49,7 +49,7 @@ class UsuarioEncuesta extends Model
         $query->where('usuario_encuesta.codigo_estado', '=', Estado::getState('complete'));
 
 		if(Input::has('nombre_usuario')){
-			$query->whereRaw("nombre_usuario ilike '%".Input::get('nombre_usuario')."%'");
+			$query->whereRaw("nombre_usuario ilike ?", ['%' . Input::get('nombre_usuario') . '%']);
 		}
 
 		return Datatables::of($query)

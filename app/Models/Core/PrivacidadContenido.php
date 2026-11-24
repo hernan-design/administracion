@@ -40,7 +40,7 @@ class PrivacidadContenido extends Model
 		}
 
 		if($filter) {
-			$query->whereRaw("nombre_privacidad_contenido ilike '%".$filter."%'");
+			$query->whereRaw("nombre_privacidad_contenido ilike ?", ['%' . $filter . '%']);
 		}
 		$data = $query->get();
 

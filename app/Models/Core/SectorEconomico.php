@@ -78,7 +78,7 @@ class SectorEconomico extends Model
 		$query->select('codigo_sector_economico', 'nombre_sector_economico', 'codigo_estado');
 
 		if(Input::has('nombre_sector_economico')) {
-			$query->whereRaw("nombre_sector_economico ilike '%".Input::get('nombre_sector_economico')."%'");
+			$query->whereRaw("nombre_sector_economico ilike ?", ['%' . Input::get('nombre_sector_economico') . '%']);
 		}
 
 		if(Input::has('codigo_estado')){

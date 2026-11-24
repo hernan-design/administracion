@@ -331,7 +331,7 @@ class CompraController extends Controller
 		$query->leftJoin('core.acuerdo_compra', 'compra.codigo_compra', '=', 'acuerdo_compra.codigo_compra');
 
 		if($request->has('name_product') && !empty($request->name_product)) {
-			$query->whereRaw("nombre_producto ilike '%".trim($request->name_product)."%'");
+			$query->whereRaw("nombre_producto ilike ?", ['%' . trim($request->name_product) . '%']);
 		}
 
 		if($request->has('category') && !empty($request->category)){

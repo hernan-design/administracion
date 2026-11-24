@@ -45,11 +45,11 @@ class DetalleVoucher extends Model
 		$query->join('core.estado', 'detalle_voucher.codigo_estado', '=', 'estado.codigo_estado');
 
 		if(isset($filters['correo_electronico']) && !empty($filters['correo_electronico'])){
-            $query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower('".$filters['correo_electronico']."'))");
+            $query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower(?))", [$filters['correo_electronico']]);
         }
 
        	if(isset($filters['emprendimiento']) && !empty($filters['emprendimiento'])) {
-			$query->whereRaw("enterprise.nombre_usuario ilike '%".trim($filters['emprendimiento'])."%'");
+			$query->whereRaw("enterprise.nombre_usuario ilike ?", ['%' . trim($filters['emprendimiento']) . '%']);
  		}
 
 		if(isset($filters['voucher']) && !empty($filters['voucher'])){

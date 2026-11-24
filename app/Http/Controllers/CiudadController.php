@@ -48,8 +48,8 @@ class CiudadController extends Controller
 
 			if($request->has('q')) {
 				$query->where( function($query) use($request) {
-					$query->whereRaw("nombre_ciudad ilike '%".$request->q."%'");
-					$query->orWhereRaw("distrito_ciudad ilike '%".$request->q."%'");
+					$query->whereRaw("nombre_ciudad ilike ?", ['%' . $request->q . '%']);
+					$query->orWhereRaw("distrito_ciudad ilike ?", ['%' . $request->q . '%']);
 				});
 			}
 

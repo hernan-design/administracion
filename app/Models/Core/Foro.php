@@ -55,7 +55,7 @@ class Foro extends Model {
 		}
 
 	    if( isset($filters['correo_electronico_usuario']) && !empty($filters['correo_electronico_usuario']) ) {
-			$query->whereRaw("usuario.correo_electronico ilike '%".$filters['correo_electronico_usuario']."%'" );
+			$query->whereRaw("usuario.correo_electronico ilike ?", ['%' . $filters['correo_electronico_usuario'] . '%']);
 		}
 
 	    if( isset($filters['codigo_categoria_foro']) && !empty($filters['codigo_categoria_foro']) ) {

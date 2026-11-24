@@ -28,7 +28,7 @@ class BarrioLocalidad extends Model
         }
 
         if(isset($filters['q']) && !empty($filters['q'])){
-            $query->whereRaw("nombre_barrio_localidad ilike '%".trim($filters['q'])."%'");
+            $query->whereRaw("nombre_barrio_localidad ilike ?", ['%' . trim($filters['q']) . '%']);
         }
 
         $query->orderBy('nombre_barrio_localidad', 'asc');

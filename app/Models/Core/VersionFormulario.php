@@ -29,7 +29,7 @@ class VersionFormulario extends Model
 		}
 
 		if(isset($filters['q']) && !empty($filters['q'])){
-			$query->whereRaw("comentario_version_encuesta ilike '%".trim($filters['q'])."%'");
+			$query->whereRaw("comentario_version_encuesta ilike ?", ['%' . trim($filters['q']) . '%']);
 		}
 
 		if(isset($filters['id']) && !empty($filters['id'])){

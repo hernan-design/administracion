@@ -10,7 +10,7 @@
 			</div>
 			<div class="x_content">
 				<div id="content-form-course-filter" class="well">
-					{!! Form::open(array('route' => null,'id' => 'form-course-filter', 'class' =>'form-horizontal')) !!}
+					{!! Form::open(array('route' => null,'id' => 'form-course-filter', 'class' =>'form-horizontal', 'onsubmit' => 'return false;')) !!}
 						<div class="row">
 							<div class="col-md-4 col-sm-6 col-xs-12">
 								<label>Título</label>
@@ -146,5 +146,21 @@
 				</div>
 			</div>
 		</div>
+	</script>
+	<script type="text/javascript">
+		$(function() {
+			$('#form-course-filter').on('submit', function(e) {
+				e.preventDefault();
+				$('.btn-search').trigger('click');
+				return false;
+			});
+			$('#nombre_curso').on('keydown', function(e) {
+				if (e.which === 13 || e.keyCode === 13) {
+					e.preventDefault();
+					$('.btn-search').trigger('click');
+					return false;
+				}
+			});
+		});
 	</script>
 @stop

@@ -244,7 +244,7 @@ class ProductoController extends Controller
        // $query->join('core.persona','producto.codigo_usuario','=','persona.codigo_usuario');
 
         if($request->has('name_product') && !empty($request->name_product)){
-            $query->whereRaw("nombre_producto ilike '%".$request->name_product."%'");
+            $query->whereRaw("nombre_producto ilike ?", ['%' . $request->name_product . '%']);
         }
 
         if($request->has('seg_codigo_usuario') && !empty($request->seg_codigo_usuario)) {

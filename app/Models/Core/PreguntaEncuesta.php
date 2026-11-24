@@ -173,7 +173,7 @@ class PreguntaEncuesta extends Model
 
 		// Filters
 		if(isset($filters['q']) && !empty($filters['q'])) {
- 			$query->whereRaw("texto_pregunta_encuesta ilike '%".$filters['q']."%'");
+ 			$query->whereRaw("texto_pregunta_encuesta ilike ?", ['%' . $filters['q'] . '%']);
  		}
 
 		if(isset($filters['id']) && !empty($filters['id'])) {

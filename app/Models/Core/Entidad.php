@@ -170,7 +170,7 @@ class Entidad extends Model
 				"(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || 
 				  COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || 
 				  COALESCE(trim(persona.segundo_apellido_persona), '')) 
-				  ilike '%". $cadena ."%'"
+				  ilike ?", ['%' . $cadena . '%']
 			);
 		}
 
@@ -231,7 +231,7 @@ class Entidad extends Model
 				$query->leftJoin('core.entidad', 'usuario.codigo_usuario', '=', 'entidad.codigo_usuario');
 
 				if(isset($filters['q']) && !empty($filters['q'])){
-					$query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike '%".trim($filters['q'])."%'");
+					$query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike ?", ['%' . trim($filters['q']) . '%']);
 				}
 
 			break;
@@ -282,7 +282,7 @@ class Entidad extends Model
 		$query->leftjoin('core.categoria_proyecto as scategoria', 'dato_entidad.cor_codigo_categoria_proyecto', '=', 'scategoria.codigo_categoria_proyecto');
 		$query->leftjoin('core.privacidad_contenido', 'dato_entidad.codigo_privacidad_contenido', '=', 'privacidad_contenido.codigo_privacidad_contenido');
 
-	  $query->whereRaw("trim(lower(usuario.nickname_usuario)) = trim(lower('$nickname'))");
+	  $query->whereRaw("trim(lower(usuario.nickname_usuario)) = trim(lower(?))", [$nickname]);
 		return $query->first();
 	}
 

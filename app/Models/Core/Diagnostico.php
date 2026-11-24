@@ -183,11 +183,11 @@ class Diagnostico extends BaseModel
     $query->leftJoin('core.ciudad', 'ciudad.codigo_ciudad', '=', 'usuario.codigo_ciudad');
 
     if( isset($filters['nombre_usuario']) && !empty($filters['nombre_usuario']) ) {
-      $query->whereRaw("usuario.nombre_usuario ilike '%".trim($filters['nombre_usuario'])."%'" );
+      $query->whereRaw("usuario.nombre_usuario ilike ?", ['%' . trim($filters['nombre_usuario']) . '%']);
     }
 
     if( isset($filters['nickname_usuario']) && !empty($filters['nickname_usuario']) ) {
-      $query->whereRaw("usuario.nickname_usuario ilike '%".trim($filters['nickname_usuario'])."%'" );
+      $query->whereRaw("usuario.nickname_usuario ilike ?", ['%' . trim($filters['nickname_usuario']) . '%']);
     }
 
     if( isset($filters['nombre_ciudad']) && !empty($filters['nombre_ciudad']) ) {

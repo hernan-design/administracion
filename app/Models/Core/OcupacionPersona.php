@@ -42,7 +42,7 @@ class OcupacionPersona extends Model
 		$query->select('codigo_ocupacion_persona', 'nombre_ocupacion_persona', 'codigo_estado');
 
 		if(isset($filters['nombre_ocupacion_persona']) && !empty($filters['nombre_ocupacion_persona'])) {
-			$query->whereRaw("nombre_ocupacion_persona ilike '%".$filters['nombre_ocupacion_persona']."%'");
+			$query->whereRaw("nombre_ocupacion_persona ilike ?", ['%' . $filters['nombre_ocupacion_persona'] . '%']);
 		}
 
 		if(isset($filters['codigo_estado']) && !empty($filters['codigo_estado'])) {
@@ -60,7 +60,7 @@ class OcupacionPersona extends Model
 		$query->select('codigo_ocupacion_persona as id', 'nombre_ocupacion_persona as text');
 
 		if(isset($filters['q']) && !empty($filters['q'])) {
-			$query->whereRaw("nombre_ocupacion_persona ilike '%".$filters['q']."%'");
+			$query->whereRaw("nombre_ocupacion_persona ilike ?", ['%' . $filters['q'] . '%']);
 		}
 
 		$query->where('codigo_estado', Estado::getState('active'));

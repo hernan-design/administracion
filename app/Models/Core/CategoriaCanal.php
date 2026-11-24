@@ -26,7 +26,7 @@ class CategoriaCanal extends Model
 		$query->where('codigo_institucion', session('institution')->codigo_institucion);
 
 		if(isset($filters['nombre_categoria_canal']) && !empty($filters['nombre_categoria_canal'])){
-			$query->whereRaw("nombre_categoria_canal ilike '%".$filters['nombre_categoria_canal']."%'");
+			$query->whereRaw("nombre_categoria_canal ilike ?", ['%' . $filters['nombre_categoria_canal'] . '%']);
 		}
 
 		if(isset($filters['codigo_estado']) && !empty($filters['codigo_estado'])){
@@ -45,7 +45,7 @@ class CategoriaCanal extends Model
 		$query->where('codigo_estado', '=', Estado::getState('active'));
 
 		if(isset($filters['q']) && !empty($filters['q'])){
-			$query->whereRaw("nombre_categoria_canal ilike '%".$filters['q']."%'");
+			$query->whereRaw("nombre_categoria_canal ilike ?", ['%' . $filters['q'] . '%']);
 		}
 
 		if(isset($filters['id']) && !empty($filters['id'])){

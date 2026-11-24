@@ -28,7 +28,7 @@ class CategoriaForo extends Model
 
 		// Filters
 		if(isset($filters['nombre_categoria_foro']) && !empty($filters['nombre_categoria_foro'])) {
- 			$query->whereRaw("nombre_categoria_foro ilike '%".$filters['nombre_categoria_foro']."%'");
+ 			$query->whereRaw("nombre_categoria_foro ilike ?", ['%' . $filters['nombre_categoria_foro'] . '%']);
  		}
 
 		$query->orderBy('nombre_categoria_foro', 'asc');
@@ -47,7 +47,7 @@ class CategoriaForo extends Model
 
 		// Filters
 		if(isset($filters['forum_category_name']) && !empty($filters['forum_category_name'])) {
- 			$query->whereRaw("nombre_categoria_foro ilike '%".$filters['forum_category_name']."%'");
+ 			$query->whereRaw("nombre_categoria_foro ilike ?", ['%' . $filters['forum_category_name'] . '%']);
  		}
 
 		$query->orderBy('nombre_categoria_foro', 'asc');
@@ -76,7 +76,7 @@ class CategoriaForo extends Model
 
 		// Filters
 		if(isset($filters['q']) && !empty($filters['q'])) {
- 			$query->whereRaw("nombre_categoria_foro ilike '%".$filters['q']."%'");
+ 			$query->whereRaw("nombre_categoria_foro ilike ?", ['%' . $filters['q'] . '%']);
  		}
 
 		$query->orderBy('text', 'asc');

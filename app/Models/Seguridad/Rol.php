@@ -102,7 +102,7 @@ class Rol extends LaratrustRole
 		});
 
 		if( isset($filters['title']) && $filters['title'] ) {
-			$query->whereRaw("title ilike '%".trim($filters['title'])."%'");
+			$query->whereRaw("title ilike ?", ['%' . trim($filters['title']) . '%']);
 		}
 
 		if( isset($filters['codigo_estado']) && $filters['codigo_estado'] ) {

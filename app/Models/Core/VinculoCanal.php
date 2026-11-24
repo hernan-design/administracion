@@ -40,7 +40,7 @@ class VinculoCanal extends Model
 				});
 
 				if(Input::has('nombnre_profesion_persona')){
-					$query->whereRaw("nombnre_profesion_persona ilike '%".$filters['nombnre_profesion_persona']."%'");
+					$query->whereRaw("nombnre_profesion_persona ilike ?", ['%' . $filters['nombnre_profesion_persona'] . '%']);
 				}
 		}
 

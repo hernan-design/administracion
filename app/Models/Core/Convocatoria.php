@@ -164,7 +164,7 @@ class Convocatoria extends Model
 
 		// Filters
 		if(Input::has('nombre_convocatoria')) {
- 			$query->whereRaw("nombre_convocatoria ilike '%".trim(Input::get('nombre_convocatoria'))."%'");
+ 			$query->whereRaw("nombre_convocatoria ilike ?", ['%' . trim(Input::get('nombre_convocatoria')) . '%']);
  		}
 
 		if(Input::has('tipo_convocatoria')) {
@@ -214,7 +214,7 @@ class Convocatoria extends Model
 
 		// Filters
 		if(Input::has('q')) {
- 			$query->whereRaw("nombre_convocatoria ilike '%".Input::get('q')."%'");
+ 			$query->whereRaw("nombre_convocatoria ilike ?", ['%' . Input::get('q') . '%']);
  		}
 
 		// Order

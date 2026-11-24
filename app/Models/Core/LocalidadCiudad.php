@@ -28,7 +28,7 @@ class LocalidadCiudad extends Model
         }
 
         if(isset($filters['q']) && !empty($filters['q'])){
-            $query->whereRaw("nombrelocalidad_ciudad ilike '%".trim($filters['q'])."%'");
+            $query->whereRaw("nombrelocalidad_ciudad ilike ?", ['%' . trim($filters['q']) . '%']);
         }
 
         $query->orderBy('nombrelocalidad_ciudad', 'asc');

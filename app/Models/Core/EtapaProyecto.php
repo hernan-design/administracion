@@ -71,7 +71,7 @@ class EtapaProyecto extends Model
         $query->where('codigo_institucion', '=', session('institution')->codigo_institucion);
 
 		if(isset($filters['q']) && !empty($filters['q'])) {
-			$query->whereRaw("nombre_etapa_proyecto ilike '%".$filters['q']."%'");
+			$query->whereRaw("nombre_etapa_proyecto ilike ?", ['%' . $filters['q'] . '%']);
 		}
 
 		$query->where("codigo_estado", "=", Estado::getState('active'));
@@ -86,7 +86,7 @@ class EtapaProyecto extends Model
         $query->where('codigo_institucion', '=', session('institution')->codigo_institucion);
 
 		if(isset($filters['nombre_etapa_proyecto']) && !empty($filters['nombre_etapa_proyecto'])) {
-			$query->whereRaw("nombre_etapa_proyecto ilike '%".$filters['nombre_etapa_proyecto']."%'");
+			$query->whereRaw("nombre_etapa_proyecto ilike ?", ['%' . $filters['nombre_etapa_proyecto'] . '%']);
 		}
 
 		if(isset($filters['codigo_estado']) && !empty($filters['codigo_estado'])) {

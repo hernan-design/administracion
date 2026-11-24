@@ -96,7 +96,7 @@ class Compra extends Model
 		$query->leftJoin('core.estado as state', 'acuerdo_compra.codigo_estado', '=', 'state.codigo_estado');
 
 	    if( isset($filters['name_product']) && !empty($filters['name_product']) ) {
-            $query->whereRaw("nombre_producto ilike '%".trim($filters['name_product'])."%'");
+            $query->whereRaw("nombre_producto ilike ?", ['%' . trim($filters['name_product']) . '%']);
         }
 
 	    if( isset($filters['category']) && !empty($filters['category']) ) {

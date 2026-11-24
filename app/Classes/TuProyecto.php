@@ -45,9 +45,9 @@ class TuProyecto
     }
 
     $date = strtotime($date);
-    $month = strtolower(jdmonthname(gregoriantojd(date('m',$date), 1, 1), CAL_MONTH_GREGORIAN_LONG));
-    $day_week = strtolower(jddayofweek ( cal_to_jd(CAL_GREGORIAN, date("m",$date),date("d",$date), date("Y",$date)) , 1 ));
-    $day_month = strftime('%e',strtotime($date));
+    $month = strtolower(date('F', $date));
+    $day_week = strtolower(date('l', $date));
+    $day_month = date('j', $date);
 
     switch ($type) {
       case 'short':

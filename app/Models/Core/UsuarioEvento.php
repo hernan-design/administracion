@@ -47,7 +47,7 @@ class UsuarioEvento extends Model
 		}
 
 		if(isset($filters['correo_electronico']) && !empty($filters['correo_electronico'])){
-			$query->whereRaw("usuario.correo_electronico ilike '%".trim($filters['correo_electronico'])."%'");
+			$query->whereRaw("usuario.correo_electronico ilike ?", ['%' . trim($filters['correo_electronico']) . '%']);
 		}
 
 		if(isset($filters['identificacion_usuario']) && !empty($filters['identificacion_usuario'])){

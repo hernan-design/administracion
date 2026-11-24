@@ -370,11 +370,11 @@ class EvaluacionEmprendimientoController extends Controller
 
 			if($request->has('email') && !empty($request->email)){
 				$email = trim($request->email);
-				$query->whereRaw("trim(lower(person.correo_electronico)) ilike trim(lower('%$email%'))");
+				$query->whereRaw("trim(lower(person.correo_electronico)) ilike trim(lower(?))", ['%' . $email . '%']);
 			}
 
 			if($request->has('emprendimiento') && !empty($request->emprendimiento)) {
-				$query->whereRaw("usuario.nombre_usuario ilike '%".$request->emprendimiento."%'");
+				$query->whereRaw("usuario.nombre_usuario ilike ?", ['%' . $request->emprendimiento . '%']);
 			}
 
 			if($request->has('number_register') && !empty($request->number_register)){

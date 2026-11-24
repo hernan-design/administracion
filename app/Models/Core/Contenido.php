@@ -82,7 +82,7 @@ class Contenido extends Model
 		$query->join('core.estado', 'contenido_institucion.codigo_estado', '=', 'estado.codigo_estado');
 
 		if(isset($filters['nombre_contenido']) && !empty($filters['nombre_contenido'])){
-			$query->whereRaw("nombre_contenido ilike '%".trim($filters['nombre_contenido'])."%'");
+			$query->whereRaw("nombre_contenido ilike ?", ['%' . trim($filters['nombre_contenido']) . '%']);
 		}
 
 		if(isset($filters['landing_contenido']) && !empty($filters['landing_contenido'])){
@@ -158,7 +158,7 @@ class Contenido extends Model
 
 		// Filters
 		if(isset($filters['q']) && !empty($filters['q'])) {
- 			$query->whereRaw("nombre_contenido ilike '%".$filters['q']."%'");
+ 			$query->whereRaw("nombre_contenido ilike ?", ['%' . $filters['q'] . '%']);
  		}
 
 		// Order

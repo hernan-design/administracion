@@ -51,7 +51,7 @@ class CategoriaProyecto extends Model
 		$query->where('codigo_institucion', '=', session('institution')->codigo_institucion);
 
 		if(isset($filters['q']) && !empty($filters['q'])){
-			$query->whereRaw("nombre_categoria_proyecto ilike '%".$filters['q']."%'");
+			$query->whereRaw("nombre_categoria_proyecto ilike ?", ['%' . $filters['q'] . '%']);
 		}
 
 		$query->where('codigo_estado', '=', Estado::getState('active'));
@@ -67,7 +67,7 @@ class CategoriaProyecto extends Model
 		$query->where('codigo_institucion', '=', session('institution')->codigo_institucion);
 
 		if(isset($filters['nombre_categoria_proyecto']) && !empty($filters['nombre_categoria_proyecto'])){
-			$query->whereRaw("nombre_categoria_proyecto ilike '%".$filters['nombre_categoria_proyecto']."%'");
+			$query->whereRaw("nombre_categoria_proyecto ilike ?", ['%' . $filters['nombre_categoria_proyecto'] . '%']);
 		}
 
 		if(isset($filters['codigo_estado']) && !empty($filters['codigo_estado'])){

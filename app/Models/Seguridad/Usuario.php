@@ -305,7 +305,7 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
 
 		};
 
-		$query->whereRaw("trim(lower(correo_electronico)) = trim(lower('$filters[email]'))");
+		$query->whereRaw("trim(lower(correo_electronico)) = trim(lower(?))", [$filters['email']]);
 		$query->whereRaw("trim(lower(correo_electronico)) != ''");
 		$query->whereNotNull('correo_electronico');
 
@@ -319,7 +319,7 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
 	{
 		$query = Usuario::query();
 		$query->join('core.usuario_institucion', 'usuario_institucion.codigo_usuario', '=', 'usuario.codigo_usuario');
-		$query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower('$filters[correo_electronico]'))");
+		$query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower(?))", [$filters['correo_electronico']]);
 		$query->whereNotNull('usuario.correo_electronico');
 		$query->where('usuario_institucion.codigo_institucion', '=', session('institution')->codigo_institucion);
 
@@ -329,7 +329,7 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
   public static function validateUser(array $filters = [])
   {
     $query = Usuario::query();
-    $query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower('$filters[correo_electronico]'))");
+    $query->whereRaw("trim(lower(usuario.correo_electronico)) = trim(lower(?))", [$filters['correo_electronico']]);
     $query->whereNotNull('usuario.correo_electronico');
 
     return $query->first();
@@ -385,11 +385,11 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
 		$query->join('param.terminos_condiciones', 'terminos_condiciones.codigo_terminos_condiciones', '=', 'version_terminos.codigo_terminos_condiciones');
 
 		if( isset($filters['nombre_usuario']) && !empty($filters['nombre_usuario']) ) {
-      		$query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike '%".trim($filters['nombre_usuario'])."%'");
+      		$query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike ?", ['%' . trim($filters['nombre_usuario']) . '%']);
 		}
 
 		if( isset($filters['correo_electronico']) && !empty($filters['correo_electronico']) ) {
-			$query->whereRaw("usuario.correo_electronico ilike '%".trim($filters['correo_electronico'])."%'");
+			$query->whereRaw("usuario.correo_electronico ilike ?", ['%' . trim($filters['correo_electronico']) . '%']);
 		}
 
 		if( isset($filters['nombre_ciudad']) && !empty($filters['nombre_ciudad']) ) {
@@ -397,7 +397,7 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
 		}
 
 		if( isset($filters['nickname_usuario']) && !empty($filters['nickname_usuario']) ) {
-			$query->whereRaw("usuario.nickname_usuario ilike '%".trim($filters['nickname_usuario'])."%'");
+			$query->whereRaw("usuario.nickname_usuario ilike ?", ['%' . trim($filters['nickname_usuario']) . '%']);
 		}
 
 		if( isset($filters['identificacion_usuario']) && !empty($filters['identificacion_usuario']) ) {
@@ -483,11 +483,11 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
         });
 
         if( isset($filters['nombre_usuario']) && !empty($filters['nombre_usuario']) ) {
-            $query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike '%".trim($filters['nombre_usuario'])."%'");
+            $query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike ?", ['%' . trim($filters['nombre_usuario']) . '%']);
         }
 
         if( isset($filters['correo_electronico']) && !empty($filters['correo_electronico']) ) {
-            $query->whereRaw("usuario.correo_electronico ilike '%".trim($filters['correo_electronico'])."%'");
+            $query->whereRaw("usuario.correo_electronico ilike ?", ['%' . trim($filters['correo_electronico']) . '%']);
         }
 
         if( isset($filters['nombre_ciudad']) && !empty($filters['nombre_ciudad']) ) {
@@ -495,7 +495,7 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
         }
 
         if( isset($filters['nickname_usuario']) && !empty($filters['nickname_usuario']) ) {
-            $query->whereRaw("usuario.nickname_usuario ilike '%".trim($filters['nickname_usuario'])."%'");
+            $query->whereRaw("usuario.nickname_usuario ilike ?", ['%' . trim($filters['nickname_usuario']) . '%']);
 		}
 
 		if ( isset($filters['cedula_usuario']) && !empty($filters['cedula_usuario']) ) {
@@ -552,11 +552,11 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
 	  $query->leftJoin('core.ciudad', 'ciudad.codigo_ciudad', '=', 'usuario.codigo_ciudad');
 
     if( isset($filters['nombre_usuario']) && !empty($filters['nombre_usuario']) ) {
-      $query->whereRaw("usuario.nombre_usuario ilike '%".trim($filters['nombre_usuario'])."%'" );
+      $query->whereRaw("usuario.nombre_usuario ilike ?", ['%' . trim($filters['nombre_usuario']) . '%']);
     }
 
     if( isset($filters['nickname_usuario']) && !empty($filters['nickname_usuario']) ) {
-      $query->whereRaw("usuario.nickname_usuario ilike '%".trim($filters['nickname_usuario'])."%'" );
+      $query->whereRaw("usuario.nickname_usuario ilike ?", ['%' . trim($filters['nickname_usuario']) . '%']);
     }
 
     if( isset($filters['nombre_ciudad']) && !empty($filters['nombre_ciudad']) ) {
@@ -730,7 +730,7 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
 		}
 
 		if( isset($filters['nombre_usuario']) && !empty($filters['nombre_usuario']) ) {
-			$query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike '%".trim($filters['nombre_usuario'])."%'");
+			$query->whereRaw("(COALESCE(trim(usuario.nombre_usuario), '') || ' ' || COALESCE(trim(persona.primer_apellido_persona), '') || ' ' || COALESCE(trim(persona.segundo_apellido_persona), '')) ilike ?", ['%' . trim($filters['nombre_usuario']) . '%']);
 		}
 
 		// $query->where('usuario.tipo_usuario', '=',  self::typeUser('person'));
@@ -1030,7 +1030,7 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
 
 			$query = Usuario::query();
 			$query->select('usuario.*');
-			$query->whereRaw("trim(lower(nickname_usuario)) ilike trim(lower('$newnickname'))");
+			$query->whereRaw("trim(lower(nickname_usuario)) ilike trim(lower(?))", [$newnickname]);
 			$user = $query->first();
 
 			$contador ++;

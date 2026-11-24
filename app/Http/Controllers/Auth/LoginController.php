@@ -182,7 +182,7 @@ class LoginController extends Controller
      */
     public function validateAbility(Request $request)
     {
-        $user = Usuario::whereRaw("trim(lower(correo_electronico)) = trim(lower('{$request->correo_electronico}'))")->first();
+        $user = Usuario::whereRaw("trim(lower(correo_electronico)) = trim(lower(?))", [$request->correo_electronico])->first();
 
         // Ability login admin
         return $user instanceof Usuario ? $user->ability('admin,super-admin', 'login-admin') : false;
