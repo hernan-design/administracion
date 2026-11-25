@@ -468,16 +468,6 @@
 
 									</tr>
 								</thead>
-								<tfoot>
-									<tr>
-										<th>Código</th>
-										<th>Nombre del organizador</th>
-                    <th>Descripción del organizador</th>
-										<th>Imagen</th>
-										<th>Agregar/Quitar del Curso</th>
-										<th>Eliminar Organizador de DB	</th>
-									</tr>
-								</tfoot>
 								<tbody >
 									<!-- Render view  -->
 								</tbody>
@@ -506,14 +496,6 @@
 
 									</tr>
 								</thead>
-								<tfoot>
-									<tr>
-										<th>Código Organizador</th>
-										<th>Nombre Organizador</th>&nbsp
-										<th>&nbsp</th>
-
-									</tr>
-								</tfoot>
 								<tbody >
 									<!-- Render view  -->
 								</tbody>
