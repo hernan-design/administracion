@@ -358,7 +358,32 @@ class Convocatoria extends Model
 		// Phase register
 		$fase = $this->fase_registro();
 		if(!$fase instanceof Fase) {
-			Log::critical("FATAL ERROR => No se encuentra la fase de registro de la convocatoria $this->codigo_convocatoria");
+			$fase = $this->fases()->where('fase.fase_registro', true)->first();
+			if(!$fase instanceof Fase) {
+				$fase = $this->fases()->first();
+			}
+			if(!$fase instanceof Fase) {
+				$fase = new Fase;
+				$fase->codigo_convocatoria = $this->codigo_convocatoria;
+				$fase->codigo_estado = Estado::getState('active');
+				$fase->nombre_fase = 'Fase de Registro';
+				$fase->descripcion_fase = '<p>Fase de registro</p>';
+				$fase->fecha_inicio_fase = date('Y-m-d');
+				$fase->fecha_fin_fase = !empty($this->fecha_cierre_convocatoria) ? $this->fecha_cierre_convocatoria : date('Y-m-d', strtotime('+1 year'));
+				$fase->fase_registro = true;
+				$fase->resumen_fase = 'Fase de registro';
+				$fase->url_fase = slugtp('Fase de Registro ' . $this->codigo_convocatoria, $fase->getTable(), 'url_fase');
+				$fase->codigo_privacidad_contenido = 3;
+				$fase->orden_fase = 1;
+				$fase->rango_superior_evaluacion = 0;
+				$fase->rango_inferior_evaluacion = 0;
+				$fase->asignacion_especialidad = false;
+				$fase->fase_cancelacion = false;
+				$fase->fase_entidad_editable = false;
+				$fase->numero_maximo_evaluadores = 0;
+				$fase->edicion_formulario_registro = false;
+				$fase->save();
+			}
 		}
 
     $registro_fase = RegistroFaseUsuario::where('codigo_registro_convocatoria', $register->codigo_registro_convocatoria)
