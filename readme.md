@@ -76,20 +76,32 @@ APP_NAME=Administrator
 APP_ENV=local
 APP_KEY=
 APP_DEBUG=true
-APP_URL=http://localhost:8001
+APP_URL=http://localhost:8000
 
+# Conexión PostgreSQL
+# Si se ejecuta fuera de Docker (en el host): DB_HOST=127.0.0.1 y DB_PORT=5433
+# Si se ejecuta dentro del contenedor Docker: DB_HOST=postgres y DB_PORT=5432
 DB_CONNECTION=pgsql
-DB_HOST=127.0.0.1
+DB_HOST=postgres
 DB_PORT=5432
-DB_DATABASE=tuproyecto_db
+DB_DATABASE=tu_proyecto_db
 DB_USERNAME=postgres
-DB_PASSWORD=secret
+DB_PASSWORD=postgres
 
-MONGO_DB_HOST=127.0.0.1
-MONGO_DB_PORT=27017
-MONGO_DB_DATABASE=tuproyecto_mongo
-MONGO_DB_USERNAME=
-MONGO_DB_PASSWORD=
+# Conexión MongoDB
+# Si se ejecuta fuera de Docker (en el host): MDB_HOST=127.0.0.1 y MDB_PORT=27018
+# Si se ejecuta dentro del contenedor Docker: MDB_HOST=mongodb y MDB_PORT=27017
+MDB_HOST=mongodb
+MDB_PORT=27017
+MDB_DATABASE=tuproyecto
+MDB_USERNAME=
+MDB_PASSWORD=
+
+# Conexión Redis
+REDIS_CLIENT=predis
+REDIS_HOST=redis
+REDIS_PORT=6379
+REDIS_PASSWORD=null
 ```
 
 ### 3. Instalación de Dependencias Backend
